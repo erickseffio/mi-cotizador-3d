@@ -18,10 +18,14 @@ texts = {
         "height": "Altura (cm)",
         "complexity": "Complejidad",
         "levels_opt": ["Baja", "Media", "Alta"],
-        "paint_opt": ["Básico", "Avanzado", "Pro"],
-        "design_opt": ["Simple", "Medio", "Complejo"],
+        "paint_opt": ["Básico", "Vitrina", "Museo"],
+        "design_opt": [
+            "Ajuste Simple (Escalar, reparar, unir piezas)", 
+            "Modificación Media (Añadir base, cortar, textos)", 
+            "Diseño Complejo (Modelado desde cero)"
+        ],
         "include_paint": "¿Incluir pintura?",
-        "level": "Nivel",
+        "level": "Nivel de Acabado",
         "include_design": "¿Ajustes de diseño?",
         "total": "PRECIO FINAL (EUR)",
         "savings": "¡Ahorras!",
@@ -40,10 +44,14 @@ texts = {
         "height": "Height (cm)",
         "complexity": "Complexity",
         "levels_opt": ["Low", "Medium", "High"],
-        "paint_opt": ["Basic", "Advanced", "Pro"],
-        "design_opt": ["Simple", "Medium", "Complex"],
+        "paint_opt": ["Basic", "Display Case", "Museum Quality"],
+        "design_opt": [
+            "Simple Adjustment (Scale, repair, join parts)", 
+            "Medium Modification (Add base, cut, texts)", 
+            "Complex Design (Modeling from scratch)"
+        ],
         "include_paint": "Include painting?",
-        "level": "Level",
+        "level": "Finish Level",
         "include_design": "Design adjustments?",
         "total": "FINAL PRICE (EUR)",
         "savings": "You save!",
@@ -62,10 +70,14 @@ texts = {
         "height": "Altezza (cm)",
         "complexity": "Complessità",
         "levels_opt": ["Bassa", "Media", "Alta"],
-        "paint_opt": ["Base", "Avanzato", "Pro"],
-        "design_opt": ["Semplice", "Medio", "Complesso"],
+        "paint_opt": ["Base", "Vetrina", "Museo"],
+        "design_opt": [
+            "Regolazione Semplice (Scalare, riparare, unire pezzi)", 
+            "Modifica Media (Aggiungere base, tagliare, testi)", 
+            "Design Complesso (Modellazione da zero)"
+        ],
         "include_paint": "Includere pittura?",
-        "level": "Livello",
+        "level": "Livello di Finitura",
         "include_design": "Modifiche di design?",
         "total": "PREZZO FINALE (EUR)",
         "savings": "Risparmi!",
@@ -111,7 +123,6 @@ with tab1:
     altura = st.number_input(t["height"], min_value=0.0, value=10.0)
     vol = (altura ** 2.2) * 0.15 if altura > 0 else 0
     dif = st.select_slider(t["complexity"], options=t["levels_opt"])
-    # Mapeo de costos de limpieza (independiente del idioma)
     extra_cost = {t["levels_opt"][0]: 1.5, t["levels_opt"][1]: 3.0, t["levels_opt"][2]: 6.0}
     costo_imp = (vol * resina_base) + extra_cost[dif] if altura > 0 else 0
 
@@ -129,6 +140,7 @@ with tab3:
     horas_b = 0.0
     if quiere_b:
         tipo_b = st.selectbox("Type", t["design_opt"])
+        # Mapeo de horas según la descripción seleccionada
         mapa_h = {t["design_opt"][0]: 1.0, t["design_opt"][1]: 3.0, t["design_opt"][2]: 8.0}
         horas_b = st.number_input("Design Hours", value=mapa_h[tipo_b])
     costo_b = horas_b * hora_blender
@@ -145,7 +157,7 @@ if ahorro > 0: c2.success(f"✨ {t['savings']} € {ahorro:,.2f}")
 
 # --- WHATSAPP ---
 msg = t["wa_msg"].format(name=nombre_cliente, char=nombre_personaje, price=f"€ {total_eur:.2f} (S/. {total_pen:.2f})")
-# RECUERDA PONER TU NÚMERO AQUÍ:
+# RECUERDA CAMBIAR ESTE NÚMERO POR EL TUYO:
 wa_link = f"https://wa.me/51999888777?text={urllib.parse.quote(msg)}"
 
 st.link_button(t["send_wa"], wa_link)
