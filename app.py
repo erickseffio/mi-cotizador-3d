@@ -154,6 +154,7 @@ with st.container(border=True):
 st.warning(t["note"])
 msg = (f"{t['wa_header']}\n--------------------------\n"
        f"👤 Cliente: {nombre_c}\n👾 Figura: {nombre_p}\n📏 Altura: {altura}cm\n"
+       f"💧 Impressione: {dif}\n🖌️ Pittura: {nv_p}\n🧊 Edit: {tipo_d}\n"
        f"--------------------------\n💰 TOTAL: €{total_eur:.2f} / S/. {total_pen:.2f}")
 
 wa_link = f"https://wa.me/{t['wa_num']}?text={urllib.parse.quote(msg)}"
