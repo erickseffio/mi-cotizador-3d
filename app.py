@@ -50,7 +50,8 @@ texts = {
         "savings_desc": "Comparado con precios de estudios de arte estándar.",
         "wa_btn": "📲 Solicitar Pedido (WhatsApp Perú)",
         "note": "⚠️ El trabajo inicia tras confirmar el 50% de adelanto.",
-        "wa_header": "*NUEVO PEDIDO DETALLADO*"
+        "wa_header": "*NUEVO PEDIDO DETALLADO*",
+        "thanks": "✅ **¡Gracias por tu solicitud!** Te responderemos en breve para confirmar los detalles y disponibilidad."
     },
     "English": {
         "title": "3D STUDIO",
@@ -80,7 +81,8 @@ texts = {
         "savings_desc": "Compared to standard art studio prices.",
         "wa_btn": "📲 Send Order (WhatsApp Europe)",
         "note": "⚠️ Project starts after 50% deposit.",
-        "wa_header": "*NEW DETAILED ORDER*"
+        "wa_header": "*NEW DETAILED ORDER*",
+        "thanks": "✅ **Thank you for your request!** We will get back to you shortly to confirm details and availability."
     },
     "Italiano": {
         "title": "STUDIO 3D",
@@ -110,7 +112,8 @@ texts = {
         "savings_desc": "Rispetto ai prezzi standard degli studi d'arte.",
         "wa_btn": "📲 Invia Ordine (WhatsApp Italia)",
         "note": "⚠️ Il lavoro inizia dopo l'acconto del 50%.",
-        "wa_header": "*NUOVO ORDINE DETTAGLIATO*"
+        "wa_header": "*NUOVO ORDINE DETTAGLIATO*",
+        "thanks": "✅ **Grazie per la tua richiesta!** Ti risponderemo a breve per confermare i dettagli e la disponibilità."
     }
 }
 
@@ -176,10 +179,9 @@ with st.container(border=True):
             st.metric(label=t["final_price_label"], value=f"€ {total_eur:.2f}")
             st.write(f"Ref: **S/. {total_pen:.2f}**")
 
-# --- 7. MENSAJE DE WHATSAPP DETALLADO ---
+# --- 7. ENVÍO WHATSAPP Y CONFIRMACIÓN ---
 st.warning(t["note"])
 
-# Construcción del mensaje con todos los detalles técnicos
 msg = (
     f"{t['wa_header']}\n"
     f"--------------------------\n"
@@ -198,5 +200,8 @@ wa_link = f"https://wa.me/{t['wa_num']}?text={urllib.parse.quote(msg)}"
 
 if nombre_c and nombre_p:
     st.link_button(t["wa_btn"], wa_link, use_container_width=True, type="primary")
+    # MENSAJE DE CONFIRMACIÓN POST-ENVÍO
+    st.write("")
+    st.markdown(t["thanks"])
 else:
-    st.info("⚠️ Completa tus datos para enviar el pedido detallado.")
+    st.info("⚠️ Completa tus datos para activar el botón de solicitud.")
