@@ -22,7 +22,30 @@ with st.sidebar:
 
 # --- 3. DICCIONARIO DE TRADUCCIONES ---
 texts = {
-    "Español": {
+    "Español (Perú)": {
+        "title": "Maker3DPeru-Italia",
+        "slogan": "✨ Hiper-realismo en Resina: Del archivo digital a tu vitrina.",
+        "delivery": "🕒 Entrega: 3 semanas (Desde el depósito del 50%)",
+        "wa_num": "51977511500",
+        "p_name_label": "Tu Nombre", "char_name_label": "Personaje", "ref_label": "Subir Referencia",
+        "step1": "1️⃣ Datos del Proyecto", "step2": "2️⃣ Configuración Artística", "step3": "3️⃣ Presupuesto Final",
+        "tab_print": "💧 Impresión", "tab_paint": "🖌️ Pintura", "tab_design": "🧊 Diseño",
+        "height_label": "Altura (cm)", "comp_label": "Complejidad", "comp_opts": ["Simple", "Orgánico", "Épico"],
+        "paint_check": "¿Incluir Pintura Profesional?", "paint_level": "Nivel de acabado", "paint_opts": ["Básico", "Vitrina", "Museo"],
+        "design_label": "Edición Digital",
+        "design_opts": ["Listo para imprimir (0€)", "Ajuste Básico (10€)", "Personalizado (25€)", "Premium (60€)"],
+        "final_price_label": "PRECIO ESTIMADO", "saving_label": "Ahorro Aplicado",
+        "savings_title": "✨ Beneficio por Tarifa de Taller", 
+        "wa_btn": "📲 Enviar Pedido a WhatsApp", "note": "⚠️ El inicio de producción requiere el 50% de adelanto.",
+        "wa_header": "*NUEVO PEDIDO DETALLADO*",
+        "thanks": "✅ **¡Gracias por tu solicitud!** Al abrir WhatsApp, **no olvides adjuntar tu imagen de referencia**.",
+        "social_title": "📱 ¡Síguenos en nuestras redes!",
+        "social_proof": "Envíos seguros a todo el Perú y el extranjero 📦",
+        "height_help": "📏 Guía: Una lata de soda mide 12cm, una figura estándar 18cm.",
+        "warning_input": "⚠️ **Atención:** Debes ingresar tu **Nombre** y el **Personaje** arriba para activar el botón de WhatsApp.",
+        "quality_tag": "⭐ Calidad Garantizada | Envío Seguro | Resina ABS-Like"
+    },
+    "Español (España)": {
         "title": "Maker3DPeru-Italia",
         "slogan": "✨ Hiper-realismo en Resina: Del archivo digital a tu vitrina.",
         "delivery": "🕒 Entrega: 3 semanas (Desde el depósito del 50%)",
@@ -93,7 +116,7 @@ texts = {
     }
 }
 
-idioma = st.selectbox("🌐 Idioma", ["Español", "English", "Italiano"])
+idioma = st.selectbox("🌐 Idioma", ["Español (Perú)", "Español (España)", "English", "Italiano"])
 t = texts[idioma]
 
 # --- 4. HEADER ---
@@ -148,7 +171,7 @@ total_pen = total_eur * st.session_state.tasa
 with st.container(border=True):
     col_res1, col_res2 = st.columns(2)
     with col_res1:
-        if idioma == "Español":
+        if idioma == "Español (Perú)":
             st.metric(label=t["final_price_label"], value=f"S/. {total_pen:.2f}")
             st.caption(f"Referencia: € {total_eur:.2f}")
         else:
