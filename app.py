@@ -2,7 +2,7 @@ import streamlit as st
 import urllib.parse
 
 # 1. Configuración de la página
-st.set_page_config(page_title="3D Studio Quote Pro", page_icon="🎨")
+st.set_page_config(page_title="Maker3DperuItalia", page_icon="🎨")
 
 # --- 2. VALORES ADMINISTRABLES ---
 if 'resina' not in st.session_state: st.session_state.resina = 0.03
