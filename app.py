@@ -40,6 +40,7 @@ texts = {
         "wa_header": "*NUEVO PEDIDO DETALLADO*",
         "thanks": "✅ **¡Gracias por tu solicitud!** Al abrir WhatsApp, **no olvides adjuntar tu imagen de referencia**.",
         "social_title": "📱 ¡Síguenos en nuestras redes!",
+        "social_proof": "⭐ **Más de 100 proyectos entregados con éxito en todo el mundo.**",
         "warning_input": "⚠️ **Atención:** Debes ingresar tu **Nombre** y el **Personaje** arriba para activar el botón de WhatsApp.",
         "quality_tag": "⭐ Calidad Garantizada | Envío Seguro | Resina ABS-Like"
     },
@@ -61,6 +62,7 @@ texts = {
         "wa_header": "*NEW DETAILED ORDER*",
         "thanks": "✅ **Thank you!** When WhatsApp opens, **please attach your reference image**.",
         "social_title": "📱 Follow us!",
+        "social_proof": "⭐ **Over 100 projects successfully delivered worldwide.**",
         "warning_input": "⚠️ **Attention:** Please enter your **Name** and **Character** above to enable the WhatsApp button.",
         "quality_tag": "⭐ Guaranteed Quality | Secure Shipping | ABS-Like Resin"
     },
@@ -82,6 +84,7 @@ texts = {
         "wa_header": "*NUOVO ORDINE DETTAGLIATO*",
         "thanks": "✅ **Grazie!** Quando si apre WhatsApp, **non dimenticare di allegare l'immagine**.",
         "social_title": "📱 Seguici sui social!",
+        "social_proof": "⭐ **Oltre 100 progetti consegnati con successo in tutto il mondo.**",
         "warning_input": "⚠️ **Attenzione:** Inserisci il tuo **Nome** e il **Personaggio** sopra per attivare il pulsante WhatsApp.",
         "quality_tag": "⭐ Qualità Garantita | Spedizione Sicura | Resina ABS-Like"
     }
