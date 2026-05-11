@@ -24,7 +24,7 @@ with st.sidebar:
 texts = {
     "Español": {
         "title": "Maker3DPeru-Italia",
-        "slogan": "✨ Hacemos tus sueños realidad",
+        "slogan": "✨ Hiper-realismo en Resina: Del archivo digital a tu vitrina.",
         "delivery": "🕒 Entrega: 3 semanas (Desde el depósito del 50%)",
         "wa_num": "51977511500",
         "p_name_label": "Tu Nombre", "char_name_label": "Personaje", "ref_label": "Subir Referencia",
@@ -46,7 +46,7 @@ texts = {
     },
     "English": {
         "title": "Maker3DPeru-Italia",
-        "slogan": "✨ We make your dreams come true",
+        "slogan": "✨ Hyper-realism in Resin: From the digital file to your display case.",
         "delivery": "🕒 Delivery: 1.5 weeks (After 50% deposit)",
         "wa_num": "393924043068",
         "p_name_label": "Your Name", "char_name_label": "Character", "ref_label": "Upload Reference",
@@ -68,7 +68,7 @@ texts = {
     },
     "Italiano": {
         "title": "Maker3DPeru-Italia",
-        "slogan": "✨ Rendiamo i tuoi sogni realtà",
+        "slogan": "✨ Iperrealismo in resina: dal file digitale alla teca espositiva.",
         "delivery": "🕒 Consegna: 1.5 settimane (Dall'acconto del 50%)",
         "wa_num": "393924043068",
         "p_name_label": "Il tuo Nome", "char_name_label": "Personaggio", "ref_label": "Carica Riferimento",
