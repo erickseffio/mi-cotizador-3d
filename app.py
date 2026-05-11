@@ -182,7 +182,8 @@ else:
 st.divider()
 
 # --- 8. REDES SOCIALES ---
-st.markdown(f"#### {t['social_title']}")
+st.markdown("---") # Una línea divisoria sutil
+st.markdown(f"<p style='text-align: center; color: #FF4B2B; font-weight: bold;'>{t['social_title']}</p>", unsafe_allow_html=True)
 col_social = st.columns(4)
 with col_social[0]: st.link_button("📸 Instagram", "https://www.instagram.com/maker_3d_peru_it", use_container_width=True)
 with col_social[1]: st.link_button("🎬 TikTok", "https://www.tiktok.com/@maker3dperu.it", use_container_width=True)
