@@ -2,7 +2,7 @@ import streamlit as st
 import urllib.parse
 
 # 1. Configuración de la página
-st.set_page_config(page_title="3D Studio Quote Pro", page_icon="🎨")
+st.set_page_config(page_title="Maker3DPeru-Italia", page_icon="🎨")
 
 # --- 2. VALORES ADMINISTRABLES ---
 if 'resina' not in st.session_state: st.session_state.resina = 0.03
@@ -23,7 +23,7 @@ with st.sidebar:
 # --- 3. DICCIONARIO DE TRADUCCIONES TOTAL ---
 texts = {
     "Español": {
-        "title": "EMPRESA 3D",
+        "title": "Maker3DPeru-Italia",
         "delivery": "🕒 Entrega: 3 semanas (Desde el depósito del 50%)",
         "wa_num": "51910034696",
         "p_name_label": "Tu Nombre", 
@@ -51,7 +51,7 @@ texts = {
         "note": "⚠️ El trabajo inicia tras confirmar el 50% de adelanto."
     },
     "English": {
-        "title": "3D STUDIO",
+        "title": "Maker3DPeru-Italia",
         "delivery": "🕒 Delivery: 1.5 weeks (After 50% deposit)",
         "wa_num": "3934567890",
         "p_name_label": "Your Name", 
@@ -79,7 +79,7 @@ texts = {
         "note": "⚠️ Project starts after 50% deposit."
     },
     "Italiano": {
-        "title": "STUDIO 3D",
+        "title": "Maker3DPeru-Italia",
         "delivery": "🕒 Consegna: 1.5 settimane (Dal acconto del 50%)",
         "wa_num": "3934567890",
         "p_name_label": "Il tuo Nome", 
@@ -114,7 +114,7 @@ t = texts[idioma]
 # --- 4. HEADER ---
 col_header1, col_header2 = st.columns([1, 4])
 with col_header1:
-    st.image("https://cdn-icons-png.flaticon.com/512/1720/1720516.png", width=90)
+    st.image("Logo.jpg", width=90) # <-- Pon el nombre exacto del archivo
 with col_header2:
     st.markdown(f"<h1 style='margin-bottom: 0;'>{t['title']}</h1>", unsafe_allow_html=True)
     st.write("✨ *Arte en Resina ABS-Like & Pintura Profesional*")
