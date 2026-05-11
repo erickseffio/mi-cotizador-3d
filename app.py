@@ -2,7 +2,7 @@ import streamlit as st
 import urllib.parse
 
 # 1. Configuración de la página
-st.set_page_config(page_title="Maker3DPeru-Italia", page_icon="🎨")
+st.set_page_config(page_title="3D Studio Quote Pro", page_icon="🎨")
 
 # --- 2. VALORES ADMINISTRABLES ---
 if 'resina' not in st.session_state: st.session_state.resina = 0.03
@@ -20,10 +20,11 @@ with st.sidebar:
         st.session_state.pintura = st.number_input("Hora Pintura (€)", value=st.session_state.pintura)
         st.session_state.tasa = st.number_input("Tasa S/.", value=st.session_state.tasa)
 
-# --- 3. DICCIONARIO DE TRADUCCIONES TOTAL ---
+# --- 3. DICCIONARIO DE TRADUCCIONES ACTUALIZADO ---
 texts = {
     "Español": {
-        "title": "Maker3DPeru-Italia",
+        "title": "EMPRESA 3D",
+        "slogan": "✨ Hacemos tus sueños realidad",
         "delivery": "🕒 Entrega: 3 semanas (Desde el depósito del 50%)",
         "wa_num": "51910034696",
         "p_name_label": "Tu Nombre", 
@@ -51,7 +52,8 @@ texts = {
         "note": "⚠️ El trabajo inicia tras confirmar el 50% de adelanto."
     },
     "English": {
-        "title": "Maker3DPeru-Italia",
+        "title": "3D STUDIO",
+        "slogan": "✨ We make your dreams come true",
         "delivery": "🕒 Delivery: 1.5 weeks (After 50% deposit)",
         "wa_num": "3934567890",
         "p_name_label": "Your Name", 
@@ -79,7 +81,8 @@ texts = {
         "note": "⚠️ Project starts after 50% deposit."
     },
     "Italiano": {
-        "title": "Maker3DPeru-Italia",
+        "title": "STUDIO 3D",
+        "slogan": "✨ Rendiamo i tuoi sogni realtà",
         "delivery": "🕒 Consegna: 1.5 settimane (Dal acconto del 50%)",
         "wa_num": "3934567890",
         "p_name_label": "Il tuo Nome", 
@@ -111,18 +114,18 @@ texts = {
 idioma = st.selectbox("🌐 Idioma / Language", ["Español", "English", "Italiano"])
 t = texts[idioma]
 
-# --- 4. HEADER ---
+# --- 4. HEADER DINÁMICO ---
 col_header1, col_header2 = st.columns([1, 4])
 with col_header1:
-    st.image("Logo.jpg", width=90) # <-- Pon el nombre exacto del archivo
+    st.image("https://cdn-icons-png.flaticon.com/512/1720/1720516.png", width=90)
 with col_header2:
     st.markdown(f"<h1 style='margin-bottom: 0;'>{t['title']}</h1>", unsafe_allow_html=True)
-    st.write("✨ *Arte en Resina ABS-Like & Pintura Profesional*")
+    st.write(f"{t['slogan']}") # Ahora el eslogan cambia con el idioma
 
 st.info(t["delivery"])
 st.divider()
 
-# --- 5. PASO 1: DATOS (TRADUCIDO) ---
+# --- 5. PASO 1: DATOS ---
 st.header(t["step1"])
 c1, c2 = st.columns(2)
 with c1:
@@ -131,7 +134,7 @@ with c1:
 with c2:
     st.file_uploader(t["ref_label"], type=['png', 'jpg', 'jpeg'])
 
-# --- 6. PASO 2: CONFIGURACIÓN (TABS TRADUCIDOS) ---
+# --- 6. PASO 2: CONFIGURACIÓN ---
 st.header(t["step2"])
 tab1, tab2, tab3 = st.tabs([t["tab_print"], t["tab_paint"], t["tab_design"]])
 
@@ -153,10 +156,12 @@ with tab2:
 
 with tab3:
     tipo_d = st.selectbox(t["design_label"], t["design_opts"])
-    costo_d = {t["design_opts"][0]: 0.0, t["design_opts"][1]: 10.0, t["design_opts"][2]: 25.0, t["design_opts"][3]: 60.0}[tipo_d]
-    horas_d = {t["design_opts"][0]: 0, t["design_opts"][1]: 1, t["design_opts"][2]: 3, t["design_opts"][3]: 8}[tipo_d]
+    costo_d = {t["design_opts"][0]: 0.0, t["design_opts"][1]: 10.0, 
+               t["design_opts"][2]: 25.0, t["design_opts"][3]: 60.0}[tipo_d]
+    horas_d = {t["design_opts"][0]: 0, t["design_opts"][1]: 1, 
+               t["design_opts"][2]: 3, t["design_opts"][3]: 8}[tipo_d]
 
-# --- 7. PASO 3: PRESUPUESTO (ETIQUETAS TRADUCIDAS) ---
+# --- 7. PASO 3: PRESUPUESTO ---
 st.header(t["step3"])
 total_eur = costo_imp + costo_p + costo_d
 total_pen = total_eur * st.session_state.tasa
