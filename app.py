@@ -136,7 +136,7 @@ if ahorro > 0: c2.success(f"✨ {t['savings']} € {ahorro:,.2f}")
 # DINÁMICA DE WHATSAPP PRIORIZANDO EURO
 # Se incluye el precio en Euros en el mensaje de WhatsApp primero
 msg = t["wa_msg"].format(name=nombre_cliente, char=nombre_personaje, price=f"€ {total_eur:.2f} (S/. {total_pen:.2f})")
-wa_link = f"https://wa.me/51999888777?text={urllib.parse.quote(msg)}"
+wa_link = f"https://wa.me/393924043068?text={urllib.parse.quote(msg)}"
 
 if st.link_button(t["send_wa"], wa_link):
     st.balloons()
