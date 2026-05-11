@@ -1,7 +1,7 @@
 import streamlit as st
 
 # Configuración de la página
-st.set_page_config(page_title="Cotizador 3D - Oferta Lanzamiento", page_icon="🎨")
+st.set_page_config(page_title="Cotizador 3D - Oferta Lanzamiento", page_icon="🎨" , initial_sidebar_state="collapsed" # Esto la mantiene cerrada al inicio)
 
 st.title("🚀 Cotizador 3D: ¡Promoción de Apertura!")
 st.info("🎁 Calidad premium a precio de taller. ¡Aprovecha nuestros descuentos de inauguración!")
