@@ -49,7 +49,8 @@ texts = {
         "savings_title": "✨ Ahorro por Tarifa de Taller",
         "savings_desc": "Comparado con precios de estudios de arte estándar.",
         "wa_btn": "📲 Solicitar Pedido (WhatsApp Perú)",
-        "note": "⚠️ El trabajo inicia tras confirmar el 50% de adelanto."
+        "note": "⚠️ El trabajo inicia tras confirmar el 50% de adelanto.",
+        "wa_header": "*NUEVO PEDIDO DETALLADO*"
     },
     "English": {
         "title": "3D STUDIO",
@@ -78,7 +79,8 @@ texts = {
         "savings_title": "✨ Workshop Rate Savings",
         "savings_desc": "Compared to standard art studio prices.",
         "wa_btn": "📲 Send Order (WhatsApp Europe)",
-        "note": "⚠️ Project starts after 50% deposit."
+        "note": "⚠️ Project starts after 50% deposit.",
+        "wa_header": "*NEW DETAILED ORDER*"
     },
     "Italiano": {
         "title": "STUDIO 3D",
@@ -107,7 +109,8 @@ texts = {
         "savings_title": "✨ Risparmio Tariffa Bottega",
         "savings_desc": "Rispetto ai prezzi standard degli studi d'arte.",
         "wa_btn": "📲 Invia Ordine (WhatsApp Italia)",
-        "note": "⚠️ Il lavoro inizia dopo l'acconto del 50%."
+        "note": "⚠️ Il lavoro inizia dopo l'acconto del 50%.",
+        "wa_header": "*NUOVO ORDINE DETTAGLIATO*"
     }
 }
 
@@ -158,44 +161,42 @@ with tab3:
     costo_d = {t["design_opts"][0]: 0.0, t["design_opts"][1]: 10.0, t["design_opts"][2]: 25.0, t["design_opts"][3]: 60.0}[tipo_d]
     horas_d = {t["design_opts"][0]: 0, t["design_opts"][1]: 1, t["design_opts"][2]: 3, t["design_opts"][3]: 8}[tipo_d]
 
-# --- 6. PRESUPUESTO FINAL (Lógica de tamaño dinámico) ---
+# --- 6. PRESUPUESTO FINAL ---
 st.header(t["step3"])
 total_eur = costo_imp + costo_p + costo_d
 total_pen = total_eur * st.session_state.tasa
 
-ahorro_p = horas_p * (18 - st.session_state.pintura)
-ahorro_d = horas_d * (30 - st.session_state.blender)
-total_ahorro = ahorro_p + ahorro_d
-
 with st.container(border=True):
     col_res1, col_res2 = st.columns(2)
-    
     with col_res1:
         if idioma == "Español":
-            # Resaltamos Soles para Perú
             st.metric(label=t["final_price_label"], value=f"S/. {total_pen:.2f}")
-            st.write(f"Referencia: **€ {total_eur:.2f}**")
+            st.write(f"Ref: **€ {total_eur:.2f}**")
         else:
-            # Resaltamos Euros para el resto
             st.metric(label=t["final_price_label"], value=f"€ {total_eur:.2f}")
             st.write(f"Ref: **S/. {total_pen:.2f}**")
-    
-    with col_res2:
-        if total_ahorro > 0:
-            st.success(f"{t['savings_title']}")
-            # El ahorro también se muestra en la moneda principal elegida
-            if idioma == "Español":
-                st.write(f"{t['saving_label']}: **S/. {total_ahorro * st.session_state.tasa:.2f}**")
-            else:
-                st.write(f"{t['saving_label']}: **€ {total_ahorro:.2f}**")
-            st.caption(t["savings_desc"])
 
-# --- 7. BOTÓN WHATSAPP ---
+# --- 7. MENSAJE DE WHATSAPP DETALLADO ---
 st.warning(t["note"])
-msg = f"*COTIZACIÓN {t['title']}*\nCliente: {nombre_c}\nFigura: {nombre_p}\nAltura: {altura}cm\nTOTAL: €{total_eur:.2f}"
+
+# Construcción del mensaje con todos los detalles técnicos
+msg = (
+    f"{t['wa_header']}\n"
+    f"--------------------------\n"
+    f"👤 *Cliente:* {nombre_c}\n"
+    f"👾 *Personaje:* {nombre_p}\n\n"
+    f"📏 *Dimensiones:* {altura} cm\n"
+    f"💧 *Impresión:* {dif}\n"
+    f"🖌️ *Pintura:* {nv_p}\n"
+    f"🧊 *Edición Digital:* {tipo_d}\n"
+    f"--------------------------\n"
+    f"💰 *TOTAL:* €{total_eur:.2f} / S/. {total_pen:.2f}\n"
+    f"🕒 *Plazo:* {t['delivery']}"
+)
+
 wa_link = f"https://wa.me/{t['wa_num']}?text={urllib.parse.quote(msg)}"
 
 if nombre_c and nombre_p:
     st.link_button(t["wa_btn"], wa_link, use_container_width=True, type="primary")
 else:
-    st.info("⚠️ Completa tus datos para enviar.")
+    st.info("⚠️ Completa tus datos para enviar el pedido detallado.")
