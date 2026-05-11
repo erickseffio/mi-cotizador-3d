@@ -23,7 +23,7 @@ with st.sidebar:
 # --- 3. DICCIONARIO DE TRADUCCIONES Y NÚMEROS (DOBLE WHATSAPP) ---
 texts = {
     "Español": {
-        "title": "EMPRESA 3D",
+        "title": "Maker3DPeru-Italia",
         "delivery": "🕒 Entrega: 3 semanas (Desde el depósito del 50%)",
         "wa_num": "51910034696", # <--- NÚMERO PERÚ
         "p_name": "Tu Nombre", "char_name": "Personaje",
@@ -35,7 +35,7 @@ texts = {
         "savings_desc": "Comparado con precios de estudios de arte estándar."
     },
     "English": {
-        "title": "3D STUDIO",
+        "title": "Maker3DPeru-Italia",
         "delivery": "🕒 Delivery: 1.5 weeks (After 50% deposit)",
         "wa_num": "3934567890", # <--- NÚMERO ITALIA/EUROPA (Cámbialo aquí)
         "p_name": "Your Name", "char_name": "Character",
@@ -47,7 +47,7 @@ texts = {
         "savings_desc": "Compared to standard art studio prices."
     },
     "Italiano": {
-        "title": "STUDIO 3D",
+        "title": "Maker3DPeru-Italia",
         "delivery": "🕒 Consegna: 1.5 settimane (Dal acconto del 50%)",
         "wa_num": "3934567890", # <--- NÚMERO ITALIA/EUROPA (Cámbialo aquí)
         "p_name": "Il tuo Nome", "char_name": "Personaggio",
