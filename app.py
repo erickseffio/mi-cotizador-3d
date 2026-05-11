@@ -208,6 +208,15 @@ else:
     
     wa_link = f"https://wa.me/{t['wa_num']}?text={urllib.parse.quote(msg)}"
     st.markdown("""
+    <div style="background-color: #f0f2f6; border-left: 5px solid #ffa500; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
+        <small style="color: #31333F;">
+            💡 <b>Nota del Experto:</b> Este presupuesto es una estimación base. 
+            El precio final se confirma tras revisar la complejidad del diseño 3D. 
+            ¡Envíame tu archivo y ajustamos los detalles!
+        </small>
+    </div>
+    """, unsafe_allow_html=True)
+    st.markdown("""
     <div style="background-color: #1A1C24; border: 2px solid #FF4B2B; padding: 15px; border-radius: 10px; text-align: center; margin-bottom: 20px;">
         <span style="font-size: 20px;">📲</span> 
         <strong style="color: #FF4B2B;">¿Los botones no funcionan?</strong><br>
