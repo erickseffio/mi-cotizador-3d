@@ -9,8 +9,8 @@ st.markdown("Calcula el costo de tu proyecto de resina, diseño y pintura en Eur
 # --- SECCIÓN: PARÁMETROS DE COSTOS PERMANENTES ---
 # 30 euros el litro = 0.03 euros por ml
 PRECIO_RESINA_ML = 0.03  
-PRECIO_HORA_BLENDER = 20.0
-PRECIO_HORA_PINTURA = 15.0
+PRECIO_HORA_BLENDER = 12.0
+PRECIO_HORA_PINTURA = 9.0
 TASA_CAMBIO_SOLS = 4.10 
 
 with st.sidebar:
