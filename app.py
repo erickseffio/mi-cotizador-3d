@@ -2,7 +2,7 @@ import streamlit as st
 import urllib.parse
 
 # 1. Configurazione della pagina
-st.set_page_config(page_title="Maker3DPeru-Italia", page_icon="🎨")
+st.set_page_config(page_title="Maker3DPeru-Italia", page_icon="Logo.jpg")
 
 # --- 2. VALORI AMMINISTRATIVI ---
 if 'resina' not in st.session_state: st.session_state.resina = 0.03
@@ -91,7 +91,7 @@ t = texts[idioma]
 col_header1, col_header2 = st.columns([1, 4])
 with col_header1:
     # REEMPLAZA "logo.png" por tu archivo real
-    st.image("https://cdn-icons-png.flaticon.com/512/1720/1720516.png", width=90)
+    st.image("Logo.jpg", width=90)
 with col_header2:
     st.markdown(f"<h1 style='margin-bottom: 0;'>{t['title']}</h1>", unsafe_allow_html=True)
     st.write(f"{t['slogan']}")
