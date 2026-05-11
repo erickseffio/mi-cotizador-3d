@@ -204,7 +204,7 @@ else:
     msg = (f"{t['wa_header']}\n--------------------------\n"
            f"👤 Cliente: {nombre_c}\n👾 Figura: {nombre_p}\n📏 Altura: {altura}cm\n"
            f"💧 Impresión: {dif}\n🖌️ Pintura: {nv_p}\n🧊 Diseño: {tipo_d}\n"
-           f"--------------------------\n💰 TOTAL: {moneda_wa}")
+           f"--------------------------\n💰 TOTAL ESTIMADO: {moneda_wa}")
     
     wa_link = f"https://wa.me/{t['wa_num']}?text={urllib.parse.quote(msg)}"
     st.markdown("""
