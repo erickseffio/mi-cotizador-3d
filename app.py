@@ -66,7 +66,7 @@ t = texts[idioma]
 # --- 4. HEADER: LOGO Y NOMBRE ---
 col_header1, col_header2 = st.columns([1, 4])
 with col_header1:
-    st.image("mi_logo.png", width=90) # <-- Pon el nombre exacto del archivo
+    st.image("Logo.jpg", width=90) # <-- Pon el nombre exacto del archivo
 with col_header2:
     st.markdown(f"<h1 style='margin-bottom: 0;'>{t['title']}</h1>", unsafe_allow_html=True)
     st.write("✨ *Arte en Resina ABS-Like & Pintura Profesional*")
