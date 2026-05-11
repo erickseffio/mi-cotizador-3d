@@ -152,6 +152,12 @@ with st.container(border=True):
 
 # --- 7. CIERRE Y WHATSAPP ---
 st.warning(t["note"])
+
+# Si el usuario NO ha puesto el nombre o el personaje
+if not nombre_c or not nombre_p:
+    st.info(t["warning_input"]) # Aquí sale el aviso que pides
+else:
+    # Si ya puso los datos, generamos el mensaje y el botón
 msg = (f"{t['wa_header']}\n--------------------------\n"
        f"👤 Cliente: {nombre_c}\n👾 Figura: {nombre_p}\n📏 Altura: {altura}cm\n"
        f"💧 Impressione: {dif}\n🖌️ Pittura: {nv_p}\n🧊 Edit: {tipo_d}\n"
