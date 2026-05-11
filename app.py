@@ -4,7 +4,7 @@ import urllib.parse
 # 1. Configuración de la página
 st.set_page_config(page_title="3D Quote Pro", page_icon="🎨", initial_sidebar_state="collapsed")
 
-# --- 2. DICCIONARIO DE TRADUCCIONES ---
+# --- 2. DICCIONARIO DE TRADUCCIONES CON NUEVOS TÉRMINOS ---
 texts = {
     "Español": {
         "title": "🚀 Cotizador 3D Pro",
@@ -16,8 +16,8 @@ texts = {
         "upload_img": "Sube una imagen",
         "tabs": ["💧 Impresión", "🖌️ Pintura", "🧊 Blender"],
         "height": "Altura (cm)",
-        "complexity": "Complejidad",
-        "levels_opt": ["Baja", "Media", "Alta"],
+        "complexity": "Nivel de Detalle / Complejidad",
+        "levels_opt": ["Pieza Simple", "Detalle Orgánico", "Complejidad Épica"], # <--- CAMBIO AQUÍ
         "paint_opt": ["Básico", "Vitrina", "Museo"],
         "design_opt": [
             "Ajuste Simple (Escalar, reparar, unir piezas)", 
@@ -42,8 +42,8 @@ texts = {
         "upload_img": "Upload a reference image",
         "tabs": ["💧 Printing", "🖌️ Painting", "🧊 Blender"],
         "height": "Height (cm)",
-        "complexity": "Complexity",
-        "levels_opt": ["Low", "Medium", "High"],
+        "complexity": "Detail Level / Complexity",
+        "levels_opt": ["Simple Piece", "Organic Detail", "Epic Complexity"], # <--- CAMBIO AQUÍ
         "paint_opt": ["Basic", "Display Case", "Museum Quality"],
         "design_opt": [
             "Simple Adjustment (Scale, repair, join parts)", 
@@ -68,8 +68,8 @@ texts = {
         "upload_img": "Carica un'immagine",
         "tabs": ["💧 Stampa 3D", "🖌️ Pittura", "🧊 Blender"],
         "height": "Altezza (cm)",
-        "complexity": "Complessità",
-        "levels_opt": ["Bassa", "Media", "Alta"],
+        "complexity": "Livello di Dettaglio",
+        "levels_opt": ["Pezzo Semplice", "Dettaglio Organico", "Complessità Epica"], # <--- CAMBIO AQUÍ
         "paint_opt": ["Base", "Vetrina", "Museo"],
         "design_opt": [
             "Regolazione Semplice (Scalare, riparare, unire pezzi)", 
@@ -123,6 +123,7 @@ with tab1:
     altura = st.number_input(t["height"], min_value=0.0, value=10.0)
     vol = (altura ** 2.2) * 0.15 if altura > 0 else 0
     dif = st.select_slider(t["complexity"], options=t["levels_opt"])
+    # Mantenemos la lógica de precios vinculada a la posición de la opción
     extra_cost = {t["levels_opt"][0]: 1.5, t["levels_opt"][1]: 3.0, t["levels_opt"][2]: 6.0}
     costo_imp = (vol * resina_base) + extra_cost[dif] if altura > 0 else 0
 
@@ -140,7 +141,6 @@ with tab3:
     horas_b = 0.0
     if quiere_b:
         tipo_b = st.selectbox("Type", t["design_opt"])
-        # Mapeo de horas según la descripción seleccionada
         mapa_h = {t["design_opt"][0]: 1.0, t["design_opt"][1]: 3.0, t["design_opt"][2]: 8.0}
         horas_b = st.number_input("Design Hours", value=mapa_h[tipo_b])
     costo_b = horas_b * hora_blender
@@ -157,7 +157,6 @@ if ahorro > 0: c2.success(f"✨ {t['savings']} € {ahorro:,.2f}")
 
 # --- WHATSAPP ---
 msg = t["wa_msg"].format(name=nombre_cliente, char=nombre_personaje, price=f"€ {total_eur:.2f} (S/. {total_pen:.2f})")
-# RECUERDA CAMBIAR ESTE NÚMERO POR EL TUYO:
 wa_link = f"https://wa.me/51999888777?text={urllib.parse.quote(msg)}"
 
 st.link_button(t["send_wa"], wa_link)
