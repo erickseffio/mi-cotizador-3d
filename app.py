@@ -2,166 +2,161 @@ import streamlit as st
 import urllib.parse
 
 # 1. Configuración de la página
-st.set_page_config(page_title="3D Quote Pro", page_icon="🎨", initial_sidebar_state="collapsed")
+st.set_page_config(page_title="3D Studio Quote", page_icon="🎨")
 
-# --- 2. DICCIONARIO DE TRADUCCIONES CON NUEVOS TÉRMINOS ---
+# --- 2. HEADER CON IDENTIDAD ---
+col_logo, col_name = st.columns([1, 3])
+with col_logo:
+    # Reemplaza con tu logo real cuando lo subas a GitHub
+    st.image("https://cdn-icons-png.flaticon.com/512/1720/1720516.png", width=100)
+with col_name:
+    st.markdown("# TU EMPRESA 3D")
+    st.caption("Especialistas en Resina ABS-Like de Alta Definición")
+
+# --- 3. DICCIONARIO DE TRADUCCIONES DETALLADO ---
 texts = {
     "Español": {
-        "title": "🚀 Cotizador 3D Pro",
-        "info": "🎁 Calidad premium a precio de taller.",
-        "admin_label": "🔐 Panel Admin",
-        "project_data": "📝 Datos del Proyecto",
-        "your_name": "Tu Nombre",
-        "char_name": "Personaje",
-        "upload_img": "Sube una imagen",
-        "tabs": ["💧 Impresión", "🖌️ Pintura", "🧊 Blender"],
-        "height": "Altura (cm)",
-        "complexity": "Nivel de Detalle / Complejidad",
-        "levels_opt": ["Pieza Simple", "Detalle Orgánico", "Complejidad Épica"], # <--- CAMBIO AQUÍ
-        "paint_opt": ["Básico", "Vitrina", "Museo"],
-        "design_opt": [
-            "Ajuste Simple (Escalar, reparar, unir piezas)", 
-            "Modificación Media (Añadir base, cortar, textos)", 
-            "Diseño Complejo (Modelado desde cero)"
-        ],
-        "include_paint": "¿Incluir pintura?",
-        "level": "Nivel de Acabado",
-        "include_design": "¿Ajustes de diseño?",
-        "total": "PRECIO FINAL (EUR)",
-        "savings": "¡Ahorras!",
-        "send_wa": "📲 Enviar por WhatsApp",
-        "wa_msg": "¡Hola! Soy {name}. He cotizado a {char}. Total: {price}. ¿Cómo procedemos?"
+        "step1": "1️⃣ Cuéntanos sobre tu proyecto",
+        "step2": "2️⃣ Configura los detalles técnicos",
+        "step3": "3️⃣ Revisa y envía tu pedido",
+        "wa_num": "51910034696",
+        "delivery": "🕒 Entrega: 3 semanas (Desde el depósito del 50%)",
+        "p_name": "Tu nombre completo",
+        "char_name": "Nombre del personaje / figura",
+        "img_help": "Sube una foto o captura de lo que quieres imprimir",
+        "paint_help": "Selecciona el nivel de pintura que deseas",
+        "design_help": "Selecciona si el archivo necesita retoques",
+        "total_label": "VALOR TOTAL ESTIMADO",
+        "payment_note": "⚠️ El trabajo inicia tras confirmar el 50% de adelanto.",
+        "wa_btn": "📲 Solicitar Pedido vía WhatsApp Perú",
+        "detail_summary": "📝 Resumen de tu configuración:"
     },
     "English": {
-        "title": "🚀 3D Configurator Pro",
-        "info": "🎁 Premium quality at workshop prices.",
-        "admin_label": "🔐 Admin Panel",
-        "project_data": "📝 Project Details",
-        "your_name": "Your Name",
-        "char_name": "Character Name",
-        "upload_img": "Upload a reference image",
-        "tabs": ["💧 Printing", "🖌️ Painting", "🧊 Blender"],
-        "height": "Height (cm)",
-        "complexity": "Detail Level / Complexity",
-        "levels_opt": ["Simple Piece", "Organic Detail", "Epic Complexity"], # <--- CAMBIO AQUÍ
-        "paint_opt": ["Basic", "Display Case", "Museum Quality"],
-        "design_opt": [
-            "Simple Adjustment (Scale, repair, join parts)", 
-            "Medium Modification (Add base, cut, texts)", 
-            "Complex Design (Modeling from scratch)"
-        ],
-        "include_paint": "Include painting?",
-        "level": "Finish Level",
-        "include_design": "Design adjustments?",
-        "total": "FINAL PRICE (EUR)",
-        "savings": "You save!",
-        "send_wa": "📲 Send via WhatsApp",
-        "wa_msg": "Hi! I'm {name}. I quoted {char}. Total: {price}. How do we proceed?"
+        "step1": "1️⃣ Tell us about your project",
+        "step2": "2️⃣ Technical configuration",
+        "step3": "3️⃣ Review and send order",
+        "wa_num": "3934567890", # Reemplazar con número de Italia
+        "delivery": "🕒 Delivery: 1.5 weeks (After 50% deposit)",
+        "p_name": "Your full name",
+        "char_name": "Character / Figure name",
+        "img_help": "Upload a screenshot of what you want to print",
+        "paint_help": "Select your desired painting level",
+        "design_help": "Select if the file needs adjustments",
+        "total_label": "ESTIMATED TOTAL VALUE",
+        "payment_note": "⚠️ Project starts after 50% down payment is confirmed.",
+        "wa_btn": "📲 Send Order via WhatsApp Europe",
+        "detail_summary": "📝 Configuration Summary:"
     },
     "Italiano": {
-        "title": "🚀 Preventivo 3D Pro",
-        "info": "🎁 Qualità premium a prezzi di bottega.",
-        "admin_label": "🔐 Pannello Admin",
-        "project_data": "📝 Dettagli del Progetto",
-        "your_name": "Il tuo Nome",
-        "char_name": "Nome del Personaggio",
-        "upload_img": "Carica un'immagine",
-        "tabs": ["💧 Stampa 3D", "🖌️ Pittura", "🧊 Blender"],
-        "height": "Altezza (cm)",
-        "complexity": "Livello di Dettaglio",
-        "levels_opt": ["Pezzo Semplice", "Dettaglio Organico", "Complessità Epica"], # <--- CAMBIO AQUÍ
-        "paint_opt": ["Base", "Vetrina", "Museo"],
-        "design_opt": [
-            "Regolazione Semplice (Scalare, riparare, unire pezzi)", 
-            "Modifica Media (Aggiungere base, tagliare, testi)", 
-            "Design Complesso (Modellazione da zero)"
-        ],
-        "include_paint": "Includere pittura?",
-        "level": "Livello di Finitura",
-        "include_design": "Modifiche di design?",
-        "total": "PREZZO FINALE (EUR)",
-        "savings": "Risparmi!",
-        "send_wa": "📲 Invia su WhatsApp",
-        "wa_msg": "Ciao! Sono {name}. Ho fatto un preventivo per {char}. Totale: {price}. Come procediamo?"
+        "step1": "1️⃣ Raccontaci del tuo progetto",
+        "step2": "2️⃣ Configurazione tecnica",
+        "step3": "3️⃣ Revisione e invio ordine",
+        "wa_num": "3934567890", # Reemplazar con número de Italia
+        "delivery": "🕒 Consegna: 1.5 settimane (Dal deposito del 50%)",
+        "p_name": "Il tuo nome completo",
+        "char_name": "Nome del personaggio",
+        "img_help": "Carica uno screenshot di ciò che vuoi stampare",
+        "paint_help": "Seleziona il livello di pittura desiderato",
+        "design_help": "Seleziona se il file necessita di modifiche",
+        "total_label": "VALORE TOTALE ESTIMATO",
+        "payment_note": "⚠️ Il lavoro inizia dopo la conferma dell'acconto del 50%.",
+        "wa_btn": "📲 Invia Ordine via WhatsApp Italia",
+        "detail_summary": "📝 Riepilogo configurazione:"
     }
 }
 
-# --- 3. SELECTOR DE IDIOMA ---
-idioma = st.selectbox("🌐 Language / Idioma / Lingua", ["Español", "English", "Italiano"])
+idioma = st.selectbox("🌐 Selecciona tu idioma / Select Language / Seleziona Lingua", ["Español", "English", "Italiano"])
 t = texts[idioma]
+st.divider()
 
-st.title(t["title"])
-st.info(t["info"])
-
-# --- 4. VALORES INTERNOS ---
+# --- 4. VALORES DE ADMINISTRACIÓN (OCULTOS) ---
 PRECIO_RESINA_ML, PRECIO_HORA_BLENDER, PRECIO_HORA_PINTURA, TASA_CAMBIO_SOLS = 0.03, 11.0, 8.5, 4.10
 
-with st.sidebar:
-    st.header(t["admin_label"])
-    clave = st.text_input("Password", type="password")
-    if clave == "admin123":
-        resina_base = st.number_input("Resina ml (€)", value=PRECIO_RESINA_ML, format="%.3f")
-        hora_blender = st.number_input("Blender (€/h)", value=PRECIO_HORA_BLENDER)
-        hora_pintura = st.number_input("Pintura (€/h)", value=PRECIO_HORA_PINTURA)
-        tasa_soles = st.number_input("Tasa S/.", value=TASA_CAMBIO_SOLS)
-    else:
-        resina_base, hora_blender, hora_pintura, tasa_soles = PRECIO_RESINA_ML, PRECIO_HORA_BLENDER, PRECIO_HORA_PINTURA, TASA_CAMBIO_SOLS
+# --- 5. PASO 1: DATOS ---
+st.header(t["step1"])
+c1, c2 = st.columns(2)
+with c1:
+    nombre_cliente = st.text_input(t["p_name"], placeholder="Ej: Mario Rossi")
+    nombre_personaje = st.text_input(t["char_name"], placeholder="Ej: Seiya de Pegaso")
+with c2:
+    img = st.file_uploader(t["img_help"], type=['png', 'jpg', 'jpeg'])
 
-# --- 5. DATOS DEL PROYECTO ---
-st.subheader(t["project_data"])
-c_n1, c_n2 = st.columns(2)
-with c_n1:
-    nombre_cliente = st.text_input(t["your_name"])
-    nombre_personaje = st.text_input(t["char_name"])
-with c_n2:
-    img = st.file_uploader(t["upload_img"], type=['png', 'jpg', 'jpeg'])
-
-# --- 6. PESTAÑAS Y CÁLCULOS ---
-tab1, tab2, tab3 = st.tabs(t["tabs"])
+# --- 6. PASO 2: CONFIGURACIÓN ---
+st.header(t["step2"])
+tab1, tab2, tab3 = st.tabs(["💧 Impresión (ABS)", "🖌️ Pintura Artística", "🧊 Ajustes Blender"])
 
 with tab1:
-    altura = st.number_input(t["height"], min_value=0.0, value=10.0)
-    vol = (altura ** 2.2) * 0.15 if altura > 0 else 0
-    dif = st.select_slider(t["complexity"], options=t["levels_opt"])
-    # Mantenemos la lógica de precios vinculada a la posición de la opción
-    extra_cost = {t["levels_opt"][0]: 1.5, t["levels_opt"][1]: 3.0, t["levels_opt"][2]: 6.0}
-    costo_imp = (vol * resina_base) + extra_cost[dif] if altura > 0 else 0
+    altura = st.number_input("Altura de la figura (cm)", min_value=5.0, max_value=100.0, value=15.0)
+    # Lista de opciones de complejidad para evitar errores de traducción
+    opts_comp = ["Simple", "Orgánico", "Épico"] if idioma == "Español" else (["Simple", "Organic", "Epic"] if idioma == "English" else ["Semplice", "Organico", "Epico"])
+    dif = st.select_slider("Nivel de detalle de la pieza", options=opts_comp)
+    
+    vol = (altura ** 2.2) * 0.15
+    extra = {opts_comp[0]: 1.5, opts_comp[1]: 3.0, opts_comp[2]: 6.0}
+    costo_imp = (vol * PRECIO_RESINA_ML) + extra[dif]
 
 with tab2:
-    quiere_p = st.checkbox(t["include_paint"])
-    horas_p = 0.0
+    st.write(t["paint_help"])
+    quiere_p = st.checkbox("¿Deseas que la pintemos a mano?")
+    nv_p, costo_p = "No", 0.0
     if quiere_p:
-        nv_p = st.select_slider(t["level"], options=t["paint_opt"], key="p")
-        mult_p = {t["paint_opt"][0]: 1, t["paint_opt"][1]: 2.5, t["paint_opt"][2]: 5}
-        horas_p = st.number_input("Hours", value=round((altura/5)*mult_p[nv_p], 1))
-    costo_p = horas_p * hora_pintura
+        opts_p = ["Básico", "Vitrina", "Museo"] if idioma == "Español" else (["Basic", "Display", "Museum"] if idioma == "English" else ["Base", "Vetrina", "Museo"])
+        nv_p = st.select_slider("Calidad del acabado", options=opts_p)
+        mult = {opts_p[0]: 1, opts_p[1]: 2.5, opts_p[2]: 5}
+        horas_p = (altura/5) * mult[nv_p]
+        costo_p = horas_p * PRECIO_HORA_PINTURA
 
 with tab3:
-    quiere_b = st.checkbox(t["include_design"])
-    horas_b = 0.0
+    st.write(t["design_help"])
+    quiere_b = st.checkbox("¿El archivo necesita modificaciones?")
+    tipo_b, costo_b = "No", 0.0
     if quiere_b:
-        tipo_b = st.selectbox("Type", t["design_opt"])
-        mapa_h = {t["design_opt"][0]: 1.0, t["design_opt"][1]: 3.0, t["design_opt"][2]: 8.0}
-        horas_b = st.number_input("Design Hours", value=mapa_h[tipo_b])
-    costo_b = horas_b * hora_blender
+        opts_b = ["Simple", "Medio", "Complejo"] if idioma == "Español" else (["Simple", "Medium", "Complex"] if idioma == "English" else ["Semplice", "Medio", "Complesso"])
+        tipo_b = st.selectbox("Tipo de intervención", opts_b)
+        horas_b = {opts_b[0]: 1.0, opts_b[1]: 3.0, opts_b[2]: 8.0}
+        costo_b = horas_b[tipo_b] * PRECIO_HORA_BLENDER
 
-# --- 7. RESULTADOS ---
+# --- 7. PASO 3: RESUMEN Y ENVÍO ---
+st.header(t["step3"])
 total_eur = costo_imp + costo_p + costo_b
-total_pen = total_eur * tasa_soles
-ahorro = (horas_p * (15 - hora_pintura)) + (horas_b * (20 - hora_blender))
+total_pen = total_eur * TASA_CAMBIO_SOLS
 
-st.divider()
-c1, c2 = st.columns(2)
-c1.metric(t["total"], f"€ {total_eur:,.2f}", f"S/. {total_pen:,.2f}", delta_color="normal")
-if ahorro > 0: c2.success(f"✨ {t['savings']} € {ahorro:,.2f}")
+with st.container(border=True):
+    st.subheader(t["total_label"])
+    st.title(f"€ {total_eur:.2f}")
+    st.write(f"Equivalente aproximado: **S/. {total_pen:.2f}**")
+    st.caption(t["delivery"])
 
-# --- WHATSAPP ---
-msg = t["wa_msg"].format(name=nombre_cliente, char=nombre_personaje, price=f"€ {total_eur:.2f} (S/. {total_pen:.2f})")
-wa_link = f"https://wa.me/51999888777?text={urllib.parse.quote(msg)}"
+    # Resumen visual para que el cliente confirme antes de irse
+    st.write(t["detail_summary"])
+    col_res1, col_res2 = st.columns(2)
+    col_res1.write(f"- Altura: {altura}cm")
+    col_res1.write(f"- Detalle: {dif}")
+    col_res2.write(f"- Pintura: {nv_p}")
+    col_res2.write(f"- Diseño: {tipo_b}")
 
-st.link_button(t["send_wa"], wa_link)
+# --- BOTÓN DE WHATSAPP ---
+msg = (
+    f"🚀 *SOLICITUD DE PEDIDO 3D*\n"
+    f"------------------------------------\n"
+    f"👤 *Cliente:* {nombre_cliente}\n"
+    f"👾 *Figura:* {nombre_personaje}\n"
+    f"📏 *Tamaño:* {altura} cm\n"
+    f"🧪 *Material:* Resina ABS-Like\n"
+    f"⚙️ *Detalle:* {dif}\n"
+    f"🖌️ *Pintura:* {nv_p}\n"
+    f"🧊 *Diseño:* {tipo_b}\n"
+    f"------------------------------------\n"
+    f"💰 *PRECIO TOTAL: € {total_eur:.2f}*\n"
+    f"🕒 *TIEMPO:* {t['delivery']}\n"
+    f"------------------------------------\n"
+    f"✅ El cliente confirma conocimiento del adelanto del 50%."
+)
 
-with st.expander("Dettagli / Details / Detalles"):
-    st.write(f"Impresión: € {costo_imp:.2f}")
-    st.write(f"Pintura: € {costo_p:.2f}")
-    st.write(f"Diseño: € {costo_b:.2f}")
+st.warning(t["payment_note"])
+wa_link = f"https://wa.me/{t['wa_num']}?text={urllib.parse.quote(msg)}"
+
+if nombre_cliente and nombre_personaje:
+    st.link_button(t["wa_btn"], wa_link, use_container_width=True, type="primary")
+else:
+    st.error("⚠️ Por favor, escribe tu nombre y el del personaje en el Paso 1 para habilitar el envío.")
