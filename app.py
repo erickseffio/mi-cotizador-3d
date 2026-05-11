@@ -191,11 +191,12 @@ st.markdown(f"<div style='text-align: center; padding: 10px; background-color: #
 if not nombre_c or not nombre_p:
     st.info(t["warning_input"]) # Aquí sale el aviso que pides
 else:
+    moneda_wa = f"S/. {total_pen:.2f}" if idioma == "Español (Perú)" else f"€ {total_eur:.2f}"
     # Si ya puso los datos, generamos el mensaje y el botón
     msg = (f"{t['wa_header']}\n--------------------------\n"
            f"👤 Cliente: {nombre_c}\n👾 Figura: {nombre_p}\n📏 Altura: {altura}cm\n"
            f"💧 Impresión: {dif}\n🖌️ Pintura: {nv_p}\n🧊 Diseño: {tipo_d}\n"
-           f"--------------------------\n💰 TOTAL: €{total_eur:.2f} / S/. {total_pen:.2f}")
+           f"--------------------------\n💰 TOTAL: {moneda_wa}")
     
     wa_link = f"https://wa.me/{t['wa_num']}?text={urllib.parse.quote(msg)}"
     
