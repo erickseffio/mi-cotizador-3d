@@ -28,6 +28,8 @@ texts = {
         "delivery": "🕒 Entrega: 3 semanas (Desde el depósito del 50%)",
         "wa_num": "51977511500",
         "p_name_label": "Tu Nombre", "char_name_label": "Personaje", "ref_label": "Subir Referencia",
+        "p_name_ph": "Ej: Juan Pérez",
+        "char_name_ph": "Ej: Iron Man Mark 85",
         "step1": "1️⃣ Datos del Proyecto", "step2": "2️⃣ Configuración Artística", "step3": "3️⃣ Presupuesto Final",
         "tab_print": "💧 Impresión", "tab_paint": "🖌️ Pintura", "tab_design": "🧊 Diseño",
         "height_label": "Altura (cm)", "comp_label": "Complejidad", "comp_opts": ["Simple", "Orgánico", "Épico"],
