@@ -41,6 +41,7 @@ texts = {
         "thanks": "✅ **¡Gracias por tu solicitud!** Al abrir WhatsApp, **no olvides adjuntar tu imagen de referencia**.",
         "social_title": "📱 ¡Síguenos en nuestras redes!",
         "social_proof": "Envíos seguros a todo el Perú y el extranjero 📦",
+        "height_help": "📏 Guía: Una lata de soda mide 12cm, una figura estándar 18cm.",
         "warning_input": "⚠️ **Atención:** Debes ingresar tu **Nombre** y el **Personaje** arriba para activar el botón de WhatsApp.",
         "quality_tag": "⭐ Calidad Garantizada | Envío Seguro | Resina ABS-Like"
     },
@@ -63,6 +64,7 @@ texts = {
         "thanks": "✅ **Thank you!** When WhatsApp opens, **please attach your reference image**.",
         "social_title": "📱 Follow us!",
         "social_proof": "Secure shipping throughout Peru and abroad 📦",
+        "height_help": "📏 Guide: A soda can is 12cm, a standard figure is 18cm.",
         "warning_input": "⚠️ **Attention:** Please enter your **Name** and **Character** above to enable the WhatsApp button.",
         "quality_tag": "⭐ Guaranteed Quality | Secure Shipping | ABS-Like Resin"
     },
@@ -85,6 +87,7 @@ texts = {
         "thanks": "✅ **Grazie!** Quando si apre WhatsApp, **non dimenticare di allegare l'immagine**.",
         "social_title": "📱 Seguici sui social!",
         "social_proof": "Spedizione sicura in tutto il Perù e all'estero 📦",
+        "height_help": "📏 Guida: Una lattina misura 12cm, una figura standard 18cm.",
         "warning_input": "⚠️ **Attenzione:** Inserisci il tuo **Nome** e il **Personaggio** sopra per attivare il pulsante WhatsApp.",
         "quality_tag": "⭐ Qualità Garantita | Spedizione Sicura | Resina ABS-Like"
     }
@@ -118,6 +121,7 @@ tab1, tab2, tab3 = st.tabs([t["tab_print"], t["tab_paint"], t["tab_design"]])
 
 with tab1:
     altura = st.number_input(t["height_label"], 5, 100, 15)
+    st.caption(t["height_help"])
     dif = st.select_slider(t["comp_label"], options=t["comp_opts"])
     vol = (altura ** 2.2) * 0.15
     extra = {t["comp_opts"][0]: 1.5, t["comp_opts"][1]: 3.0, t["comp_opts"][2]: 6.0}[dif]
