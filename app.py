@@ -157,6 +157,8 @@ with st.container(border=True):
 
 # --- 7. CIERRE Y WHATSAPP (Lógica Corregida) ---
 st.warning(t["note"])
+# Agrégalo justo debajo de st.warning(t["note"])
+st.markdown(f"<div style='text-align: center; padding: 10px; background-color: #fdf2d9; border-radius: 5px; border: 1px solid #f9e2af; color: #856404; margin: 15px 0;'>⭐ <b>Más de 100 proyectos entregados con éxito en todo el mundo.</b></div>", unsafe_allow_html=True)
 
 # Si el usuario NO ha puesto el nombre o el personaje
 if not nombre_c or not nombre_p:
