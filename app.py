@@ -201,6 +201,21 @@ else:
     wa_link = f"https://wa.me/{t['wa_num']}?text={urllib.parse.quote(msg)}"
     
     st.link_button(t["wa_btn"], wa_link, use_container_width=True, type="primary")
+    # ... después de calcular el msg y el wa_link ...
+
+# PEGA AQUÍ LA OPCIÓN 2
+st.markdown("""
+    <div style="background-color: #1A1C24; border: 2px solid #FF4B2B; padding: 15px; border-radius: 10px; text-align: center; margin-bottom: 20px;">
+        <span style="font-size: 20px;">📲</span> 
+        <strong style="color: #FF4B2B;">¿Los botones no funcionan?</strong><br>
+        <p style="font-size: 0.9rem; color: white; margin-top: 5px;">
+        Si vienes de TikTok, pulsa los <b>tres puntos (⋮)</b> y elige <b>'Abrir en navegador externo'</b> para poder enviarnos tu pedido.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+# Debajo aparece tu botón de WhatsApp
+st.link_button(t["wa_btn"], wa_link, use_container_width=True, type="primary")
     st.success(t["thanks"])
 
 st.divider()
@@ -214,5 +229,4 @@ with col_social[2]: st.link_button("📺 YouTube", "https://www.youtube.com/@Mak
 with col_social[3]: st.link_button("👤 Facebook", "https://www.facebook.com/Maker.3d.Peru", use_container_width=True)
 
 st.write("")
-st.caption("⚠️ Si los botones no abren, dale a los tres puntos (⋮) y selecciona 'Abrir en navegador'.")
 st.markdown(f"<p style='text-align: center; color: #888888; font-size: 0.8rem;'>❤️ Diseñado por Maker 3D Perú | Envíos nacionales e internacionales</p>", unsafe_allow_html=True)
