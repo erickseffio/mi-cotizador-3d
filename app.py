@@ -199,7 +199,15 @@ else:
            f"--------------------------\n💰 TOTAL: {moneda_wa}")
     
     wa_link = f"https://wa.me/{t['wa_num']}?text={urllib.parse.quote(msg)}"
-    
+    st.markdown("""
+    <div style="background-color: #1A1C24; border: 2px solid #FF4B2B; padding: 15px; border-radius: 10px; text-align: center; margin-bottom: 20px;">
+        <span style="font-size: 20px;">📲</span> 
+        <strong style="color: #FF4B2B;">¿Los botones no funcionan?</strong><br>
+        <p style="font-size: 0.9rem; color: white; margin-top: 5px;">
+        Si vienes de TikTok, pulsa los <b>tres puntos (⋮)</b> y elige <b>'Abrir en navegador externo'</b> para poder enviarnos tu pedido.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
     st.link_button(t["wa_btn"], wa_link, use_container_width=True, type="primary")
     st.success(t["thanks"])
 
