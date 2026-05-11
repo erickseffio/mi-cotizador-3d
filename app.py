@@ -7,12 +7,10 @@ st.title("🚀 Cotizador 3D: ¡Promoción de Apertura!")
 st.info("🎁 Calidad premium a precio de taller. ¡Aprovecha nuestros descuentos de inauguración!")
 
 # --- SECCIÓN: PARÁMETROS DE COSTOS ---
-# Precios de "mercado" para calcular el ahorro
 MERCADO_BLENDER = 20.0
 MERCADO_PINTURA = 15.0
 
-# Tus precios de lanzamiento
-PRECIO_RESINA_ML = 0.03  # 30€ el litro
+PRECIO_RESINA_ML = 0.03  
 PRECIO_HORA_BLENDER = 11.0 
 PRECIO_HORA_PINTURA = 8.5
 TASA_CAMBIO_SOLS = 4.10 
@@ -31,11 +29,8 @@ with tab1:
     st.header("Detalles de Impresión")
     altura = st.number_input("Altura de la figura (cm)", min_value=1.0, value=10.0, step=1.0)
     cantidad = st.number_input("Cantidad de copias", min_value=1, value=1)
-    
-    # Fórmula de volumen automática
     volumen_estimado = (altura ** 2.2) * 0.15
     st.caption(f"📦 Volumen estimado: ~{volumen_estimado:.1f} ml (Resina ABS-Like)")
-    
     dificultad_imp = st.select_slider("Complejidad de la pieza", options=["Baja", "Media", "Alta"])
     extra_limpieza = {"Baja": 1.5, "Media": 3.0, "Alta": 6.0}
     costo_impresion_eur = (volumen_estimado * resina_base * cantidad) + extra_limpieza[dificultad_imp]
@@ -50,10 +45,8 @@ with tab2:
         base_h = (altura / 5)
         mult_nivel = {"Básico": 1, "Avanzado": 2.5, "Pro/Museo": 5}
         sugerencia = base_h * mult_nivel[nivel]
-        
         horas_p = st.number_input(f"Horas estimadas", min_value=0.0, value=round(sugerencia, 1), step=0.5)
         costo_pintura_eur = horas_p * hora_pintura
-        # Cálculo de ahorro en pintura
         ahorro_pintura = horas_p * (MERCADO_PINTURA - PRECIO_HORA_PINTURA)
     else:
         costo_pintura_eur = 0.0
@@ -66,7 +59,6 @@ with tab3:
     if quiere_diseno:
         horas_b = st.number_input("Horas de diseño", min_value=0.0, value=1.0, step=0.5)
         costo_diseno_eur = horas_b * hora_blender
-        # Cálculo de ahorro en Blender
         ahorro_blender = horas_b * (MERCADO_BLENDER - PRECIO_HORA_BLENDER)
     else:
         costo_diseno_eur = 0.0
@@ -81,8 +73,17 @@ col1, col2 = st.columns(2)
 col1.metric("PRECIO LANZAMIENTO", f"€ {total_eur:,.2f}", delta=f"S/. {total_pen:,.2f}", delta_color="normal")
 
 if ahorro_total_eur > 0:
-    col2.success(f"✨ ¡Ahorras € {ahorro_total_eur:,.2f} con esta oferta!")
-    st.write(f"*(Precio normal de mercado: € {total_eur + ahorro_total_eur:,.2f})*")
+    col2.success(f"✨ ¡Ahorras € {ahorro_total_eur:,.2f}!")
+    st.write(f"*(Precio normal: € {total_eur + ahorro_total_eur:,.2f})*")
+
+# --- EL CUADRO DESGLOSADO ---
+st.subheader("📊 Desglose de la Inversión")
+datos_tabla = [
+    {"Servicio": "Impresión 3D (ABS)", "Euros (€)": f"{costo_impresion_eur:,.2f}", "Soles (S/.)": f"{costo_impresion_eur * tasa_soles:,.2f}"},
+    {"Servicio": "Pintura Artística", "Euros (€)": f"{costo_pintura_eur:,.2f}", "Soles (S/.)": f"{costo_pintura_eur * tasa_soles:,.2f}"},
+    {"Servicio": "Diseño en Blender", "Euros (€)": f"{costo_diseno_eur:,.2f}", "Soles (S/.)": f"{costo_diseno_eur * tasa_soles:,.2f}"},
+]
+st.table(datos_tabla)
 
 # --- RESUMEN WHATSAPP ---
 if st.button("Generar Resumen para WhatsApp"):
