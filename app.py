@@ -2,19 +2,9 @@ import streamlit as st
 import urllib.parse
 
 # 1. Configuración de la página
-st.set_page_config(page_title="3D Studio Quote", page_icon="🎨")
+st.set_page_config(page_title="3D Studio Quote Pro", page_icon="🎨")
 
-# --- 2. HEADER: TU LOGO Y EMPRESA ---
-col_header1, col_header2 = st.columns([1, 4])
-with col_header1:
-    st.image("https://cdn-icons-png.flaticon.com/512/1720/1720516.png", width=90)
-
-with col_header2:
-    # REEMPLAZA CON TU NOMBRE REAL
-    st.markdown("<h1 style='margin-bottom: 0;'>NOMBRE DE TU EMPRESA</h1>", unsafe_allow_html=True)
-    st.write("✨ *Arte en Resina ABS-Like & Pintura Profesional*")
-
-# --- 3. VALORES ADMINISTRABLES ---
+# --- 2. VALORES ADMINISTRABLES (Inicialización segura) ---
 if 'resina' not in st.session_state: st.session_state.resina = 0.03
 if 'blender' not in st.session_state: st.session_state.blender = 11.0
 if 'pintura' not in st.session_state: st.session_state.pintura = 8.5
@@ -30,10 +20,10 @@ with st.sidebar:
         st.session_state.pintura = st.number_input("Hora Pintura (€)", value=st.session_state.pintura)
         st.session_state.tasa = st.number_input("Tasa S/.", value=st.session_state.tasa)
 
-# --- 4. DICCIONARIO DE TRADUCCIONES (CORREGIDO) ---
+# --- 3. DICCIONARIO DE TRADUCCIONES (Completo para evitar KeyErrors) ---
 texts = {
     "Español": {
-        "title": "Empresa 3D",
+        "title": "EMPRESA 3D",
         "delivery": "🕒 Entrega: 3 semanas (Desde el depósito del 50%)",
         "wa_num": "51910034696",
         "p_name": "Tu Nombre", "char_name": "Personaje",
@@ -45,7 +35,7 @@ texts = {
         "savings_desc": "Comparado con precios de estudios de arte estándar."
     },
     "English": {
-        "title": "3D Studio",
+        "title": "3D STUDIO",
         "delivery": "🕒 Delivery: 1.5 weeks (After 50% deposit)",
         "wa_num": "3934567890",
         "p_name": "Your Name", "char_name": "Character",
@@ -57,14 +47,14 @@ texts = {
         "savings_desc": "Compared to standard art studio prices."
     },
     "Italiano": {
-        "title": "Studio 3D",
+        "title": "STUDIO 3D",
         "delivery": "🕒 Consegna: 1.5 settimane (Dal acconto del 50%)",
         "wa_num": "3934567890",
         "p_name": "Il tuo Nome", "char_name": "Personaggio",
         "design_label": "Modifica Digitale",
         "design_opts": ["Pronto da stampare (0€)", "Base (10€)", "Personalizzato (25€)", "Premium (60€)"],
         "wa_btn": "📲 Invia Ordine (WhatsApp Italia)",
-        "note": "⚠️ Il trabajo inicia después del acconto del 50%.",
+        "note": "⚠️ Il lavoro inizia dopo l'acconto del 50%.",
         "savings_title": "✨ Risparmio Tariffa Bottega",
         "savings_desc": "Rispetto ai prezzi standard degli studi d'arte."
     }
@@ -72,6 +62,15 @@ texts = {
 
 idioma = st.selectbox("🌐 Idioma / Language", ["Español", "English", "Italiano"])
 t = texts[idioma]
+
+# --- 4. HEADER: LOGO Y NOMBRE ---
+col_header1, col_header2 = st.columns([1, 4])
+with col_header1:
+    st.image("https://cdn-icons-png.flaticon.com/512/1720/1720516.png", width=90)
+with col_header2:
+    st.markdown(f"<h1 style='margin-bottom: 0;'>{t['title']}</h1>", unsafe_allow_html=True)
+    st.write("✨ *Arte en Resina ABS-Like & Pintura Profesional*")
+
 st.info(t["delivery"])
 st.divider()
 
@@ -79,8 +78,8 @@ st.divider()
 st.header("1️⃣ Datos del Proyecto")
 col1, col2 = st.columns(2)
 with col1:
-    nombre_c = st.text_input(t["p_name"])
-    nombre_p = st.text_input(t["char_name"])
+    nombre_c = st.text_input(t["p_name"], key="user_name")
+    nombre_p = st.text_input(t["char_name"], key="char_name")
 with col2:
     st.file_uploader("Subir referencia", type=['png', 'jpg', 'jpeg'])
 
@@ -108,7 +107,7 @@ with tab3:
     costo_d = {t["design_opts"][0]: 0.0, t["design_opts"][1]: 10.0, t["design_opts"][2]: 25.0, t["design_opts"][3]: 60.0}[tipo_d]
     horas_d = {t["design_opts"][0]: 0, t["design_opts"][1]: 1, t["design_opts"][2]: 3, t["design_opts"][3]: 8}[tipo_d]
 
-# --- 6. PRESUPUESTO Y AHORRO ---
+# --- 6. PRESUPUESTO Y AHORRO (El cuadro de abajo) ---
 st.header("3️⃣ Presupuesto Final")
 total_eur = costo_imp + costo_p + costo_d
 total_pen = total_eur * st.session_state.tasa
@@ -118,17 +117,23 @@ ahorro_p = horas_p * (18 - st.session_state.pintura)
 ahorro_d = horas_d * (30 - st.session_state.blender)
 total_ahorro = ahorro_p + ahorro_d
 
-c_res1, c_res2 = st.columns(2)
-with c_res1:
-    st.metric("PRECIO FINAL", f"€ {total_eur:.2f}", f"S/. {total_pen:.2f}")
+# Dibujamos el cuadro de resultados
+with st.container(border=True):
+    c_res1, c_res2 = st.columns(2)
+    with c_res1:
+        st.metric("PRECIO TOTAL", f"€ {total_eur:.2f}")
+        st.write(f"Conversión aprox: **S/. {total_pen:.2f}**")
+    
+    with c_res2:
+        if total_ahorro > 0:
+            st.success(f"{t['savings_title']}")
+            st.write(f"💰 Ahorras: **€ {total_ahorro:.2f}**")
+            st.caption(t["savings_desc"])
 
-with c_res2:
-    if total_ahorro > 0:
-        st.success(f"{t['savings_title']}\n\n**€ {total_ahorro:.2f}**")
-        st.caption(t["savings_desc"])
+# --- 7. BOTÓN WHATSAPP ---
+st.warning(t["note"])
 
-# --- 7. BOTÓN WHATSAPP (CORREGIDO) ---
-msg = (f"*COTIZACIÓN {t['title'].upper()}*\n"
+msg = (f"*SOLICITUD DE COTIZACIÓN*\n"
        f"----------------------\n"
        f"👤 Cliente: {nombre_c}\n"
        f"👾 Figura: {nombre_p}\n"
@@ -140,7 +145,8 @@ msg = (f"*COTIZACIÓN {t['title'].upper()}*\n"
        f"🕒 {t['delivery']}")
 
 wa_link = f"https://wa.me/{t['wa_num']}?text={urllib.parse.quote(msg)}"
-st.warning(t["note"])
 
 if nombre_c and nombre_p:
     st.link_button(t["wa_btn"], wa_link, use_container_width=True, type="primary")
+else:
+    st.info("⚠️ Completa tu nombre y el del personaje en el Paso 1 para activar el envío.")
