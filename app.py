@@ -168,4 +168,19 @@ else:
     st.info("⚠️ Info: " + t["p_name_label"] + " & " + t["char_name_label"])
 
 st.divider()
+
+# --- 8. NUEVA SECCIÓN: REDES SOCIALES ---
+st.markdown(f"#### {t['social_title']}")
+col_social = st.columns(4)
+
+with col_social[0]:
+    st.link_button("📸 Instagram", "https://instagram.com/TU_USUARIO", use_container_width=True)
+with col_social[1]:
+    st.link_button("🎬 TikTok", "https://tiktok.com/@TU_USUARIO", use_container_width=True)
+with col_social[2]:
+    st.link_button("📺 YouTube", "https://youtube.com/@TU_USUARIO", use_container_width=True)
+with col_social[3]:
+    st.link_button("👤 Facebook", "https://facebook.com/TU_PAGINA", use_container_width=True)
+
+st.write("")
 st.markdown(f"<p style='text-align: center; color: gray;'>{t['quality_tag']}</p>", unsafe_allow_html=True)
