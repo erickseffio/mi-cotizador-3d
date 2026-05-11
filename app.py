@@ -8,7 +8,7 @@ st.set_page_config(page_title="3D Studio Quote", page_icon="🎨")
 # Definimos los valores estándar que usabas antes
 if 'resina' not in st.session_state: st.session_state.resina = 0.03
 if 'blender' not in st.session_state: st.session_state.blender = 11.0
-if 'pintura' not in st.session_state: st.session_state.pintura = 8.5
+if 'pintura' not in st.session_state: st.session_state.pintura = 10.0
 if 'tasa' not in st.session_state: st.session_state.tasa = 4.10
 
 with st.sidebar:
