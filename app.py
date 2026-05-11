@@ -40,14 +40,14 @@ texts = {
         "wa_header": "*NUEVO PEDIDO DETALLADO*",
         "thanks": "✅ **¡Gracias por tu solicitud!** Al abrir WhatsApp, **no olvides adjuntar tu imagen de referencia**.",
         "social_title": "📱 ¡Síguenos en nuestras redes!",
-        "social_proof": "⭐ **Más de 100 proyectos entregados con éxito en todo el mundo.**",
+        "social_proof": "Envíos seguros a todo el Perú y el extranjero 📦",
         "warning_input": "⚠️ **Atención:** Debes ingresar tu **Nombre** y el **Personaje** arriba para activar el botón de WhatsApp.",
         "quality_tag": "⭐ Calidad Garantizada | Envío Seguro | Resina ABS-Like"
     },
     "English": {
         "title": "Maker3DPeru-Italia",
         "slogan": "✨ Hyper-realism in Resin: From the digital file to your display case.",
-        "delivery": "🕒 Delivery: 1.5 weeks (After 50% deposit)",
+        "delivery": "🕒 Delivery: 3 weeks (After 50% deposit)",
         "wa_num": "393924043068",
         "p_name_label": "Your Name", "char_name_label": "Character", "ref_label": "Upload Reference",
         "step1": "1️⃣ Project Details", "step2": "2️⃣ Artistic Configuration", "step3": "3️⃣ Final Budget",
@@ -62,7 +62,7 @@ texts = {
         "wa_header": "*NEW DETAILED ORDER*",
         "thanks": "✅ **Thank you!** When WhatsApp opens, **please attach your reference image**.",
         "social_title": "📱 Follow us!",
-        "social_proof": "⭐ **Over 100 projects successfully delivered worldwide.**",
+        "social_proof": "Secure shipping throughout Peru and abroad 📦",
         "warning_input": "⚠️ **Attention:** Please enter your **Name** and **Character** above to enable the WhatsApp button.",
         "quality_tag": "⭐ Guaranteed Quality | Secure Shipping | ABS-Like Resin"
     },
@@ -84,7 +84,7 @@ texts = {
         "wa_header": "*NUOVO ORDINE DETTAGLIATO*",
         "thanks": "✅ **Grazie!** Quando si apre WhatsApp, **non dimenticare di allegare l'immagine**.",
         "social_title": "📱 Seguici sui social!",
-        "social_proof": "⭐ **Oltre 100 progetti consegnati con successo in tutto il mondo.**",
+        "social_proof": "Spedizione sicura in tutto il Perù e all'estero 📦",
         "warning_input": "⚠️ **Attenzione:** Inserisci il tuo **Nome** e il **Personaggio** sopra per attivare il pulsante WhatsApp.",
         "quality_tag": "⭐ Qualità Garantita | Spedizione Sicura | Resina ABS-Like"
     }
