@@ -214,4 +214,5 @@ with col_social[2]: st.link_button("📺 YouTube", "https://www.youtube.com/@Mak
 with col_social[3]: st.link_button("👤 Facebook", "https://www.facebook.com/Maker.3d.Peru", use_container_width=True)
 
 st.write("")
+st.caption("⚠️ Si los botones no abren, dale a los tres puntos (⋮) y selecciona 'Abrir en navegador'.")
 st.markdown(f"<p style='text-align: center; color: #888888; font-size: 0.8rem;'>❤️ Diseñado por Maker 3D Perú | Envíos nacionales e internacionales</p>", unsafe_allow_html=True)
