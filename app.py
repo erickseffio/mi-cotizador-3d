@@ -1,142 +1,138 @@
 import streamlit as st
+import urllib.parse
 
-# Configuración de la página
-st.set_page_config(
-    page_title="Cotizador 3D - Oferta Lanzamiento", 
-    page_icon="🎨", 
-    initial_sidebar_state="collapsed" # Esto la mantiene cerrada al inicio
-)
+# 1. Configuración de la página
+st.set_page_config(page_title="3D Quote Pro", page_icon="🎨", initial_sidebar_state="collapsed")
 
-st.title("🚀 Cotizador 3D: ¡Promoción de Apertura!")
-st.info("🎁 Calidad premium a precio de taller. ¡Aprovecha nuestros descuentos de inauguración!")
+# --- 2. DICCIONARIO DE TRADUCCIONES ---
+texts = {
+    "Español": {
+        "title": "🚀 Cotizador 3D: ¡Promoción!",
+        "info": "🎁 Calidad premium a precio de taller.",
+        "admin_label": "🔐 Panel Admin",
+        "project_data": "📝 Datos del Proyecto",
+        "your_name": "Tu Nombre",
+        "char_name": "Personaje",
+        "upload_img": "Sube una imagen",
+        "tabs": ["💧 Impresión", "🖌️ Pintura", "🧊 Blender"],
+        "height": "Altura (cm)",
+        "complexity": "Complejidad",
+        "include_paint": "¿Incluir pintura?",
+        "level": "Nivel",
+        "include_design": "¿Ajustes de diseño?",
+        "total": "PRECIO FINAL",
+        "savings": "¡Ahorras!",
+        "send_wa": "📲 Enviar por WhatsApp",
+        "wa_msg": "¡Hola! Soy {name}. He cotizado a {char}. Total: {price}. ¿Cómo procedemos?"
+    },
+    "English": {
+        "title": "🚀 3D Configurator: Promo!",
+        "info": "🎁 Premium quality at workshop prices.",
+        "admin_label": "🔐 Admin Panel",
+        "project_data": "📝 Project Details",
+        "your_name": "Your Name",
+        "char_name": "Character Name",
+        "upload_img": "Upload a reference image",
+        "tabs": ["💧 Printing", "🖌️ Painting", "🧊 Blender"],
+        "height": "Height (cm)",
+        "complexity": "Complexity",
+        "include_paint": "Include painting?",
+        "level": "Level",
+        "include_design": "Design adjustments?",
+        "total": "FINAL PRICE",
+        "savings": "You save!",
+        "send_wa": "📲 Send via WhatsApp",
+        "wa_msg": "Hi! I'm {name}. I quoted {char}. Total: {price}. How do we proceed?"
+    },
+    "Italiano": {
+        "title": "🚀 Preventivo 3D: Promo!",
+        "info": "🎁 Qualità premium a prezzi di bottega.",
+        "admin_label": "🔐 Pannello Admin",
+        "project_data": "📝 Dettagli del Progetto",
+        "your_name": "Il tuo Nome",
+        "char_name": "Nome del Personaggio",
+        "upload_img": "Carica un'immagine",
+        "tabs": ["💧 Stampa 3D", "🖌️ Pittura", "🧊 Blender"],
+        "height": "Altezza (cm)",
+        "complexity": "Complessità",
+        "include_paint": "Includere pittura?",
+        "level": "Livello",
+        "include_design": "Modifiche di design?",
+        "total": "PREZZO FINALE",
+        "savings": "Risparmi!",
+        "send_wa": "📲 Invia su WhatsApp",
+        "wa_msg": "Ciao! Sono {name}. Ho fatto un preventivo per {char}. Totale: {price}. Come procediamo?"
+    }
+}
 
-# --- SECCIÓN: PARÁMETROS DE COSTOS ---
-MERCADO_BLENDER = 20.0
-MERCADO_PINTURA = 15.0
+# --- 3. SELECTOR DE IDIOMA ---
+idioma = st.selectbox("🌐 Language / Idioma / Lingua", ["Español", "English", "Italiano"])
+t = texts[idioma]
 
-PRECIO_RESINA_ML = 0.03  
-PRECIO_HORA_BLENDER = 11.0 
-PRECIO_HORA_PINTURA = 8.5
-TASA_CAMBIO_SOLS = 4.10 
+st.title(t["title"])
+st.info(t["info"])
+
+# --- 4. VALORES INTERNOS (COSTOS) ---
+PRECIO_RESINA_ML, PRECIO_HORA_BLENDER, PRECIO_HORA_PINTURA, TASA_CAMBIO_SOLS = 0.03, 11.0, 8.5, 4.10
 
 with st.sidebar:
-    st.header("🔐 Acceso Administrador")
-    password = st.text_input("Introduce la clave para editar precios", type="password")
-    
-    if password == "02110510": # <--- Cambia esto por la contraseña que quieras
-        st.success("Acceso concedido")
-        st.header("⚙️ Configuración Interna")
-        resina_base = st.number_input("Precio Resina por ml (€)", value=PRECIO_RESINA_ML, format="%.3f")
-        hora_blender = st.number_input("Tu precio Blender (€/h)", value=PRECIO_HORA_BLENDER)
-        hora_pintura = st.number_input("Tu precio Pintura (€/h)", value=PRECIO_HORA_PINTURA)
-        tasa_soles = st.number_input("Tasa de cambio (1€ a S/.)", value=TASA_CAMBIO_SOLS)
+    st.header(t["admin_label"])
+    clave = st.text_input("Password", type="password")
+    if clave == "admin123":
+        resina_base = st.number_input("Resina ml (€)", value=PRECIO_RESINA_ML, format="%.3f")
+        hora_blender = st.number_input("Blender (€/h)", value=PRECIO_HORA_BLENDER)
+        hora_pintura = st.number_input("Pintura (€/h)", value=PRECIO_HORA_PINTURA)
+        tasa_soles = st.number_input("Tasa S/.", value=TASA_CAMBIO_SOLS)
     else:
-        # Lo que ve el cliente si intenta abrir la barra
-        st.warning("Área restringida")
-        st.write("Esta sección es solo para personal del taller.")
-        # Valores por defecto para que la app funcione aunque no se vea el panel
-        resina_base = PRECIO_RESINA_ML
-        hora_blender = PRECIO_HORA_BLENDER
-        hora_pintura = PRECIO_HORA_PINTURA
-        tasa_soles = TASA_CAMBIO_SOLS
+        resina_base, hora_blender, hora_pintura, tasa_soles = PRECIO_RESINA_ML, PRECIO_HORA_BLENDER, PRECIO_HORA_PINTURA, TASA_CAMBIO_SOLS
 
-# --- INTERFAZ DE USUARIO ---
-tab1, tab2, tab3 = st.tabs(["💧 Impresión 3D (ABS)", "🖌️ Pintura Artística", "🧊 Diseño/Blender"])
+# --- 5. IDENTIFICACIÓN ---
+st.subheader(t["project_data"])
+c_n1, c_n2 = st.columns(2)
+with c_n1:
+    nombre_cliente = st.text_input(t["your_name"])
+    nombre_personaje = st.text_input(t["char_name"])
+with c_n2:
+    img = st.file_uploader(t["upload_img"], type=['png', 'jpg', 'jpeg'])
+
+# --- 6. CALCULOS ---
+tab1, tab2, tab3 = st.tabs(t["tabs"])
 
 with tab1:
-    st.header("Detalles de Impresión")
-    st.write("*(Deja en 0 si solo deseas diseño o pintura)*")
-    # CAMBIO AQUÍ: Ahora el mínimo es 0.0
-    altura = st.number_input("Altura de la figura (cm)", min_value=0.0, value=10.0, step=1.0)
-    cantidad = st.number_input("Cantidad de copias", min_value=1, value=1)
-    
-    if altura > 0:
-        volumen_estimado = (altura ** 2.2) * 0.15
-        st.caption(f"📦 Volumen estimado: ~{volumen_estimado:.1f} ml (Resina ABS-Like)")
-        dificultad_imp = st.select_slider("Complejidad de la pieza", options=["Baja", "Media", "Alta"])
-        extra_limpieza = {"Baja": 1.5, "Media": 3.0, "Alta": 6.0}
-        costo_impresion_eur = (volumen_estimado * resina_base * cantidad) + extra_limpieza[dificultad_imp]
-    else:
-        costo_impresion_eur = 0.0
-        st.write("⚠️ No se ha incluido servicio de impresión.")
+    altura = st.number_input(t["height"], min_value=0.0, value=10.0)
+    vol = (altura ** 2.2) * 0.15 if altura > 0 else 0
+    dif = st.select_slider(t["complexity"], options=["Baja", "Media", "Alta"])
+    costo_imp = (vol * resina_base) + {"Baja": 1.5, "Media": 3.0, "Alta": 6.0}[dif] if altura > 0 else 0
 
 with tab2:
-    st.header("Servicio de Pintura")
-    quiere_pintura = st.checkbox("¿Deseas incluir pintura?")
+    quiere_p = st.checkbox(t["include_paint"])
     horas_p = 0.0
-    ahorro_pintura = 0.0
-    if quiere_pintura:
-        nivel_p = st.select_slider("Nivel de acabado", options=["Básico", "Avanzado", "Pro/Museo"], key="pintura")
-        # Si la altura es 0, usamos una base de 5cm para el cálculo o permitimos manual
-        h_referencia = altura if altura > 0 else 5.0
-        base_h = (h_referencia / 5)
-        mult_nivel_p = {"Básico": 1, "Avanzado": 2.5, "Pro/Museo": 5}
-        sugerencia_p = base_h * mult_nivel_p[nivel_p]
-        horas_p = st.number_input(f"Horas estimadas de pintura", min_value=0.0, value=round(sugerencia_p, 1), step=0.5)
-        costo_pintura_eur = horas_p * hora_pintura
-        ahorro_pintura = horas_p * (MERCADO_PINTURA - PRECIO_HORA_PINTURA)
-    else:
-        costo_pintura_eur = 0.0
+    if quiere_p:
+        nv_p = st.select_slider(t["level"], options=["Básico", "Avanzado", "Pro"], key="p")
+        horas_p = st.number_input("Hours", value=round((altura/5)*{"Básico": 1, "Avanzado": 2.5, "Pro": 5}[nv_p], 1))
+    costo_p = horas_p * hora_pintura
 
 with tab3:
-    st.header("Diseño en Blender")
-    quiere_diseno = st.checkbox("¿Necesitas ajustes de diseño?")
+    quiere_b = st.checkbox(t["include_design"])
     horas_b = 0.0
-    ahorro_blender = 0.0
-    tipo_diseno = "N/A"
-    if quiere_diseno:
-        tipo_diseno = st.selectbox("¿Qué necesitas hacer?", 
-                                 ["Ajuste Simple (Escalar, reparar archivo, unir piezas)", 
-                                  "Modificación Media (Añadir base, cortar para impresión, textos)", 
-                                  "Diseño Complejo (Modelado desde cero, esculpido orgánico)"])
-        
-        mapa_horas = {
-            "Ajuste Simple (Escalar, reparar archivo, unir piezas)": 1.0,
-            "Modificación Media (Añadir base, cortar para impresión, textos)": 3.0,
-            "Diseño Complejo (Modelado desde cero, esculpido orgánico)": 8.0
-        }
-        
-        horas_b = st.number_input("Horas de diseño", min_value=0.0, value=mapa_horas[tipo_diseno], step=0.5)
-        costo_diseno_eur = horas_b * hora_blender
-        ahorro_blender = horas_b * (MERCADO_BLENDER - PRECIO_HORA_BLENDER)
-    else:
-        costo_diseno_eur = 0.0
+    if quiere_b:
+        tipo_b = st.selectbox("Type", ["Simple", "Medio", "Complex"])
+        horas_b = st.number_input("Design Hours", value={"Simple": 1.0, "Medio": 3.0, "Complex": 8.0}[tipo_b])
+    costo_b = horas_b * hora_blender
 
-# --- TOTALES Y AHORRO ---
-st.divider()
-total_eur = costo_impresion_eur + costo_pintura_eur + costo_diseno_eur
+# --- 7. TOTALES Y WHATSAPP ---
+total_eur = costo_imp + costo_p + costo_b
 total_pen = total_eur * tasa_soles
-ahorro_total_eur = ahorro_pintura + ahorro_blender
+ahorro = (horas_p * (15 - hora_pintura)) + (horas_b * (20 - hora_blender))
 
-col1, col2 = st.columns(2)
-col1.metric("PRECIO FINAL", f"€ {total_eur:,.2f}", delta=f"S/. {total_pen:,.2f}", delta_color="normal")
+st.divider()
+c1, c2 = st.columns(2)
+c1.metric(t["total"], f"S/. {total_pen:,.2f}", f"€ {total_eur:,.2f}")
+if ahorro > 0: c2.success(f"✨ {t['savings']} € {ahorro:,.2f}")
 
-if ahorro_total_eur > 0:
-    col2.success(f"✨ ¡Ahorras € {ahorro_total_eur:,.2f}!")
+# DINÁMICA DE WHATSAPP POR IDIOMA
+msg = t["wa_msg"].format(name=nombre_cliente, char=nombre_personaje, price=f"S/. {total_pen:.2f}")
+wa_link = f"https://wa.me/51999888777?text={urllib.parse.quote(msg)}"
 
-# --- EL CUADRO DESGLOSADO ---
-st.subheader("📊 Desglose del Servicio")
-datos_tabla = [
-    {"Servicio": "Impresión 3D (ABS)", "Euros (€)": f"{costo_impresion_eur:,.2f}", "Soles (S/.)": f"{costo_impresion_eur * tasa_soles:,.2f}"},
-    {"Servicio": "Pintura Artística", "Euros (€)": f"{costo_pintura_eur:,.2f}", "Soles (S/.)": f"{costo_pintura_eur * tasa_soles:,.2f}"},
-    {"Servicio": "Diseño en Blender", "Euros (€)": f"{costo_diseno_eur:,.2f}", "Soles (S/.)": f"{costo_diseno_eur * tasa_soles:,.2f}"},
-]
-st.table(datos_tabla)
-
-# --- RESUMEN WHATSAPP DINÁMICO ---
-if st.button("Generar Resumen para WhatsApp"):
-    if altura == 0 and costo_diseno_eur > 0:
-        titulo = "🖥️ *COTIZACIÓN DE DISEÑO DIGITAL*"
-        detalle = f"✅ Servicio: {tipo_diseno}\\n⏳ Tiempo estimado: {horas_b}h"
-    else:
-        titulo = "🔥 *COTIZACIÓN ESPECIAL LANZAMIENTO*"
-        detalle = f"📏 Tamaño: {altura}cm\\n📦 Servicio de Impresión incluido"
-
-    texto = (f"{titulo}\\n"
-             f"------------------------------------\\n"
-             f"{detalle}\\n"
-             f"💰 Precio: € {total_eur:.2f} / S/. {total_pen:.2f}\\n"
-             f"✨ Tu ahorro: € {ahorro_total_eur:.2f}\\n"
-             f"------------------------------------\\n"
-             f"¿Cómo podemos proceder?")
-    st.code(texto)
+if st.link_button(t["send_wa"], wa_link):
+    st.balloons()
