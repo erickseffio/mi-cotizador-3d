@@ -20,11 +20,25 @@ PRECIO_HORA_PINTURA = 8.5
 TASA_CAMBIO_SOLS = 4.10 
 
 with st.sidebar:
-    st.header("⚙️ Configuración Interna")
-    resina_base = st.number_input("Precio Resina por ml (€)", value=PRECIO_RESINA_ML, format="%.3f")
-    hora_blender = st.number_input("Tu precio Blender (€/h)", value=PRECIO_HORA_BLENDER)
-    hora_pintura = st.number_input("Tu precio Pintura (€/h)", value=PRECIO_HORA_PINTURA)
-    tasa_soles = st.number_input("Tasa de cambio (1€ a S/.)", value=TASA_CAMBIO_SOLS)
+    st.header("🔐 Acceso Administrador")
+    password = st.text_input("Introduce la clave para editar precios", type="password")
+    
+    if password == "tuclave123": # <--- Cambia esto por la contraseña que quieras
+        st.success("Acceso concedido")
+        st.header("⚙️ Configuración Interna")
+        resina_base = st.number_input("Precio Resina por ml (€)", value=PRECIO_RESINA_ML, format="%.3f")
+        hora_blender = st.number_input("Tu precio Blender (€/h)", value=PRECIO_HORA_BLENDER)
+        hora_pintura = st.number_input("Tu precio Pintura (€/h)", value=PRECIO_HORA_PINTURA)
+        tasa_soles = st.number_input("Tasa de cambio (1€ a S/.)", value=TASA_CAMBIO_SOLS)
+    else:
+        # Lo que ve el cliente si intenta abrir la barra
+        st.warning("Área restringida")
+        st.write("Esta sección es solo para personal del taller.")
+        # Valores por defecto para que la app funcione aunque no se vea el panel
+        resina_base = PRECIO_RESINA_ML
+        hora_blender = PRECIO_HORA_BLENDER
+        hora_pintura = PRECIO_HORA_PINTURA
+        tasa_soles = TASA_CAMBIO_SOLS
 
 # --- INTERFAZ DE USUARIO ---
 tab1, tab2, tab3 = st.tabs(["💧 Impresión 3D (ABS)", "🖌️ Pintura Artística", "🧊 Diseño/Blender"])
