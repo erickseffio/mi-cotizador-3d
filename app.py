@@ -200,8 +200,8 @@ else:
     
     wa_link = f"https://wa.me/{t['wa_num']}?text={urllib.parse.quote(msg)}"
     
-st.link_button(t["wa_btn"], wa_link, use_container_width=True, type="primary")
-st.success(t["thanks"])
+    st.link_button(t["wa_btn"], wa_link, use_container_width=True, type="primary")
+    st.success(t["thanks"])
 
 st.divider()
 
