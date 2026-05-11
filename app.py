@@ -23,7 +23,7 @@ with st.sidebar:
     st.header("🔐 Acceso Administrador")
     password = st.text_input("Introduce la clave para editar precios", type="password")
     
-    if password == "tuclave123": # <--- Cambia esto por la contraseña que quieras
+    if password == "02110510": # <--- Cambia esto por la contraseña que quieras
         st.success("Acceso concedido")
         st.header("⚙️ Configuración Interna")
         resina_base = st.number_input("Precio Resina por ml (€)", value=PRECIO_RESINA_ML, format="%.3f")
