@@ -13,7 +13,7 @@ if 'tasa' not in st.session_state: st.session_state.tasa = 4.10
 with st.sidebar:
     st.header("🔐 Panel de Control")
     clave = st.text_input("Contraseña Admin", type="password")
-    if clave == "admin123":
+    if clave == "02110510":
         st.success("Acceso Autorizado")
         st.session_state.resina = st.number_input("Resina ml (€)", value=st.session_state.resina, format="%.3f")
         st.session_state.blender = st.number_input("Hora Diseño (€)", value=st.session_state.blender)
@@ -99,7 +99,7 @@ t = texts[idioma]
 # --- 4. HEADER ---
 col_header1, col_header2 = st.columns([1, 4])
 with col_header1:
-    st.image("Logo.jpg", width=90)
+    st.image("Logo.jpg", width=120)
 with col_header2:
     st.markdown(f"<h1 style='margin-bottom: 0;'>{t['title']}</h1>", unsafe_allow_html=True)
     st.write(f"{t['slogan']}")
