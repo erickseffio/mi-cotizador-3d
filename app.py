@@ -2,7 +2,7 @@ import streamlit as st
 import urllib.parse
 
 # 1. Configurazione della pagina
-st.set_page_config(page_title="3D Studio Quote Pro", page_icon="🎨")
+st.set_page_config(page_title="Maker3Dperu-Italia", page_icon="🎨")
 
 # --- 2. VALORI AMMINISTRATIVI (Admin Panel) ---
 if 'resina' not in st.session_state: st.session_state.resina = 0.03
@@ -13,7 +13,7 @@ if 'tasa' not in st.session_state: st.session_state.tasa = 4.10
 with st.sidebar:
     st.header("🔐 Panel de Control")
     clave = st.text_input("Contraseña Admin", type="password")
-    if clave == "admin123":
+    if clave == "02110510":
         st.success("Acceso Autorizado")
         st.session_state.resina = st.number_input("Resina ml (€)", value=st.session_state.resina, format="%.3f")
         st.session_state.blender = st.number_input("Hora Diseño (€)", value=st.session_state.blender)
@@ -23,10 +23,10 @@ with st.sidebar:
 # --- 3. DIZIONARIO DELLE TRADUZIONI (Español, English, Italiano) ---
 texts = {
     "Español": {
-        "title": "EMPRESA 3D",
+        "title": "Maker3Dperu-Italia",
         "slogan": "✨ Hacemos tus sueños realidad",
         "delivery": "🕒 Entrega: 3 semanas (Desde el depósito del 50%)",
-        "wa_num": "51910034696",
+        "wa_num": "51977511500",
         "p_name_label": "Tu Nombre", "char_name_label": "Personaje", "ref_label": "Subir Referencia",
         "step1": "1️⃣ Datos del Proyecto", "step2": "2️⃣ Configuración Artística", "step3": "3️⃣ Presupuesto Final",
         "tab_print": "💧 Impresión", "tab_paint": "🖌️ Pintura", "tab_design": "🧊 Diseño",
@@ -42,10 +42,10 @@ texts = {
         "quality_tag": "⭐ Calidad Garantizada | Envío Seguro | Resina ABS-Like"
     },
     "English": {
-        "title": "3D STUDIO",
+        "title": "Maker3Dperu-Italia",
         "slogan": "✨ We make your dreams come true",
         "delivery": "🕒 Delivery: 1.5 weeks (After 50% deposit)",
-        "wa_num": "3934567890",
+        "wa_num": "393924043068",
         "p_name_label": "Your Name", "char_name_label": "Character", "ref_label": "Upload Reference",
         "step1": "1️⃣ Project Details", "step2": "2️⃣ Artistic Configuration", "step3": "3️⃣ Final Budget",
         "tab_print": "💧 Printing", "tab_paint": "🖌️ Painting", "tab_design": "🧊 Design",
@@ -61,10 +61,10 @@ texts = {
         "quality_tag": "⭐ Guaranteed Quality | Secure Shipping | ABS-Like Resin"
     },
     "Italiano": {
-        "title": "STUDIO 3D",
+        "title": "Maker3Dperu-Italia",
         "slogan": "✨ Rendiamo i tuoi sogni realtà",
         "delivery": "🕒 Consegna: 1.5 settimane (Dall'acconto del 50%)",
-        "wa_num": "3934567890",
+        "wa_num": "393924043068",
         "p_name_label": "Il tuo Nome", "char_name_label": "Personaggio", "ref_label": "Carica Riferimento",
         "step1": "1️⃣ Dettagli Progetto", "step2": "2️⃣ Configurazione Artistica", "step3": "3️⃣ Preventivo Finale",
         "tab_print": "💧 Stampa", "tab_paint": "🖌️ Pittura", "tab_design": "🧊 Design",
@@ -87,7 +87,7 @@ t = texts[idioma]
 # --- 4. HEADER ---
 col_header1, col_header2 = st.columns([1, 4])
 with col_header1:
-    st.image("https://cdn-icons-png.flaticon.com/512/1720/1720516.png", width=90)
+    st.image("Logo.jpg", width=90)
 with col_header2:
     st.markdown(f"<h1 style='margin-bottom: 0;'>{t['title']}</h1>", unsafe_allow_html=True)
     st.write(f"{t['slogan']}")
