@@ -187,8 +187,11 @@ with st.container(border=True):
             st.caption(f"Ref: S/. {total_pen:.2f}")
     with col_res2:
         ahorro_est = (total_eur * 0.25) 
-        st.success(f"{t['savings_title']}")
-        st.write(f"€ {ahorro_est:.2f} / S/. {ahorro_est * st.session_state.tasa:.2f}")
+        if idioma == "Español (Perú)":
+            st.success(f"{t['savings_title']} **¡Ahorraste S/. {ahorro_pen:.2f}!**")
+        else:
+            st.success(f"{t['savings_title']} **Ahorro: € {ahorro_est:.2f}**")
+            st.caption(f"Ref: S/. {ahorro_pen:.2f}")
 
 # --- 7. CIERRE Y WHATSAPP (Lógica Corregida) ---
 st.warning(t["note"])
