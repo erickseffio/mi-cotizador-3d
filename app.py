@@ -2,7 +2,7 @@ import streamlit as st
 import urllib.parse
 
 # 1. Configuración de la página
-st.set_page_config(page_title="3D Studio Quote Pro", page_icon="🎨")
+st.set_page_config(page_title="Maker3DPeru-Italia", page_icon="Logo.jpg")
 
 # --- 2. VALORES ADMINISTRABLES ---
 if 'resina' not in st.session_state: st.session_state.resina = 0.03
@@ -23,10 +23,10 @@ with st.sidebar:
 # --- 3. DICCIONARIO DE TRADUCCIONES ---
 texts = {
     "Español": {
-        "title": "EMPRESA 3D",
+        "title": "Maker3DPeru-Italia",
         "slogan": "✨ Hacemos tus sueños realidad",
         "delivery": "🕒 Entrega: 3 semanas (Desde el depósito del 50%)",
-        "wa_num": "51910034696",
+        "wa_num": "51977511500",
         "p_name_label": "Tu Nombre", "char_name_label": "Personaje", "ref_label": "Subir Referencia",
         "step1": "1️⃣ Datos del Proyecto", "step2": "2️⃣ Configuración Artística", "step3": "3️⃣ Presupuesto Final",
         "tab_print": "💧 Impresión", "tab_paint": "🖌️ Pintura", "tab_design": "🧊 Diseño",
@@ -44,10 +44,10 @@ texts = {
         "quality_tag": "⭐ Calidad Garantizada | Envío Seguro | Resina ABS-Like"
     },
     "English": {
-        "title": "3D STUDIO",
+        "title": "Maker3DPeru-Italia",
         "slogan": "✨ We make your dreams come true",
         "delivery": "🕒 Delivery: 1.5 weeks (After 50% deposit)",
-        "wa_num": "3934567890",
+        "wa_num": "393924043068",
         "p_name_label": "Your Name", "char_name_label": "Character", "ref_label": "Upload Reference",
         "step1": "1️⃣ Project Details", "step2": "2️⃣ Artistic Configuration", "step3": "3️⃣ Final Budget",
         "tab_print": "💧 Printing", "tab_paint": "🖌️ Painting", "tab_design": "🧊 Design",
@@ -65,10 +65,10 @@ texts = {
         "quality_tag": "⭐ Guaranteed Quality | Secure Shipping | ABS-Like Resin"
     },
     "Italiano": {
-        "title": "STUDIO 3D",
+        "title": "Maker3DPeru-Italia",
         "slogan": "✨ Rendiamo i tuoi sogni realtà",
         "delivery": "🕒 Consegna: 1.5 settimane (Dall'acconto del 50%)",
-        "wa_num": "3934567890",
+        "wa_num": "393924043068",
         "p_name_label": "Il tuo Nome", "char_name_label": "Personaggio", "ref_label": "Carica Riferimento",
         "step1": "1️⃣ Dettagli Progetto", "step2": "2️⃣ Configurazione Artistica", "step3": "3️⃣ Preventivo Finale",
         "tab_print": "💧 Stampa", "tab_paint": "🖌️ Pittura", "tab_design": "🧊 Design",
@@ -93,7 +93,7 @@ t = texts[idioma]
 # --- 4. HEADER ---
 col_header1, col_header2 = st.columns([1, 4])
 with col_header1:
-    st.image("https://cdn-icons-png.flaticon.com/512/1720/1720516.png", width=90)
+    st.image("Logo.jpg", width=90)
 with col_header2:
     st.markdown(f"<h1 style='margin-bottom: 0;'>{t['title']}</h1>", unsafe_allow_html=True)
     st.write(f"{t['slogan']}")
@@ -175,10 +175,10 @@ st.divider()
 # --- 8. REDES SOCIALES ---
 st.markdown(f"#### {t['social_title']}")
 col_social = st.columns(4)
-with col_social[0]: st.link_button("📸 Instagram", "https://instagram.com/TU_USUARIO", use_container_width=True)
-with col_social[1]: st.link_button("🎬 TikTok", "https://tiktok.com/@TU_USUARIO", use_container_width=True)
-with col_social[2]: st.link_button("📺 YouTube", "https://youtube.com/@TU_USUARIO", use_container_width=True)
-with col_social[3]: st.link_button("👤 Facebook", "https://facebook.com/TU_PAGINA", use_container_width=True)
+with col_social[0]: st.link_button("📸 Instagram", "https://www.instagram.com/maker_3d_peru_it", use_container_width=True)
+with col_social[1]: st.link_button("🎬 TikTok", "https://www.tiktok.com/@maker3dperu.it", use_container_width=True)
+with col_social[2]: st.link_button("📺 YouTube", "https://www.youtube.com/@Maker3dPeru.italia", use_container_width=True)
+with col_social[3]: st.link_button("👤 Facebook", "https://www.facebook.com/Maker.3d.Peru", use_container_width=True)
 
 st.write("")
 st.markdown(f"<p style='text-align: center; color: gray;'>{t['quality_tag']}</p>", unsafe_allow_html=True)
