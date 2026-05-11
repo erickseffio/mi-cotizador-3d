@@ -7,7 +7,6 @@ st.set_page_config(page_title="3D Studio Quote", page_icon="🎨")
 # --- 2. HEADER: TU LOGO Y EMPRESA ---
 col_header1, col_header2 = st.columns([1, 4])
 with col_header1:
-    # REEMPLAZA "logo.png" por tu archivo real en GitHub
     st.image("https://cdn-icons-png.flaticon.com/512/1720/1720516.png", width=90)
 
 with col_header2:
@@ -31,9 +30,10 @@ with st.sidebar:
         st.session_state.pintura = st.number_input("Hora Pintura (€)", value=st.session_state.pintura)
         st.session_state.tasa = st.number_input("Tasa S/.", value=st.session_state.tasa)
 
-# --- 4. DICCIONARIO DE TRADUCCIONES ---
+# --- 4. DICCIONARIO DE TRADUCCIONES (CORREGIDO) ---
 texts = {
     "Español": {
+        "title": "Empresa 3D",
         "delivery": "🕒 Entrega: 3 semanas (Desde el depósito del 50%)",
         "wa_num": "51910034696",
         "p_name": "Tu Nombre", "char_name": "Personaje",
@@ -45,6 +45,7 @@ texts = {
         "savings_desc": "Comparado con precios de estudios de arte estándar."
     },
     "English": {
+        "title": "3D Studio",
         "delivery": "🕒 Delivery: 1.5 weeks (After 50% deposit)",
         "wa_num": "3934567890",
         "p_name": "Your Name", "char_name": "Character",
@@ -56,13 +57,14 @@ texts = {
         "savings_desc": "Compared to standard art studio prices."
     },
     "Italiano": {
+        "title": "Studio 3D",
         "delivery": "🕒 Consegna: 1.5 settimane (Dal acconto del 50%)",
         "wa_num": "3934567890",
         "p_name": "Il tuo Nome", "char_name": "Personaggio",
         "design_label": "Modifica Digitale",
         "design_opts": ["Pronto da stampare (0€)", "Base (10€)", "Personalizzato (25€)", "Premium (60€)"],
         "wa_btn": "📲 Invia Ordine (WhatsApp Italia)",
-        "note": "⚠️ Il lavoro inizia dopo l'acconto del 50%.",
+        "note": "⚠️ Il trabajo inicia después del acconto del 50%.",
         "savings_title": "✨ Risparmio Tariffa Bottega",
         "savings_desc": "Rispetto ai prezzi standard degli studi d'arte."
     }
@@ -106,12 +108,12 @@ with tab3:
     costo_d = {t["design_opts"][0]: 0.0, t["design_opts"][1]: 10.0, t["design_opts"][2]: 25.0, t["design_opts"][3]: 60.0}[tipo_d]
     horas_d = {t["design_opts"][0]: 0, t["design_opts"][1]: 1, t["design_opts"][2]: 3, t["design_opts"][3]: 8}[tipo_d]
 
-# --- 6. PRESUPUESTO Y AHORRO DETALLADO ---
+# --- 6. PRESUPUESTO Y AHORRO ---
 st.header("3️⃣ Presupuesto Final")
 total_eur = costo_imp + costo_p + costo_d
 total_pen = total_eur * st.session_state.tasa
 
-# Cálculo del ahorro vs mercado (Pintura €18/h | Diseño €30/h estudios PRO)
+# Cálculo del ahorro (Precios mercado: Pintura €18/h | Diseño €30/h)
 ahorro_p = horas_p * (18 - st.session_state.pintura)
 ahorro_d = horas_d * (30 - st.session_state.blender)
 total_ahorro = ahorro_p + ahorro_d
@@ -125,12 +127,17 @@ with c_res2:
         st.success(f"{t['savings_title']}\n\n**€ {total_ahorro:.2f}**")
         st.caption(t["savings_desc"])
 
-# --- 7. BOTÓN WHATSAPP ---
-msg = (f"*COTIZACIÓN {t['title']}*\n"
-       f"Cliente: {nombre_c}\nFigura: {nombre_p}\n"
-       f"Altura: {altura}cm | Pintura: {nv_p}\n"
-       f"TOTAL: €{total_eur:.2f}\n"
-       f"Acepta adelanto del 50%.")
+# --- 7. BOTÓN WHATSAPP (CORREGIDO) ---
+msg = (f"*COTIZACIÓN {t['title'].upper()}*\n"
+       f"----------------------\n"
+       f"👤 Cliente: {nombre_c}\n"
+       f"👾 Figura: {nombre_p}\n"
+       f"📏 Altura: {altura}cm\n"
+       f"🖌️ Pintura: {nv_p}\n"
+       f"🧊 Edición: {tipo_d}\n"
+       f"----------------------\n"
+       f"💰 TOTAL: €{total_eur:.2f}\n"
+       f"🕒 {t['delivery']}")
 
 wa_link = f"https://wa.me/{t['wa_num']}?text={urllib.parse.quote(msg)}"
 st.warning(t["note"])
