@@ -53,6 +53,8 @@ texts = {
         "delivery": "🕒 Entrega: 3 semanas (Desde el depósito del 50%)",
         "wa_num": "393924043068",
         "p_name_label": "Tu Nombre", "char_name_label": "Personaje", "ref_label": "Subir Referencia",
+        "p_name_ph": "Ej: Javier García",
+        "char_name_ph": "Ej: Batman (Hush)",
         "step1": "1️⃣ Datos del Proyecto", "step2": "2️⃣ Configuración Artística", "step3": "3️⃣ Presupuesto Final",
         "tab_print": "💧 Impresión", "tab_paint": "🖌️ Pintura", "tab_design": "🧊 Diseño",
         "height_label": "Altura (cm)", "comp_label": "Complejidad", "comp_opts": ["Simple", "Orgánico", "Épico"],
@@ -76,6 +78,8 @@ texts = {
         "delivery": "🕒 Delivery: 3 weeks (After 50% deposit)",
         "wa_num": "393924043068",
         "p_name_label": "Your Name", "char_name_label": "Character", "ref_label": "Upload Reference",
+        "p_name_ph": "e.g. John Doe",
+        "char_name_ph": "e.g. Spider-Man",
         "step1": "1️⃣ Project Details", "step2": "2️⃣ Artistic Configuration", "step3": "3️⃣ Final Budget",
         "tab_print": "💧 Printing", "tab_paint": "🖌️ Painting", "tab_design": "🧊 Design",
         "height_label": "Height (cm)", "comp_label": "Complexity", "comp_opts": ["Simple", "Organic", "Epic"],
@@ -99,6 +103,8 @@ texts = {
         "delivery": "🕒 Consegna: 1.5 settimane (Dall'acconto del 50%)",
         "wa_num": "393924043068",
         "p_name_label": "Il tuo Nome", "char_name_label": "Personaggio", "ref_label": "Carica Riferimento",
+        "p_name_ph": "es: Alessandro Rossi",
+        "char_name_ph": "es: Darth Vader",
         "step1": "1️⃣ Dettagli Progetto", "step2": "2️⃣ Configurazione Artistica", "step3": "3️⃣ Preventivo Finale",
         "tab_print": "💧 Stampa", "tab_paint": "🖌️ Pittura", "tab_design": "🧊 Design",
         "height_label": "Altezza (cm)", "comp_label": "Complessità", "comp_opts": ["Semplice", "Organico", "Epico"],
@@ -136,8 +142,8 @@ st.divider()
 st.header(t["step1"])
 c1, c2 = st.columns(2)
 with c1:
-    nombre_c = st.text_input(t["p_name_label"])
-    nombre_p = st.text_input(t["char_name_label"])
+    nombre_c = st.text_input(t["p_name_label"], placeholder=t["p_name_ph"])
+    nombre_p = st.text_input(t["char_name_label"], placeholder=t["char_name_ph"])
 with c2:
     st.file_uploader(t["ref_label"], type=['png', 'jpg', 'jpeg'])
 
