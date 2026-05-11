@@ -1,10 +1,10 @@
 import streamlit as st
 import urllib.parse
 
-# 1. Configurazione della pagina
-st.set_page_config(page_title="Maker3DPeru-Italia", page_icon="Logo.jpg")
+# 1. Configuración de la página
+st.set_page_config(page_title="3D Studio Quote Pro", page_icon="🎨")
 
-# --- 2. VALORI AMMINISTRATIVI ---
+# --- 2. VALORES ADMINISTRABLES ---
 if 'resina' not in st.session_state: st.session_state.resina = 0.03
 if 'blender' not in st.session_state: st.session_state.blender = 11.0
 if 'pintura' not in st.session_state: st.session_state.pintura = 8.5
@@ -13,26 +13,26 @@ if 'tasa' not in st.session_state: st.session_state.tasa = 4.10
 with st.sidebar:
     st.header("🔐 Panel de Control")
     clave = st.text_input("Contraseña Admin", type="password")
-    if clave == "02110510":
+    if clave == "admin123":
         st.success("Acceso Autorizado")
         st.session_state.resina = st.number_input("Resina ml (€)", value=st.session_state.resina, format="%.3f")
         st.session_state.blender = st.number_input("Hora Diseño (€)", value=st.session_state.blender)
         st.session_state.pintura = st.number_input("Hora Pintura (€)", value=st.session_state.pintura)
         st.session_state.tasa = st.number_input("Tasa S/.", value=st.session_state.tasa)
 
-# --- 3. DIZIONARIO DELLE TRADUZIONI ---
+# --- 3. DICCIONARIO DE TRADUCCIONES ---
 texts = {
     "Español": {
-        "title": "Maker3DPeru-Italia",
+        "title": "EMPRESA 3D",
         "slogan": "✨ Hacemos tus sueños realidad",
         "delivery": "🕒 Entrega: 3 semanas (Desde el depósito del 50%)",
-        "wa_num": "51977511500",
+        "wa_num": "51910034696",
         "p_name_label": "Tu Nombre", "char_name_label": "Personaje", "ref_label": "Subir Referencia",
         "step1": "1️⃣ Datos del Proyecto", "step2": "2️⃣ Configuración Artística", "step3": "3️⃣ Presupuesto Final",
         "tab_print": "💧 Impresión", "tab_paint": "🖌️ Pintura", "tab_design": "🧊 Diseño",
-        "height_label": "Altura (cm)", "comp_label": "Complejidad de la pieza", "comp_opts": ["Simple", "Orgánico", "Épico"],
+        "height_label": "Altura (cm)", "comp_label": "Complejidad", "comp_opts": ["Simple", "Orgánico", "Épico"],
         "paint_check": "¿Incluir Pintura Profesional?", "paint_level": "Nivel de acabado", "paint_opts": ["Básico", "Vitrina", "Museo"],
-        "design_label": "Edición Digital / Modelado",
+        "design_label": "Edición Digital",
         "design_opts": ["Listo para imprimir (0€)", "Ajuste Básico (10€)", "Personalizado (25€)", "Premium (60€)"],
         "final_price_label": "PRECIO ESTIMADO", "saving_label": "Ahorro Aplicado",
         "savings_title": "✨ Beneficio por Tarifa de Taller", 
@@ -40,19 +40,20 @@ texts = {
         "wa_header": "*NUEVO PEDIDO DETALLADO*",
         "thanks": "✅ **¡Gracias por tu solicitud!** Al abrir WhatsApp, **no olvides adjuntar tu imagen de referencia**.",
         "social_title": "📱 ¡Síguenos en nuestras redes!",
+        "warning_input": "⚠️ **Atención:** Debes ingresar tu **Nombre** y el **Personaje** arriba para activar el botón de WhatsApp.",
         "quality_tag": "⭐ Calidad Garantizada | Envío Seguro | Resina ABS-Like"
     },
     "English": {
-        "title": "Maker3DPeru-Italia",
+        "title": "3D STUDIO",
         "slogan": "✨ We make your dreams come true",
         "delivery": "🕒 Delivery: 1.5 weeks (After 50% deposit)",
-        "wa_num": "393924043068",
+        "wa_num": "3934567890",
         "p_name_label": "Your Name", "char_name_label": "Character", "ref_label": "Upload Reference",
         "step1": "1️⃣ Project Details", "step2": "2️⃣ Artistic Configuration", "step3": "3️⃣ Final Budget",
         "tab_print": "💧 Printing", "tab_paint": "🖌️ Painting", "tab_design": "🧊 Design",
-        "height_label": "Height (cm)", "comp_label": "Piece Complexity", "comp_opts": ["Simple", "Organic", "Epic"],
+        "height_label": "Height (cm)", "comp_label": "Complexity", "comp_opts": ["Simple", "Organic", "Epic"],
         "paint_check": "Include Professional Painting?", "paint_level": "Finish Level", "paint_opts": ["Basic", "Display", "Museum"],
-        "design_label": "Digital Editing / Modeling",
+        "design_label": "Digital Editing",
         "design_opts": ["Ready to print (0€)", "Basic Fix (10€)", "Customization (25€)", "Premium (60€)"],
         "final_price_label": "ESTIMATED PRICE", "saving_label": "Total Savings",
         "savings_title": "✨ Workshop Rate Benefit",
@@ -60,19 +61,20 @@ texts = {
         "wa_header": "*NEW DETAILED ORDER*",
         "thanks": "✅ **Thank you!** When WhatsApp opens, **please attach your reference image**.",
         "social_title": "📱 Follow us!",
+        "warning_input": "⚠️ **Attention:** Please enter your **Name** and **Character** above to enable the WhatsApp button.",
         "quality_tag": "⭐ Guaranteed Quality | Secure Shipping | ABS-Like Resin"
     },
     "Italiano": {
         "title": "STUDIO 3D",
         "slogan": "✨ Rendiamo i tuoi sogni realtà",
         "delivery": "🕒 Consegna: 1.5 settimane (Dall'acconto del 50%)",
-        "wa_num": "393924043068",
+        "wa_num": "3934567890",
         "p_name_label": "Il tuo Nome", "char_name_label": "Personaggio", "ref_label": "Carica Riferimento",
         "step1": "1️⃣ Dettagli Progetto", "step2": "2️⃣ Configurazione Artistica", "step3": "3️⃣ Preventivo Finale",
         "tab_print": "💧 Stampa", "tab_paint": "🖌️ Pittura", "tab_design": "🧊 Design",
         "height_label": "Altezza (cm)", "comp_label": "Complessità", "comp_opts": ["Semplice", "Organico", "Epico"],
         "paint_check": "Includere Pittura Professionale?", "paint_level": "Livello di finitura", "paint_opts": ["Base", "Vetrina", "Museo"],
-        "design_label": "Modifica Digitale / Modellazione",
+        "design_label": "Modifica Digitale",
         "design_opts": ["Pronto da stampare (0€)", "Base (10€)", "Personalizzato (25€)", "Premium (60€)"],
         "final_price_label": "PREZZO STIMATO", "saving_label": "Risparmio Applicato",
         "savings_title": "✨ Vantaggio Tariffa Bottega",
@@ -80,6 +82,7 @@ texts = {
         "wa_header": "*NUOVO ORDINE DETTAGLIATO*",
         "thanks": "✅ **Grazie!** Quando si apre WhatsApp, **non dimenticare di allegare l'immagine**.",
         "social_title": "📱 Seguici sui social!",
+        "warning_input": "⚠️ **Attenzione:** Inserisci il tuo **Nome** e il **Personaggio** sopra per attivare il pulsante WhatsApp.",
         "quality_tag": "⭐ Qualità Garantita | Spedizione Sicura | Resina ABS-Like"
     }
 }
@@ -87,11 +90,10 @@ texts = {
 idioma = st.selectbox("🌐 Idioma", ["Español", "English", "Italiano"])
 t = texts[idioma]
 
-# --- 4. HEADER (LOGO) ---
+# --- 4. HEADER ---
 col_header1, col_header2 = st.columns([1, 4])
 with col_header1:
-    # REEMPLAZA "logo.png" por tu archivo real
-    st.image("Logo.jpg", width=90)
+    st.image("https://cdn-icons-png.flaticon.com/512/1720/1720516.png", width=90)
 with col_header2:
     st.markdown(f"<h1 style='margin-bottom: 0;'>{t['title']}</h1>", unsafe_allow_html=True)
     st.write(f"{t['slogan']}")
@@ -120,7 +122,7 @@ with tab1:
 
 with tab2:
     quiere_p = st.checkbox(t["paint_check"])
-    nv_p, costo_p, horas_p = "No", 0.0, 0.0
+    nv_p, costo_p = "No", 0.0
     if quiere_p:
         nv_p = st.select_slider(t["paint_level"], options=t["paint_opts"])
         mult = {t["paint_opts"][0]: 1, t["paint_opts"][1]: 2.5, t["paint_opts"][2]: 5}
@@ -141,7 +143,7 @@ with st.container(border=True):
     with col_res1:
         if idioma == "Español":
             st.metric(label=t["final_price_label"], value=f"S/. {total_pen:.2f}")
-            st.caption(f"Equivalente a: € {total_eur:.2f}")
+            st.caption(f"Referencia: € {total_eur:.2f}")
         else:
             st.metric(label=t["final_price_label"], value=f"€ {total_eur:.2f}")
             st.caption(f"Ref: S/. {total_pen:.2f}")
@@ -170,18 +172,13 @@ else:
 
 st.divider()
 
-# --- 8. NUEVA SECCIÓN: REDES SOCIALES ---
+# --- 8. REDES SOCIALES ---
 st.markdown(f"#### {t['social_title']}")
 col_social = st.columns(4)
-
-with col_social[0]:
-    st.link_button("📸 Instagram", "https://www.instagram.com/maker_3d_peru_it", use_container_width=True)
-with col_social[1]:
-    st.link_button("🎬 TikTok", "https://www.tiktok.com/@maker3dperu.it", use_container_width=True)
-with col_social[2]:
-    st.link_button("📺 YouTube", "https://www.youtube.com/@Maker3dPeru.italia", use_container_width=True)
-with col_social[3]:
-    st.link_button("👤 Facebook", "https://www.facebook.com/Maker.3d.Peru", use_container_width=True)
+with col_social[0]: st.link_button("📸 Instagram", "https://instagram.com/TU_USUARIO", use_container_width=True)
+with col_social[1]: st.link_button("🎬 TikTok", "https://tiktok.com/@TU_USUARIO", use_container_width=True)
+with col_social[2]: st.link_button("📺 YouTube", "https://youtube.com/@TU_USUARIO", use_container_width=True)
+with col_social[3]: st.link_button("👤 Facebook", "https://facebook.com/TU_PAGINA", use_container_width=True)
 
 st.write("")
 st.markdown(f"<p style='text-align: center; color: gray;'>{t['quality_tag']}</p>", unsafe_allow_html=True)
