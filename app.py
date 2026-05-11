@@ -4,7 +4,7 @@ import urllib.parse
 # 1. Configuración de la página
 st.set_page_config(page_title="3D Studio Quote Pro", page_icon="🎨")
 
-# --- 2. VALORES ADMINISTRABLES (Inicialización segura) ---
+# --- 2. VALORES ADMINISTRABLES ---
 if 'resina' not in st.session_state: st.session_state.resina = 0.03
 if 'blender' not in st.session_state: st.session_state.blender = 11.0
 if 'pintura' not in st.session_state: st.session_state.pintura = 8.5
@@ -20,12 +20,12 @@ with st.sidebar:
         st.session_state.pintura = st.number_input("Hora Pintura (€)", value=st.session_state.pintura)
         st.session_state.tasa = st.number_input("Tasa S/.", value=st.session_state.tasa)
 
-# --- 3. DICCIONARIO DE TRADUCCIONES (Completo para evitar KeyErrors) ---
+# --- 3. DICCIONARIO DE TRADUCCIONES Y NÚMEROS (DOBLE WHATSAPP) ---
 texts = {
     "Español": {
         "title": "EMPRESA 3D",
         "delivery": "🕒 Entrega: 3 semanas (Desde el depósito del 50%)",
-        "wa_num": "51910034696",
+        "wa_num": "51910034696", # <--- NÚMERO PERÚ
         "p_name": "Tu Nombre", "char_name": "Personaje",
         "design_label": "Edición Digital",
         "design_opts": ["Listo para imprimir (0€)", "Ajuste Básico (10€)", "Personalizado (25€)", "Premium (60€)"],
@@ -37,7 +37,7 @@ texts = {
     "English": {
         "title": "3D STUDIO",
         "delivery": "🕒 Delivery: 1.5 weeks (After 50% deposit)",
-        "wa_num": "3934567890",
+        "wa_num": "3934567890", # <--- NÚMERO ITALIA/EUROPA (Cámbialo aquí)
         "p_name": "Your Name", "char_name": "Character",
         "design_label": "Digital Editing",
         "design_opts": ["Ready to print (0€)", "Basic Fix (10€)", "Customization (25€)", "Premium (60€)"],
@@ -49,7 +49,7 @@ texts = {
     "Italiano": {
         "title": "STUDIO 3D",
         "delivery": "🕒 Consegna: 1.5 settimane (Dal acconto del 50%)",
-        "wa_num": "3934567890",
+        "wa_num": "3934567890", # <--- NÚMERO ITALIA/EUROPA (Cámbialo aquí)
         "p_name": "Il tuo Nome", "char_name": "Personaggio",
         "design_label": "Modifica Digitale",
         "design_opts": ["Pronto da stampare (0€)", "Base (10€)", "Personalizzato (25€)", "Premium (60€)"],
@@ -74,12 +74,12 @@ with col_header2:
 st.info(t["delivery"])
 st.divider()
 
-# --- 5. PASOS DE DATOS Y CONFIGURACIÓN ---
+# --- 5. PASOS ---
 st.header("1️⃣ Datos del Proyecto")
 col1, col2 = st.columns(2)
 with col1:
-    nombre_c = st.text_input(t["p_name"], key="user_name")
-    nombre_p = st.text_input(t["char_name"], key="char_name")
+    nombre_c = st.text_input(t["p_name"])
+    nombre_p = st.text_input(t["char_name"])
 with col2:
     st.file_uploader("Subir referencia", type=['png', 'jpg', 'jpeg'])
 
@@ -97,7 +97,7 @@ with tab2:
     quiere_p = st.checkbox("¿Incluir Pintura Profesional?")
     nv_p, costo_p, horas_p = "No", 0.0, 0.0
     if quiere_p:
-        nv_p = st.select_slider("Nivel de acabado", options=["Básico", "Vitrina", "Museo"])
+        nv_p = st.select_slider("Nivel", options=["Básico", "Vitrina", "Museo"])
         mult = {"Básico": 1, "Vitrina": 2.5, "Museo": 5}
         horas_p = (altura/5) * mult[nv_p]
         costo_p = horas_p * st.session_state.pintura
@@ -107,46 +107,39 @@ with tab3:
     costo_d = {t["design_opts"][0]: 0.0, t["design_opts"][1]: 10.0, t["design_opts"][2]: 25.0, t["design_opts"][3]: 60.0}[tipo_d]
     horas_d = {t["design_opts"][0]: 0, t["design_opts"][1]: 1, t["design_opts"][2]: 3, t["design_opts"][3]: 8}[tipo_d]
 
-# --- 6. PRESUPUESTO Y AHORRO (El cuadro de abajo) ---
+# --- 6. RESULTADOS ---
 st.header("3️⃣ Presupuesto Final")
 total_eur = costo_imp + costo_p + costo_d
 total_pen = total_eur * st.session_state.tasa
 
-# Cálculo del ahorro (Precios mercado: Pintura €18/h | Diseño €30/h)
 ahorro_p = horas_p * (18 - st.session_state.pintura)
 ahorro_d = horas_d * (30 - st.session_state.blender)
 total_ahorro = ahorro_p + ahorro_d
 
-# Dibujamos el cuadro de resultados
 with st.container(border=True):
     c_res1, c_res2 = st.columns(2)
     with c_res1:
         st.metric("PRECIO TOTAL", f"€ {total_eur:.2f}")
-        st.write(f"Conversión aprox: **S/. {total_pen:.2f}**")
-    
+        st.write(f"Conversión: **S/. {total_pen:.2f}**")
     with c_res2:
         if total_ahorro > 0:
             st.success(f"{t['savings_title']}")
-            st.write(f"💰 Ahorras: **€ {total_ahorro:.2f}**")
+            st.write(f"Ahorras: **€ {total_ahorro:.2f}**")
             st.caption(t["savings_desc"])
 
-# --- 7. BOTÓN WHATSAPP ---
+# --- 7. WHATSAPP DINÁMICO ---
 st.warning(t["note"])
 
-msg = (f"*SOLICITUD DE COTIZACIÓN*\n"
-       f"----------------------\n"
+msg = (f"*SOLICITUD COTIZACIÓN*\n"
        f"👤 Cliente: {nombre_c}\n"
        f"👾 Figura: {nombre_p}\n"
        f"📏 Altura: {altura}cm\n"
-       f"🖌️ Pintura: {nv_p}\n"
-       f"🧊 Edición: {tipo_d}\n"
-       f"----------------------\n"
-       f"💰 TOTAL: €{total_eur:.2f}\n"
-       f"🕒 {t['delivery']}")
+       f"💰 TOTAL: €{total_eur:.2f}")
 
+# Aquí la app decide qué número usar
 wa_link = f"https://wa.me/{t['wa_num']}?text={urllib.parse.quote(msg)}"
 
 if nombre_c and nombre_p:
     st.link_button(t["wa_btn"], wa_link, use_container_width=True, type="primary")
 else:
-    st.info("⚠️ Completa tu nombre y el del personaje en el Paso 1 para activar el envío.")
+    st.info("⚠️ Completa tus datos para activar el envío.")
