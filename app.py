@@ -41,11 +41,11 @@ with tab2:
     horas_p = 0.0
     ahorro_pintura = 0.0
     if quiere_pintura:
-        nivel = st.select_slider("Nivel de acabado", options=["Básico", "Avanzado", "Pro/Museo"])
+        nivel_p = st.select_slider("Nivel de acabado", options=["Básico", "Avanzado", "Pro/Museo"], key="pintura")
         base_h = (altura / 5)
-        mult_nivel = {"Básico": 1, "Avanzado": 2.5, "Pro/Museo": 5}
-        sugerencia = base_h * mult_nivel[nivel]
-        horas_p = st.number_input(f"Horas estimadas", min_value=0.0, value=round(sugerencia, 1), step=0.5)
+        mult_nivel_p = {"Básico": 1, "Avanzado": 2.5, "Pro/Museo": 5}
+        sugerencia_p = base_h * mult_nivel_p[nivel_p]
+        horas_p = st.number_input(f"Horas estimadas de pintura", min_value=0.0, value=round(sugerencia_p, 1), step=0.5)
         costo_pintura_eur = horas_p * hora_pintura
         ahorro_pintura = horas_p * (MERCADO_PINTURA - PRECIO_HORA_PINTURA)
     else:
@@ -57,7 +57,20 @@ with tab3:
     horas_b = 0.0
     ahorro_blender = 0.0
     if quiere_diseno:
-        horas_b = st.number_input("Horas de diseño", min_value=0.0, value=1.0, step=0.5)
+        tipo_diseno = st.selectbox("¿Qué necesitas hacer?", 
+                                 ["Ajuste Simple (Escalar, reparar archivo, unir piezas)", 
+                                  "Modificación Media (Añadir base, cortar para impresión, textos)", 
+                                  "Diseño Complejo (Modelado desde cero, esculpido orgánico)"])
+        
+        # Asignación automática de horas según complejidad
+        mapa_horas = {
+            "Ajuste Simple (Escalar, reparar archivo, unir piezas)": 1.0,
+            "Modificación Media (Añadir base, cortar para impresión, textos)": 3.0,
+            "Diseño Complejo (Modelado desde cero, esculpido orgánico)": 8.0
+        }
+        
+        horas_b = st.number_input("Horas de diseño (puedes ajustarlas si es necesario)", 
+                                 min_value=0.0, value=mapa_horas[tipo_diseno], step=0.5)
         costo_diseno_eur = horas_b * hora_blender
         ahorro_blender = horas_b * (MERCADO_BLENDER - PRECIO_HORA_BLENDER)
     else:
