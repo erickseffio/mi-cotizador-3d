@@ -45,4 +45,39 @@ with tab2:
     if quiere_pintura:
         nivel = st.select_slider("Nivel de detalle deseado", options=["Básico", "Avanzado", "Pro/Museo"])
         # Sugerencia de horas basada en ALTURA y NIVEL
-        base_h = (altura / 5) # Una
+        base_h = (altura / 5) # Una figura de 10cm base son 2h
+        mult_nivel = {"Básico": 1, "Avanzado": 2.5, "Pro/Museo": 5}
+        sugerencia = base_h * mult_nivel[nivel]
+        
+        horas_p = st.number_input(f"Horas estimadas para {altura}cm ({nivel})", min_value=0.0, value=round(sugerencia, 1), step=0.5)
+    costo_pintura_eur = horas_p * hora_pintura
+
+with tab3:
+    st.header("Diseño en Blender")
+    quiere_diseno = st.checkbox("¿Necesitas ajustes de diseño?")
+    horas_b = 0.0
+    if quiere_diseno:
+        horas_b = st.number_input("Horas de diseño/modelado", min_value=0.0, value=1.0, step=0.5)
+    costo_diseno_eur = horas_b * hora_blender
+
+# --- TOTALES ---
+st.divider()
+total_eur = costo_impresion_eur + costo_pintura_eur + costo_diseno_eur
+total_pen = total_eur * tasa_soles
+
+c1, c2 = st.columns(2)
+c1.metric("PRECIO TOTAL (€)", f"€ {total_eur:,.2f}")
+c2.metric("PRECIO TOTAL (S/.)", f"S/. {total_pen:,.2f}")
+
+# Mensaje de acción
+st.divider()
+if st.button("Generar Resumen para WhatsApp"):
+    resumen = (f"👋 ¡Hola! He cotizado una pieza de {altura}cm:\\n"
+               f"------------------------------------\\n"
+               f"📏 Altura: {altura}cm ({volumen_estimado:.1f}ml est.)\\n"
+               f"🖌️ Pintura: {horas_p}h | Diseño: {horas_b}h\\n"
+               f"💰 TOTAL ESTIMADO: €{total_eur:.2f} / S/. {total_pen:.2f}\\n"
+               f"------------------------------------\\n"
+               f"¿Me podrían dar una cotización final con mi archivo?")
+    st.code(resumen)
+    st.success("Copia este texto y envíanoslo por WhatsApp.")
