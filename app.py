@@ -150,7 +150,7 @@ with st.container(border=True):
         st.success(f"{t['savings_title']}")
         st.write(f"€ {ahorro_est:.2f} / S/. {ahorro_est * st.session_state.tasa:.2f}")
 
-# --- 7. CIERRE Y WHATSAPP ---
+# --- 7. CIERRE Y WHATSAPP (Lógica Corregida) ---
 st.warning(t["note"])
 
 # Si el usuario NO ha puesto el nombre o el personaje
@@ -158,14 +158,13 @@ if not nombre_c or not nombre_p:
     st.info(t["warning_input"]) # Aquí sale el aviso que pides
 else:
     # Si ya puso los datos, generamos el mensaje y el botón
-msg = (f"{t['wa_header']}\n--------------------------\n"
-       f"👤 Cliente: {nombre_c}\n👾 Figura: {nombre_p}\n📏 Altura: {altura}cm\n"
-       f"💧 Impressione: {dif}\n🖌️ Pittura: {nv_p}\n🧊 Edit: {tipo_d}\n"
-       f"--------------------------\n💰 TOTAL: €{total_eur:.2f} / S/. {total_pen:.2f}")
-
-wa_link = f"https://wa.me/{t['wa_num']}?text={urllib.parse.quote(msg)}"
-
-if nombre_c and nombre_p:
+    msg = (f"{t['wa_header']}\n--------------------------\n"
+           f"👤 Cliente: {nombre_c}\n👾 Figura: {nombre_p}\n📏 Altura: {altura}cm\n"
+           f"💧 Impresión: {dif}\n🖌️ Pintura: {nv_p}\n🧊 Diseño: {tipo_d}\n"
+           f"--------------------------\n💰 TOTAL: €{total_eur:.2f} / S/. {total_pen:.2f}")
+    
+    wa_link = f"https://wa.me/{t['wa_num']}?text={urllib.parse.quote(msg)}"
+    
     st.link_button(t["wa_btn"], wa_link, use_container_width=True, type="primary")
     st.success(t["thanks"])
 
