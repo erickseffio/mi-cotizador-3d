@@ -255,59 +255,108 @@ html_portafolio = """
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { font-family: 'Helvetica', sans-serif; background-color: #0e1117; color: white; margin: 0; padding: 20px; }
-        .card { background: #1a1c23; border-radius: 15px; padding: 20px; margin-bottom: 25px; border-left: 5px solid #ffa500; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        h2 { color: #ffa500; border-bottom: 1px solid #333; padding-bottom: 10px; }
-        .skill-tag { background: #333; padding: 5px 12px; border-radius: 20px; font-size: 12px; margin-right: 5px; color: #ffa500; border: 1px solid #ffa500; }
-        .stat-box { text-align: center; padding: 15px; background: #262730; border-radius: 10px; }
-        .stat-num { font-size: 24px; font-weight: bold; color: #ffa500; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0e1117; color: #e0e0e0; margin: 0; padding: 10px; }
+        .main-container { max-width: 900px; margin: auto; }
+        
+        /* Tarjetas con Efecto de Profundidad */
+        .card { 
+            background: linear-gradient(145deg, #161b22, #0d1117); 
+            border-radius: 20px; 
+            padding: 25px; 
+            margin-bottom: 25px; 
+            border: 1px solid #30363d;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .card:hover { transform: translateY(-5px); border-color: #ffa500; }
+        
+        h2 { color: #ffa500; font-size: 28px; margin-top: 0; display: flex; align-items: center; gap: 10px; }
+        h3 { color: #ffffff; margin-bottom: 10px; }
+        p { line-height: 1.6; color: #8b949e; }
+
+        /* Etiquetas de Especialidad */
+        .badge-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
+        .badge { 
+            background: rgba(255, 165, 0, 0.1); 
+            color: #ffa500; 
+            padding: 6px 15px; 
+            border-radius: 50px; 
+            font-size: 13px; 
+            font-weight: bold; 
+            border: 1px solid rgba(255, 165, 0, 0.3); 
+        }
+
+        /* Galería de Impacto */
+        .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .gallery-item { position: relative; border-radius: 15px; overflow: hidden; background: #21262d; border: 1px solid #30363d; }
+        .gallery-text { padding: 15px; }
+
+        /* Sección de Métricas */
+        .stats { display: flex; justify-content: space-between; gap: 15px; margin-top: 10px; }
+        .stat-item { flex: 1; text-align: center; background: #161b22; padding: 15px; border-radius: 15px; border: 1px solid #30363d; }
+        .stat-num { font-size: 26px; font-weight: bold; color: #ffa500; display: block; }
+        .stat-label { font-size: 12px; color: #8b949e; text-transform: uppercase; letter-spacing: 1px; }
+
+        .footer { text-align: center; padding: 20px; color: #8b949e; font-style: italic; }
     </style>
 </head>
 <body>
-
-    <div class="card">
-        <h2>🚀 Ingeniería & Arte 3D</h2>
-        <p>Especialista en impresión de alta resolución y acabados artísticos de nivel coleccionista.</p>
-        <div>
-            <span class="skill-tag">Resina 8K</span>
-            <span class="skill-tag">Aerografía Pro</span>
-            <span class="skill-tag">Cybersecurity</span>
-            <span class="skill-tag">Python Dev</span>
-        </div>
-    </div>
-
-    <div class="grid">
+    <div class="main-container">
         <div class="card">
-            <h3>🔥 Pieza Maestra: Shanks</h3>
-            <p>Escultura de 40cm con acabado premium. Trabajo de texturas y sombreado manual detallado.</p>
+            <h2><i class="fas fa-palette"></i> Arte en Resina de Alta Gama</h2>
+            <p>En <b>Maker 3D Perú</b> transformamos archivos digitales en piezas de colección únicas. Especialistas en acabados artísticos detallados y esculturas de gran formato.</p>
+            <div class="badge-container">
+                <span class="badge">Resina 8K Ultra-Detail</span>
+                <span class="badge">Aerografía Profesional</span>
+                <span class="badge">Custom Paint</span>
+                <span class="badge">Escala Real</span>
+            </div>
         </div>
+
+        <div class="gallery">
+            <div class="gallery-item">
+                <div class="gallery-text">
+                    <h3><i class="fas fa-fire" style="color: #ff4500;"></i> Shanks (40cm)</h3>
+                    <p>Nuestra pieza maestra. Aplicación de sombras dinámicas y barniz de protección UV.</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-text">
+                    <h3><i class="fas fa-dragon" style="color: #70a1ff;"></i> Anime Series</h3>
+                    <p>Reproducción fiel de personajes de One Piece y Jujutsu Kaisen con calidad de exhibición.</p>
+                </div>
+            </div>
+        </div>
+
         <div class="card">
-            <h3>👾 Anime & Manga</h3>
-            <p>Expertise en figuras de One Piece y Jujutsu Kaisen con fidelidad total al diseño original.</p>
+            <h2><i class="fas fa-check-circle"></i> Calidad Maker 3D</h2>
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-num">+200</span>
+                    <span class="stat-label">Figuras Entregadas</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-num">Premium</span>
+                    <span class="stat-label">Acabado de Pintura</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-num">Todo el Perú</span>
+                    <span class="stat-label">Envíos Garantizados</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            "Cada figura es una obra de arte, no solo una impresión."
         </div>
     </div>
-
-    <div class="card">
-        <h3>📊 Garantía Maker 3D</h3>
-        <div class="grid" style="grid-template-columns: 1fr 1fr 1fr;">
-            <div class="stat-box"><div class="stat-num">+200</div><div>Proyectos</div></div>
-            <div class="stat-box"><div class="stat-num">100%</div><div>Seguridad</div></div>
-            <div class="stat-box"><div class="stat-num">Envío</div><div>Nacional</div></div>
-        </div>
-    </div>
-
-    <div class="card" style="text-align: center;">
-        <p><i>"Donde el código se convierte en arte tangible."</i></p>
-    </div>
-
 </body>
 </html>
 """
 
-# Esta línea es la que hace la magia de mostrarlo en la web
-components.html(html_portafolio, height=700, scrolling=True)
+components.html(html_portafolio, height=850, scrolling=True)
 st.divider()
 
 # --- 8. REDES SOCIALES ---
