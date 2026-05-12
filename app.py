@@ -64,7 +64,7 @@ texts = {
         "img_info": "Sube una foto de tu modelo para una mejor estimación.",
         "height_help": "📏 Guía: Una lata de soda mide 12cm, una figura estándar 18cm.",
         "warning_input": "⚠️ **Atención:** Debes ingresar tu **Nombre** y el **Personaje** arriba para activar el botón de WhatsApp.",
-        "quality_tag": "⭐ Calidad Garantizada | Envío Seguro | Resina ABS-Like"
+        "quality_tag": "⭐ Calidad Garantizada | Envío Seguro | Resina ABS-Like",  # <-- ESTA COMA ES LA QUE FALTA
         "design_details": [
             "El archivo STL no requiere modificaciones.",
             "Escalado, reparación de malla o cortes básicos.",
