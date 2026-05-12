@@ -439,80 +439,79 @@ else:
 import streamlit.components.v1 as components
 
 # --- SECCIÓN PORTAFOLIO REFINADA ---
+# --- ESTILOS REFINADOS ---
 st.markdown("""
 <style>
+    /* Forzamos altura igual para todas las tarjetas */
     .card {
         background: #1e1e1e;
         border-radius: 12px;
         border: 1px solid #333;
-        transition: all 0.4s ease; /* Transición más lenta = más elegante */
+        transition: all 0.4s ease;
         overflow: hidden;
-        margin-bottom: 15px;
+        display: flex;
+        flex-direction: column;
+        height: 380px; /* Altura fija para alinear botones */
     }
     .card:hover {
-        /* Un movimiento casi imperceptible pero que da vida */
-        transform: translateY(-4px); 
         border-color: #ff4b4b;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 5px 15px rgba(255, 75, 75, 0.1);
     }
     .card-img {
         width: 100%;
-        height: 200px; /* Altura moderada para no deformar */
+        height: 200px;
         object-fit: cover;
-        object-position: center 20%; /* Ajusta para que se vea mejor la parte superior */
+        object-position: center 20%;
     }
     .card-text {
-        padding: 12px;
+        padding: 15px;
+        flex-grow: 1; /* Esto empuja el contenido hacia arriba */
     }
     .card-text h3 {
         color: #ff4b4b !important;
-        font-size: 1.1rem !important;
-        margin: 0 !important;
+        font-size: 1.2rem !important;
+        margin-bottom: 8px !important;
     }
-    .card-text p {
-        color: #aaa !important;
-        font-size: 0.85rem !important;
-        margin-top: 5px !important;
+    /* Estilo para el título de la sección */
+    .section-title {
+        font-size: 2.2rem;
+        font-weight: 700;
+        background: -webkit-linear-gradient(#fff, #999);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 5px;
     }
 </style>
 """, unsafe_allow_html=True)
 
-st.header("🎨 Mi Portafolio")
+# --- TÍTULO DE SECCIÓN ---
+st.markdown('<p class="section-title">✨ Galería de Colección</p>', unsafe_allow_html=True)
+st.write("Explora mis acabados premium. **Haz clic en el botón para ver detalles y cotizar.**")
 
 col1, col2, col3 = st.columns(3)
 
-with col1:
-    st.markdown(f'''<div class="card">
-        <img src="https://i.postimg.cc/4NVvxmL4/20260502-113047.jpg" class="card-img">
-        <div class="card-text">
-            <h3>Digimon</h3>
-            <p>{t['desc_digimon']}</p>
-        </div>
-    </div>''', unsafe_allow_html=True)
-    if st.button("🔎 Detalles", key="z1", use_container_width=True):
-        mostrar_imagen_grande("https://i.postimg.cc/4NVvxmL4/20260502-113047.jpg", "Digimon", t['desc_digimon'])
+# Diccionario de datos para facilitar el mantenimiento
+obras = [
+    {"titulo": "Digimon", "img": "https://i.postimg.cc/4NVvxmL4/20260502-113047.jpg", "desc": t['desc_digimon']},
+    {"titulo": "Hyoga", "img": "https://i.postimg.cc/tJC0CKyn/20260331-230329.jpg", "desc": t['desc_hyoga']},
+    {"titulo": "Albafica", "img": "https://i.postimg.cc/76wdmFCv/20250718-124326.jpg", "desc": t['desc_albafica']}
+]
 
-with col2:
-    st.markdown(f'''<div class="card">
-        <img src="https://i.postimg.cc/tJC0CKyn/20260331-230329.jpg" class="card-img">
-        <div class="card-text">
-            <h3>Hyoga</h3>
-            <p>{t['desc_hyoga']}</p>
-        </div>
-    </div>''', unsafe_allow_html=True)
-    if st.button("🔎 Detalles", key="z2", use_container_width=True):
-        mostrar_imagen_grande("https://i.postimg.cc/tJC0CKyn/20260331-230329.jpg", "Hyoga", t['desc_hyoga'])
+cols = [col1, col2, col3]
 
-with col3:
-    st.markdown(f'''<div class="card">
-        <img src="https://i.postimg.cc/76wdmFCv/20250718-124326.jpg" class="card-img">
-        <div class="card-text">
-            <h3>Albafica</h3>
-            <p>{t['desc_albafica']}</p>
-        </div>
-    </div>''', unsafe_allow_html=True)
-    if st.button("🔎 Detalles", key="z3", use_container_width=True):
-        mostrar_imagen_grande("https://i.postimg.cc/76wdmFCv/20250718-124326.jpg", "Albafica", t['desc_albafica'])
+for i, obra in enumerate(obras):
+    with cols[i]:
+        st.markdown(f'''<div class="card">
+            <img src="{obra['img']}" class="card-img">
+            <div class="card-text">
+                <h3>{obra['titulo']}</h3>
+                <p>{obra['desc']}</p>
+            </div>
+        </div>''', unsafe_allow_html=True)
+        # Botón con llamado a la acción claro
+        if st.button(f"🔍 Cotizar {obra['titulo']}", key=f"btn_{i}", use_container_width=True):
+            mostrar_imagen_grande(obra['img'], obra['titulo'], obra['desc'])
+            st.toast("💡 Recuerda enviarme la foto por WhatsApp para cotizar")
 # --- 8. REDES SOCIALES ---
 st.markdown(f"#### {t['social_title']}")
 col_social = st.columns(4)
