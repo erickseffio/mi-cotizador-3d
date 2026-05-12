@@ -439,14 +439,19 @@ else:
 import streamlit.components.v1 as components
 
 # --- SECCIÓN PORTAFOLIO ---
-st.write("### 🎨 Portafolio de Trabajos")
+st.header("🎨 Mi Portafolio")
 
+# Creamos 3 columnas para que las imágenes queden una al lado de la otra
 col1, col2, col3 = st.columns(3)
 
 with col1:
+    # 1. Imagen
     st.image("https://i.postimg.cc/4NVvxmL4/20260502-113047.jpg", use_container_width=True)
-    st.caption("Digimon (20cm)")
-    if st.button("🔍 Ver Original", key="btn_digimon"):
+    # 2. Título y Descripción (Esto es lo que faltaba)
+    st.subheader("Digimon (20cm)")
+    st.write(t['desc_digimon']) 
+    # 3. Botón para ampliar
+    if st.button("🔍 Ver Original", key="btn1"):
         mostrar_imagen_grande(
             "https://i.postimg.cc/4NVvxmL4/20260502-113047.jpg", 
             "Digimon (20cm)", 
@@ -455,21 +460,23 @@ with col1:
 
 with col2:
     st.image("https://i.postimg.cc/tJC0CKyn/20260331-230329.jpg", use_container_width=True)
-    st.caption("Hyoga (12cm)")
-    if st.button("🔍 Ver Original", key="btn_hyoga"):
+    st.subheader("Hyoga (12cm)")
+    st.write(t['desc_hyoga'])
+    if st.button("🔍 Ver Original", key="btn2"):
         mostrar_imagen_grande(
             "https://i.postimg.cc/tJC0CKyn/20260331-230329.jpg", 
-            "Hyoga de Cisne (12cm)", 
+            "Hyoga (12cm)", 
             t['desc_hyoga']
         )
 
 with col3:
     st.image("https://i.postimg.cc/76wdmFCv/20250718-124326.jpg", use_container_width=True)
-    st.caption("Albafica (40cm)")
-    if st.button("🔍 Ver Original", key="btn_albafica"):
+    st.subheader("Albafica (40cm)")
+    st.write(t['desc_albafica'])
+    if st.button("🔍 Ver Original", key="btn3"):
         mostrar_imagen_grande(
             "https://i.postimg.cc/76wdmFCv/20250718-124326.jpg", 
-            "Albafica de Piscis (40cm)", 
+            "Albafica (40cm)", 
             t['desc_albafica']
         )
 
