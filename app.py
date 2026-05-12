@@ -318,9 +318,7 @@ with tab3:
     # Asignamos el costo basado en el índice
     costo_d = precios[idx]
     
-    # (Opcional) Puedes mostrar una confirmación discreta del costo extra
-    if costo_d > 0:
-        st.caption(f"Adicional por edición: +{costo_d} {moneda}")
+  
         
 # --- 6. PRESUPUESTO ---
 st.header(t["step3"])
