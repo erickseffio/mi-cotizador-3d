@@ -325,23 +325,53 @@ st.header(t["step3"])
 total_eur = costo_imp + costo_p + costo_d
 total_pen = total_eur * st.session_state.tasa
 
+# Definimos variables dinámicas según el idioma para el bloque visual
+if idioma == "Español (Perú S/.)": # Asegúrate que el nombre coincida exactamente con tu diccionario
+    monto_principal = f"S/. {total_pen:.2f}"
+    sub_ref = f"Ref: € {total_eur:.2f}"
+    ahorro_texto = f"S/. {ahorro_pen:.2f}"
+else:
+    monto_principal = f"€ {total_eur:.2f}"
+    sub_ref = f"Ref: S/. {total_pen:.2f}"
+    ahorro_texto = f"€ {ahorro_est:.2f}"
+
 with st.container(border=True):
-    col_res1, col_res2 = st.columns(2)
+    col_res1, col_res2 = st.columns([1.5, 1]) # Ajustamos el ancho para que el precio tenga más espacio
+    
     with col_res1:
-        if idioma == "Español (Perú)":
-            st.metric(label=t["final_price_label"], value=f"S/. {total_pen:.2f}")
-            st.caption(f"Referencia: € {total_eur:.2f}")
-        else:
-            st.metric(label=t["final_price_label"], value=f"€ {total_eur:.2f}")
-            st.caption(f"Ref: S/. {total_pen:.2f}")
+        # Diseño del Precio Grande
+        st.markdown(f"""
+            <div style="padding:10px;">
+                <p style="color:#808495; margin:0; text-transform:uppercase; font-size:0.8rem; font-weight:bold;">
+                    {t["final_price_label"]}
+                </p>
+                <h1 style="margin:0; color:white; font-size:3.5rem; line-height:1.2;">
+                    {monto_principal}
+                </h1>
+                <p style="color:#808495; margin:0; font-size:0.9rem;">
+                    {sub_ref}
+                </p>
+            </div>
+        """, unsafe_allow_html=True)
+
     with col_res2:
         ahorro_est = (total_eur * 0.25)
         ahorro_pen = ahorro_est * st.session_state.tasa
-        if idioma == "Español (Perú)":
-            st.success(f"{t['savings_title']} **¡Ahorraste S/. {ahorro_pen:.2f}!**")
-        else:
-            st.success(f"{t['savings_title']} **Ahorro: € {ahorro_est:.2f}**")
-            st.caption(f"Ref: S/. {ahorro_pen:.2f}")
+        
+        # Bloque de Ahorro con diseño tipo tarjeta verde
+        st.markdown(f"""
+            <div style="background-color:#142d1a; padding:20px; border-radius:10px; border: 1px solid #234d2c; margin-top:15px;">
+                <p style="color:#4ecb71; margin:0; font-size:1rem; font-weight:bold;">
+                    ✨ {t['savings_title']}
+                </p>
+                <h2 style="margin:0; color:#4ecb71; font-size:1.8rem;">
+                    {ahorro_texto}
+                </h2>
+            </div>
+        """, unsafe_allow_html=True)
+
+# Advertencia final (Mantenemos tu lógica original)
+st.warning(t["payment_note"])
 
 # --- 7. CIERRE Y WHATSAPP (Lógica Corregida) ---
 st.warning(t["note"])
