@@ -42,7 +42,7 @@ texts = {
         "final_quote": "Inversión Estimada", 
         "wa_header": "¡Hola Maker 3D Perú! Solicito información sobre esta inversión:",
         "tab_print": "💧 Estructura y Escala ", "tab_paint": "🖌️ Acabado Artístico", "tab_design": "🧊 Diseño",
-        "height_label": "Altura (cm)", "comp_label": "Complejidad", "comp_opts": ["Coleccionista, Épico, Obra Maestra"],
+        "height_label": "Altura (cm)", "comp_label": "Complejidad", "comp_opts": ["Coleccionista", "Épico", "Obra Maestra"],
         "paint_check": "¿Incluir Pintura Profesional?", "paint_level": "Nivel de acabado", "paint_opts": ["Básico", "Vitrina", "Museo"],
         "design_label": "Edición Digital",
         "design_opts": [
@@ -99,7 +99,7 @@ texts = {
         "final_quote": "Inversión Estimada", 
         "wa_header": "¡Hola Maker 3D Perú! Solicito información sobre esta inversión:",
         "tab_print": "💧 Estructura y Escala ", "tab_paint": "🖌️ Acabado Artístico", "tab_design": "🧊 Diseño",
-        "height_label": "Altura (cm)", "comp_label": "Complejidad", "comp_opts": ["Coleccionista, Épico, Obra Maestra"],
+        "height_label": "Altura (cm)", "comp_label": "Complejidad", "comp_opts": ["Coleccionista", "Épico", "Obra Maestra"],
         "paint_check": "¿Incluir Pintura Profesional?", "paint_level": "Nivel de acabado", "paint_opts": ["Básico", "Vitrina", "Museo"],
         "design_label": "Edición Digital",
         "design_opts": [
@@ -156,7 +156,7 @@ texts = {
         "final_quote": "Estimated Investment",
         "wa_header": "Hello Maker 3D Perú! I'm interested in this investment:",
         "tab_print": "💧 Structure and Scale", "tab_paint": "🖌️ Artistic Finish", "tab_design": "🧊 Design",
-        "height_label": "Height (cm)", "comp_label": "Complexity", "comp_opts": ["Collector's Item, Epic, Masterpiece"],
+        "height_label": "Height (cm)", "comp_label": "Complexity", "comp_opts": ["Collector's Item", "Epic", "Masterpiece"],
         "paint_check": "Include Professional Painting?", "paint_level": "Finish Level", "paint_opts": ["Basic", "Display", "Museum"],
         "design_label": "Digital Editing",
         "design_opts": [
@@ -213,7 +213,7 @@ texts = {
         "final_quote": "Investimento Stimato",
         "wa_header": "Ciao Maker 3D Perú! Richiedo informazioni su questo investimento:",
         "tab_print": "💧 Struttura e proporzioni", "tab_paint": "🖌️ finitura artistica", "tab_design": "🧊 Design",
-        "height_label": "Altezza (cm)", "comp_label": "Complessità", "comp_opts": ["Oggetto da collezione, epico, capolavoro"],
+        "height_label": "Altezza (cm)", "comp_label": "Complessità", "comp_opts": ["Oggetto da collezione", "epico", "capolavoro"],
         "paint_check": "Includere Pittura Professionale?", "paint_level": "Livello di finitura", "paint_opts": ["Base", "Vetrina", "Museo"],
         "design_label": "Modifica Digitale",
         "design_opts": [
