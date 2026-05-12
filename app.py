@@ -439,58 +439,84 @@ else:
 import streamlit.components.v1 as components
 
 # --- SECCIÓN PORTAFOLIO REFINADA ---
-# --- ESTILOS ADAPTABLES (MÓVIL Y PC) ---
+# --- SECCIÓN PORTAFOLIO RECUPERADA Y ADAPTABLE ---
 st.markdown("""
 <style>
+    /* 1. Definición general de la tarjeta */
     .card {
         background: #1e1e1e;
         border-radius: 12px;
         border: 1px solid #333;
         overflow: hidden;
-        height: 420px; /* Aumentamos un poco para dar aire al texto en móvil */
+        height: 400px; 
         display: flex;
         flex-direction: column;
         margin-bottom: 20px;
     }
+    
     .card-img {
         width: 100%;
         height: 140px; 
         object-fit: cover;
         object-position: center center;
     }
+    
     .card-text {
         padding: 15px;
         flex-grow: 1; 
     }
+    
     .card-text h3 {
         color: #ff4b4b !important;
-        font-size: 1.2rem !important; /* Título un poco más grande */
+        font-size: 1.2rem !important;
         margin-bottom: 8px !important;
     }
     
-    /* TEXTO PARA PC (Escritorio) */
     .card-text p {
-        color: #bbb !important;
-        font-size: 0.95rem !important;
-        line-height: 1.4;
+        color: #ffffff !important; /* Blanco para mejor lectura */
+        font-size: 1.05rem !important; /* Tamaño cómodo para celular y PC */
+        line-height: 1.4 !important;
     }
 
-    /* AJUSTE PARA CELULARES (Pantallas menores a 768px) */
-    @media only screen and (max-width: 768px) {
+    /* 2. Ajuste para pantallas pequeñas */
+    @media (max-width: 768px) {
         .card {
-            height: auto; /* En el celular la tarjeta crece según el texto */
-            min-height: 400px;
-        }
-        .card-text p {
-            font-size: 1.1rem !important; /* Letra más grande para el pulgar y la vista */
-            color: #ffffff !important;   /* Un poco más blanco para mejor contraste */
-        }
-        .card-text h3 {
-            font-size: 1.4rem !important;
+            height: auto !important; /* En celular crece según el texto */
+            min-height: 380px;
         }
     }
 </style>
 """, unsafe_allow_html=True)
+
+# Título de la sección
+st.markdown("""
+    <div style="display: flex; align-items: center; margin-bottom: 20px;">
+        <span style="font-size: 2.2rem; margin-right: 12px;">🎨</span>
+        <h1 style="margin: 0; font-size: 2rem; font-weight: 800; color: #ffffff;">
+            Mi Portafolio <span style="color: #ff4b4b; font-size: 0.9rem; vertical-align: middle;">| Maker 3D Perú</span>
+        </h1>
+    </div>
+""", unsafe_allow_html=True)
+
+col1, col2, col3 = st.columns(3)
+
+# Función para renderizar cada obra
+def render_obra(col, img_url, title, description, key_btn):
+    with col:
+        st.markdown(f'''<div class="card">
+            <img src="{img_url}" class="card-img">
+            <div class="card-text">
+                <h3>{title}</h3>
+                <p>{description}</p>
+            </div>
+        </div>''', unsafe_allow_html=True)
+        if st.button("🔍 Detalles", key=key_btn, use_container_width=True):
+            mostrar_imagen_grande(img_url, title, description)
+
+# Llamadas a la función con tus datos
+render_obra(col1, "https://i.postimg.cc/4NVvxmL4/20260502-113047.jpg", "Digimon", t['desc_digimon'], "btn_d_new")
+render_obra(col2, "https://i.postimg.cc/tJC0CKyn/20260331-230329.jpg", "Hyoga", t['desc_hyoga'], "btn_h_new")
+render_obra(col3, "https://i.postimg.cc/76wdmFCv/20250718-124326.jpg", "Albafica", t['desc_albafica'], "btn_a_new")
 # --- 8. REDES SOCIALES ---
 st.markdown(f"#### {t['social_title']}")
 col_social = st.columns(4)
