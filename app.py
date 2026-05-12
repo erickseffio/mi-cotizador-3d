@@ -65,6 +65,12 @@ texts = {
         "height_help": "📏 Guía: Una lata de soda mide 12cm, una figura estándar 18cm.",
         "warning_input": "⚠️ **Atención:** Debes ingresar tu **Nombre** y el **Personaje** arriba para activar el botón de WhatsApp.",
         "quality_tag": "⭐ Calidad Garantizada | Envío Seguro | Resina ABS-Like"
+        "design_details": [
+            "El archivo STL no requiere modificaciones.",
+            "Escalado, reparación de malla o cortes básicos.",
+            "Modificación de pose, nombres o unión de piezas.",
+            "Modelado desde cero o escultura compleja."
+        ]
     },
     "Español (España €)": {
         "title": "Maker3DPeru-Italia",
@@ -109,6 +115,12 @@ texts = {
         "height_help": "📏 Guía: Una lata de soda mide 12cm, una figura estándar 18cm.",
         "warning_input": "⚠️ **Atención:** Debes ingresar tu **Nombre** y el **Personaje** arriba para activar el botón de WhatsApp.",
         "quality_tag": "⭐ Calidad Garantizada | Envío Seguro | Resina ABS-Like"
+        "design_details": [
+            "El archivo STL no requiere modificaciones.",
+            "Escalado, reparación de malla o cortes básicos.",
+            "Modificación de pose, nombres o unión de piezas.",
+            "Modelado desde cero o escultura compleja."
+        ]
     },
     "English €": {
         "title": "Maker3DPeru-Italia",
@@ -153,6 +165,12 @@ texts = {
         "height_help": "📏 Guide: A soda can is 12cm, a standard figure is 18cm.",
         "warning_input": "⚠️ **Attention:** Please enter your **Name** and **Character** above to enable the WhatsApp button.",
         "quality_tag": "⭐ Guaranteed Quality | Secure Shipping | ABS-Like Resin"
+        "design_details": [
+            "STL file does not require modifications.",
+            "Scaling, mesh repair, or basic cuts.",
+            "Pose modification, names, or merging parts.",
+            "Modeling from scratch or complex sculpture."
+        ]
     },
     "Italiano €": {
         "title": "Maker3DPeru-Italia",
@@ -197,6 +215,12 @@ texts = {
         "height_help": "📏 Guida: Una lattina misura 12cm, una figura standard 18cm.",
         "warning_input": "⚠️ **Attenzione:** Inserisci il tuo **Nome** e il **Personaggio** sopra per attivare il pulsante WhatsApp.",
         "quality_tag": "⭐ Qualità Garantita | Spedizione Sicura | Resina ABS-Like"
+        "design_details": [
+            "Il file STL non richiede modifiche.",
+            "Scalatura, riparazione mesh o tagli di base.",
+            "Modifica della posa, nomi o unione di parti.",
+            "Modellazione da zero o scultura complessa."
+        ]
     }
 }
 
@@ -259,7 +283,9 @@ with tab2:
         costo_p = horas_p * st.session_state.pintura
 
 with tab3:
+    mapa_detalles = dict(zip(t["design_opts"], t["design_details"]))
     tipo_d = st.selectbox(t["design_label"], t["design_opts"])
+    st.caption(f"ℹ️ {mapa_detalles[tipo_d]}")
     costo_d = {t["design_opts"][0]: 0.0, t["design_opts"][1]: 10.0, t["design_opts"][2]: 25.0, t["design_opts"][3]: 60.0}[tipo_d]
 
 # --- 6. PRESUPUESTO ---
@@ -315,6 +341,7 @@ else:
                f"💧 Impresión: {dif}\n"
                f"🖌️ Pintura: {nv_p}\n"
                f"🧊 Diseño: {moneda_diseno}\n"
+               f"📝 Detalle: {mapa_detalles[tipo_d]}\n"
                f"✨ DESCUENTO: {simbolo} {ahorro_wsp:.2f}\n"
                f"--------------------------\n"
                f"💰 TOTAL ESTIMADO {moneda_wa}")
