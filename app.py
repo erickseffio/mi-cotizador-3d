@@ -145,7 +145,21 @@ with c1:
     nombre_c = st.text_input(t["p_name_label"], placeholder=t["p_name_ph"])
     nombre_p = st.text_input(t["char_name_label"], placeholder=t["char_name_ph"])
 with c2:
-    st.file_uploader(t["ref_label"], type=['png', 'jpg', 'jpeg'])
+    # Guardamos el archivo en una variable
+archivo_referencia = st.file_uploader(t["ref_label"], type=['png', 'jpg', 'jpeg'])
+
+if archivo_reference is not None:
+    # Mostramos un indicador de carga animado
+    with st.spinner(t.get("loading_img", "Procesando imagen de referencia...")):
+        try:
+            # Mostramos la imagen con un mensaje de éxito
+            st.image(archivo_referencia, caption="✅ Imagen cargada correctamente", use_container_width=True)
+            st.success("¡Imagen lista para la cotización!")
+        except Exception:
+            st.error("Hubo un problema al cargar la imagen. Por favor, intenta de nuevo.")
+else:
+    # Mensaje informativo si no hay nada subido aún
+    st.info("Sube una foto de tu modelo para una mejor estimación visual.")
 
 st.header(t["step2"])
 tab1, tab2, tab3 = st.tabs([t["tab_print"], t["tab_paint"], t["tab_design"]])
