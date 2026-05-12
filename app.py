@@ -422,7 +422,8 @@ else:
                f"📝 Detalle: {mapa_detalles[tipo_d]}\n"
                f"✨ DESCUENTO: {simbolo} {ahorro_wsp:.2f}\n"
                f"--------------------------\n"
-               f"💰 TOTAL ESTIMADO {moneda_wa}")
+               f"💎 {t['final_quote']}: {moneda_wa}")
+    
     wa_link = f"https://wa.me/{t['wa_num']}?text={urllib.parse.quote(msg)}"
     st.markdown("""
     <div style="background-color: #f0f2f6; border-left: 5px solid #ffa500; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
