@@ -437,48 +437,87 @@ else:
     st.link_button(t["wa_btn"], wa_link, use_container_width=True, type="primary")
     st.success(t["thanks"])
 import streamlit.components.v1 as components
+st.markdown("""
+<style>
+    .gallery-container {
+        display: flex;
+        gap: 15px;
+        justify-content: space-around;
+    }
+    .gallery-card {
+        background-color: #1e1e1e;
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid #333;
+        margin-bottom: 20px;
+    }
+    .gallery-img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+    }
+    .gallery-content {
+        padding: 15px;
+    }
+    .gallery-content h3 {
+        margin: 0;
+        color: #ff4b4b; /* El rojo de tu marca */
+        font-size: 1.1rem;
+    }
+    .gallery-content p {
+        margin: 5px 0 0 0;
+        color: #cccccc;
+        font-size: 0.85rem;
+    }
+</style>
+""", unsafe_allow_html=True)
 
 # --- SECCIÓN PORTAFOLIO ---
 st.header("🎨 Mi Portafolio")
 
-# Creamos 3 columnas para que las imágenes queden una al lado de la otra
 col1, col2, col3 = st.columns(3)
 
+# --- FIGURA 1: DIGIMON ---
 with col1:
-    # 1. Imagen
-    st.image("https://i.postimg.cc/4NVvxmL4/20260502-113047.jpg", use_container_width=True)
-    # 2. Título y Descripción (Esto es lo que faltaba)
-    st.subheader("Digimon (20cm)")
-    st.write(t['desc_digimon']) 
-    # 3. Botón para ampliar
-    if st.button("🔍 Ver Original", key="btn1"):
-        mostrar_imagen_grande(
-            "https://i.postimg.cc/4NVvxmL4/20260502-113047.jpg", 
-            "Digimon (20cm)", 
-            t['desc_digimon']
-        )
+    st.markdown(f"""
+        <div class="gallery-card">
+            <img src="https://i.postimg.cc/4NVvxmL4/20260502-113047.jpg" class="gallery-img">
+            <div class="gallery-content">
+                <h3>Digimon (20cm)</h3>
+                <p>{t['desc_digimon']}</p>
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
+    if st.button("🔍 Ver en grande", key="btn_digi", use_container_width=True):
+        mostrar_imagen_grande("https://i.postimg.cc/4NVvxmL4/20260502-113047.jpg", "Digimon (20cm)", t['desc_digimon'])
 
+# --- FIGURA 2: HYOGA ---
 with col2:
-    st.image("https://i.postimg.cc/tJC0CKyn/20260331-230329.jpg", use_container_width=True)
-    st.subheader("Hyoga (12cm)")
-    st.write(t['desc_hyoga'])
-    if st.button("🔍 Ver Original", key="btn2"):
-        mostrar_imagen_grande(
-            "https://i.postimg.cc/tJC0CKyn/20260331-230329.jpg", 
-            "Hyoga (12cm)", 
-            t['desc_hyoga']
-        )
+    st.markdown(f"""
+        <div class="gallery-card">
+            <img src="https://i.postimg.cc/tJC0CKyn/20260331-230329.jpg" class="gallery-img">
+            <div class="gallery-content">
+                <h3>Hyoga (12cm)</h3>
+                <p>{t['desc_hyoga']}</p>
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
+    if st.button("🔍 Ver en grande", key="btn_hyo", use_container_width=True):
+        mostrar_imagen_grande("https://i.postimg.cc/tJC0CKyn/20260331-230329.jpg", "Hyoga (12cm)", t['desc_hyoga'])
 
+# --- FIGURA 3: ALBAFICA ---
 with col3:
-    st.image("https://i.postimg.cc/76wdmFCv/20250718-124326.jpg", use_container_width=True)
-    st.subheader("Albafica (40cm)")
-    st.write(t['desc_albafica'])
-    if st.button("🔍 Ver Original", key="btn3"):
-        mostrar_imagen_grande(
-            "https://i.postimg.cc/76wdmFCv/20250718-124326.jpg", 
-            "Albafica (40cm)", 
-            t['desc_albafica']
-        )
+    st.markdown(f"""
+        <div class="gallery-card">
+            <img src="https://i.postimg.cc/76wdmFCv/20250718-124326.jpg" class="gallery-img">
+            <div class="gallery-content">
+                <h3>Albafica (40cm)</h3>
+                <p>{t['desc_albafica']}</p>
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
+    if st.button("🔍 Ver en grande", key="btn_alba", use_container_width=True):
+        mostrar_imagen_grande("https://i.postimg.cc/76wdmFCv/20250718-124326.jpg", "Albafica (40cm)", t['desc_albafica'])
 
 # --- 8. REDES SOCIALES ---
 st.markdown(f"#### {t['social_title']}")
