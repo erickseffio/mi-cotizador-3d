@@ -146,17 +146,17 @@ with c1:
     nombre_p = st.text_input(t["char_name_label"], placeholder=t["char_name_ph"])
 with c2:
     # Guardamos el archivo en una variable
-    archivo_referencia = st.file_uploader(t["ref_label"], type=['png', 'jpg', 'jpeg'])
+archivo_referencia = st.file_uploader(t["ref_label"], type=['png', 'jpg', 'jpeg'])
 
-    if archivo_reference is not None:
+if archivo_reference is not None:
     # Mostramos un indicador de carga animado
-        with st.spinner(t.get("loading_img", "Procesando imagen de referencia...")):
-            try:
+    with st.spinner(t.get("loading_img", "Procesando imagen de referencia...")):
+        try:
             # Mostramos la imagen con un mensaje de éxito
-                st.image(archivo_referencia, caption="✅ Imagen cargada correctamente", use_container_width=True)
-                st.success("¡Imagen lista para la cotización!")
-            except Exception:
-                st.error("Hubo un problema al cargar la imagen. Por favor, intenta de nuevo.")
+            st.image(archivo_referencia, caption="✅ Imagen cargada correctamente", use_container_width=True)
+            st.success("¡Imagen lista para la cotización!")
+        except Exception:
+            st.error("Hubo un problema al cargar la imagen. Por favor, intenta de nuevo.")
 else:
     # Mensaje informativo si no hay nada subido aún
     st.info("Sube una foto de tu modelo para una mejor estimación visual.")
