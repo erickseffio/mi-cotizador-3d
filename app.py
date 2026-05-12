@@ -212,6 +212,7 @@ else:
     moneda_diseno = f"S/. {diseno_pen:.2f}" if idioma == "Español (Perú)" else f"€ {costo_d:.2f}"
 
         # Generamos el mensaje usando la nueva variable 'moneda_diseno'
+    simbolo = "S/." if idioma == "Español (Perú)" else "€"
         # Generamos el mensaje limpio
     msg = (f"{t['wa_header']}\n"
                f"--------------------------\n"
