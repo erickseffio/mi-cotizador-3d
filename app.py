@@ -22,7 +22,7 @@ with st.sidebar:
 
 # --- 3. DICCIONARIO DE TRADUCCIONES ---
 texts = {
-    "Español (Perú)": {
+    "Español (Perú S/.)": {
         "title": "Maker3DPeru-Italia",
         "slogan": "✨ Hiper-realismo en Resina: Del archivo digital a tu vitrina.",
         "delivery": "🕒 Entrega: 3 semanas (Desde el depósito del 50%)",
@@ -47,7 +47,7 @@ texts = {
         "warning_input": "⚠️ **Atención:** Debes ingresar tu **Nombre** y el **Personaje** arriba para activar el botón de WhatsApp.",
         "quality_tag": "⭐ Calidad Garantizada | Envío Seguro | Resina ABS-Like"
     },
-    "Español (España)": {
+    "Español (España €)": {
         "title": "Maker3DPeru-Italia",
         "slogan": "✨ Hiper-realismo en Resina: Del archivo digital a tu vitrina.",
         "delivery": "🕒 Entrega: 2 semanas (Desde el depósito del 50%)",
@@ -72,7 +72,7 @@ texts = {
         "warning_input": "⚠️ **Atención:** Debes ingresar tu **Nombre** y el **Personaje** arriba para activar el botón de WhatsApp.",
         "quality_tag": "⭐ Calidad Garantizada | Envío Seguro | Resina ABS-Like"
     },
-    "English": {
+    "English €": {
         "title": "Maker3DPeru-Italia",
         "slogan": "✨ Hyper-realism in Resin: From the digital file to your display case.",
         "delivery": "🕒 Delivery: 3 weeks (After 50% deposit)",
@@ -97,7 +97,7 @@ texts = {
         "warning_input": "⚠️ **Attention:** Please enter your **Name** and **Character** above to enable the WhatsApp button.",
         "quality_tag": "⭐ Guaranteed Quality | Secure Shipping | ABS-Like Resin"
     },
-    "Italiano": {
+    "Italiano €": {
         "title": "Maker3DPeru-Italia",
         "slogan": "✨ Iperrealismo in resina: dal file digitale alla teca espositiva.",
         "delivery": "🕒 Consegna: 1.5 settimane (Dall'acconto del 50%)",
@@ -124,7 +124,7 @@ texts = {
     }
 }
 
-idioma = st.selectbox("🌐 Idioma", ["Español (Perú)", "Español (España)", "English", "Italiano"])
+idioma = st.selectbox("🌐 Idioma", ["Español (Perú S/.)", "Español (España €)", "English €", "Italiano €"])
 t = texts[idioma]
 
 # --- 4. HEADER ---
