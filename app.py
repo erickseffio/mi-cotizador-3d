@@ -114,7 +114,7 @@ texts = {
         "img_info": "Sube una foto de tu modelo para una mejor estimación.",
         "height_help": "📏 Guía: Una lata de soda mide 12cm, una figura estándar 18cm.",
         "warning_input": "⚠️ **Atención:** Debes ingresar tu **Nombre** y el **Personaje** arriba para activar el botón de WhatsApp.",
-        "quality_tag": "⭐ Calidad Garantizada | Envío Seguro | Resina ABS-Like"
+        "quality_tag": "⭐ Calidad Garantizada | Envío Seguro | Resina ABS-Like",
         "design_details": [
             "El archivo STL no requiere modificaciones.",
             "Escalado, reparación de malla o cortes básicos.",
@@ -164,7 +164,7 @@ texts = {
         "img_info": "Upload a photo of your model for a better estimation.",
         "height_help": "📏 Guide: A soda can is 12cm, a standard figure is 18cm.",
         "warning_input": "⚠️ **Attention:** Please enter your **Name** and **Character** above to enable the WhatsApp button.",
-        "quality_tag": "⭐ Guaranteed Quality | Secure Shipping | ABS-Like Resin"
+        "quality_tag": "⭐ Guaranteed Quality | Secure Shipping | ABS-Like Resin",
         "design_details": [
             "STL file does not require modifications.",
             "Scaling, mesh repair, or basic cuts.",
@@ -214,7 +214,7 @@ texts = {
         "img_info": "Carica una foto del tuo modello per una stima migliore.",
         "height_help": "📏 Guida: Una lattina misura 12cm, una figura standard 18cm.",
         "warning_input": "⚠️ **Attenzione:** Inserisci il tuo **Nome** e il **Personaggio** sopra per attivare il pulsante WhatsApp.",
-        "quality_tag": "⭐ Qualità Garantita | Spedizione Sicura | Resina ABS-Like"
+        "quality_tag": "⭐ Qualità Garantita | Spedizione Sicura | Resina ABS-Like",
         "design_details": [
             "Il file STL non richiede modifiche.",
             "Scalatura, riparazione mesh o tagli di base.",
