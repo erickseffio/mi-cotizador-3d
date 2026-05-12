@@ -448,18 +448,18 @@ st.markdown("""
         border: 1px solid #333;
         overflow: hidden;
         /* Forzamos que toda la tarjeta tenga la misma altura */
-        height: 400px; 
+        height: 380px; 
         display: flex;
         flex-direction: column;
     }
     .card-img {
         width: 100%;
-        height: 160px; 
+        height: 140px; 
         object-fit: cover;
-        object-position: center 15%;
+        object-position: center;
     }
     .card-text {
-        padding: 15px;
+        padding: 12px;
         /* Este bloque ocupará todo el espacio sobrante empujando lo que esté debajo */
         flex-grow: 1; 
     }
@@ -470,8 +470,8 @@ st.markdown("""
     }
     .card-text p {
         color: #bbb !important;
-        font-size: 0.85rem !important;
-        line-height: 1.3;
+        font-size: 0.82rem !important;
+        line-height: 1.2;
     }
     /* Estilizamos el contenedor del botón para que siempre esté al fondo */
     .button-container {
@@ -483,9 +483,9 @@ st.markdown("""
 # --- TÍTULO DE SECCIÓN PERSONALIZADO ---
 st.markdown("""
     <div style="display: flex; align-items: center; margin-bottom: 20px;">
-        <span style="font-size: 2.5rem; margin-right: 15px;">🎨</span>
-        <h1 style="margin: 0; font-size: 2.2rem; font-weight: 800; color: #ffffff;">
-            Mi Portafolio <span style="color: #ff4b4b; font-size: 1rem; vertical-align: middle;">| Proyectos Destacados</span>
+        <span style="font-size: 2.2rem; margin-right: 12px;">🎨</span>
+        <h1 style="margin: 0; font-size: 2rem; font-weight: 800; color: #ffffff;">
+            Mi Portafolio <span style="color: #ff4b4b; font-size: 0.9rem; vertical-align: middle;">| Proyectos Destacados</span>
         </h1>
     </div>
 """, unsafe_allow_html=True)
