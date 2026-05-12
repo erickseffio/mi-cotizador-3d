@@ -43,6 +43,10 @@ texts = {
         "thanks": "✅ **¡Gracias por tu solicitud!** Al abrir WhatsApp, **no olvides adjuntar tu imagen de referencia**.",
         "social_title": "📱 ¡Síguenos en nuestras redes!",
         "social_proof": "Envíos seguros a todo el Perú y el extranjero 📦",
+        "loading_img": "Procesando imagen de referencia...",
+        "img_caption": "✅ Imagen cargada correctamente",
+        "img_success": "¡Imagen lista para la cotización!",
+        "img_info": "Sube una foto de tu modelo para una mejor estimación.",
         "height_help": "📏 Guía: Una lata de soda mide 12cm, una figura estándar 18cm.",
         "warning_input": "⚠️ **Atención:** Debes ingresar tu **Nombre** y el **Personaje** arriba para activar el botón de WhatsApp.",
         "quality_tag": "⭐ Calidad Garantizada | Envío Seguro | Resina ABS-Like"
@@ -68,6 +72,10 @@ texts = {
         "thanks": "✅ **¡Gracias por tu solicitud!** Al abrir WhatsApp, **no olvides adjuntar tu imagen de referencia**.",
         "social_title": "📱 ¡Síguenos en nuestras redes!",
         "social_proof": "Envíos seguros a todo el Perú y el extranjero 📦",
+        "loading_img": "Procesando imagen de referencia...",
+        "img_caption": "✅ Imagen cargada correctamente",
+        "img_success": "¡Imagen lista para la cotización!",
+        "img_info": "Sube una foto de tu modelo para una mejor estimación.",
         "height_help": "📏 Guía: Una lata de soda mide 12cm, una figura estándar 18cm.",
         "warning_input": "⚠️ **Atención:** Debes ingresar tu **Nombre** y el **Personaje** arriba para activar el botón de WhatsApp.",
         "quality_tag": "⭐ Calidad Garantizada | Envío Seguro | Resina ABS-Like"
@@ -93,6 +101,10 @@ texts = {
         "thanks": "✅ **Thank you!** When WhatsApp opens, **please attach your reference image**.",
         "social_title": "📱 Follow us!",
         "social_proof": "Secure shipping throughout Peru and abroad 📦",
+        "loading_img": "Processing reference image...",
+        "img_caption": "✅ Image uploaded successfully",
+        "img_success": "Image ready for quotation!",
+        "img_info": "Upload a photo of your model for a better estimation.",
         "height_help": "📏 Guide: A soda can is 12cm, a standard figure is 18cm.",
         "warning_input": "⚠️ **Attention:** Please enter your **Name** and **Character** above to enable the WhatsApp button.",
         "quality_tag": "⭐ Guaranteed Quality | Secure Shipping | ABS-Like Resin"
@@ -118,6 +130,10 @@ texts = {
         "thanks": "✅ **Grazie!** Quando si apre WhatsApp, **non dimenticare di allegare l'immagine**.",
         "social_title": "📱 Seguici sui social!",
         "social_proof": "Spedizione sicura in tutto il Perù e all'estero 📦",
+        "loading_img": "Elaborazione dell'immagine...",
+        "img_caption": "✅ Immagine caricata correttamente",
+        "img_success": "Immagine pronta per el preventivo!",
+        "img_info": "Carica una foto del tuo modello per una stima migliore.",
         "height_help": "📏 Guida: Una lattina misura 12cm, una figura standard 18cm.",
         "warning_input": "⚠️ **Attenzione:** Inserisci il tuo **Nome** e il **Personaggio** sopra per attivare il pulsante WhatsApp.",
         "quality_tag": "⭐ Qualità Garantita | Spedizione Sicura | Resina ABS-Like"
@@ -145,21 +161,22 @@ with c1:
     nombre_c = st.text_input(t["p_name_label"], placeholder=t["p_name_ph"])
     nombre_p = st.text_input(t["char_name_label"], placeholder=t["char_name_ph"])
 with c2:
-        # Guardamos el archivo en una variable
+        # Cargador de archivos usando la etiqueta del idioma seleccionado
         archivo_reference = st.file_uploader(t["ref_label"], type=['png', 'jpg', 'jpeg'])
 
         if archivo_reference is not None:
-            # Mostramos un indicador de carga animado
-            with st.spinner("Procesando imagen de referencia..."):
+            # st.spinner mostrará el mensaje en el idioma actual
+            with st.spinner(t.get("loading_img", "Processing...")):
                 try:
-                    # Mostramos la imagen con un mensaje de éxito
-                    st.image(archivo_reference, caption="✅ Imagen cargada correctamente", use_container_width=True)
-                    st.success("¡Imagen lista para la cotización!")
+                    # Muestra la imagen con su descripción traducida
+                    st.image(archivo_reference, caption=t.get("img_caption", "Uploaded image"), use_container_width=True)
+                    # Cuadro verde de éxito traducido
+                    st.success(t.get("img_success", "✅ Done!"))
                 except Exception:
-                    st.error("Hubo un problema al visualizar la imagen.")
+                    st.error("Error")
         else:
-            # Mensaje informativo si no hay nada subido aún
-            st.info("Sube una foto de tu modelo para una mejor estimación.")
+            # Mensaje informativo traducido cuando no hay archivo
+            st.info(t.get("img_info", "Please upload an image."))
 
 st.header(t["step2"])
 tab1, tab2, tab3 = st.tabs([t["tab_print"], t["tab_paint"], t["tab_design"]])
