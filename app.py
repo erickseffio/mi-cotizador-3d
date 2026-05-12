@@ -155,8 +155,8 @@ texts = {
         "step1": "1️⃣ Project Details", "step2": "2️⃣ Artistic Configuration", "step3": "3️⃣ Estimated Investment",
         "final_quote": "Estimated Investment",
         "wa_header": "Hello Maker 3D Perú! I'm interested in this investment:",
-        "tab_print": "💧 Printing", "tab_paint": "🖌️ Painting", "tab_design": "🧊 Design",
-        "height_label": "Height (cm)", "comp_label": "Complexity", "comp_opts": ["Simple", "Organic", "Epic"],
+        "tab_print": "💧 Structure and Scale", "tab_paint": "🖌️ Artistic Finish", "tab_design": "🧊 Design",
+        "height_label": "Height (cm)", "comp_label": "Complexity", "comp_opts": ["Collector's Item, Epic, Masterpiece"],
         "paint_check": "Include Professional Painting?", "paint_level": "Finish Level", "paint_opts": ["Basic", "Display", "Museum"],
         "design_label": "Digital Editing",
         "design_opts": [
