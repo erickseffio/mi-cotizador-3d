@@ -153,7 +153,7 @@ if archivo_reference is not None:
     with st.spinner(t.get("loading_img", "Procesando imagen de referencia...")):
         try:
             # Mostramos la imagen con un mensaje de éxito
-            st.image(archivo_referencia, caption="✅ Imagen cargada correctamente", use_container_width=True)
+            st.image(archivo_reference, caption="✅ Imagen cargada correctamente", use_container_width=True)
             st.success("¡Imagen lista para la cotización!")
         except Exception:
             st.error("Hubo un problema al cargar la imagen. Por favor, intenta de nuevo.")
