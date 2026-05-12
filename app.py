@@ -221,6 +221,7 @@ else:
                f"💧 Impresión: {dif}\n"
                f"🖌️ Pintura: {nv_p}\n"
                f"🧊 Diseño: {moneda_diseno}\n"
+               f"✨ DESCUENTO: {simbolo} {ahorro_wsp:.2f}\n"
                f"--------------------------\n"
                f"💰 TOTAL ESTIMADO {moneda_wa}")
     wa_link = f"https://wa.me/{t['wa_num']}?text={urllib.parse.quote(msg)}"
