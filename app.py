@@ -439,7 +439,7 @@ else:
 import streamlit.components.v1 as components
 
 # --- SECCIÓN PORTAFOLIO REFINADA ---
-# --- ESTILOS REFINADOS ---
+# --- ESTILOS REFORZADOS ---
 st.markdown("""
 <style>
     .card {
@@ -447,21 +447,21 @@ st.markdown("""
         border-radius: 12px;
         border: 1px solid #333;
         overflow: hidden;
-        margin-bottom: 10px;
+        /* Forzamos que toda la tarjeta tenga la misma altura */
+        height: 400px; 
+        display: flex;
+        flex-direction: column;
     }
     .card-img {
         width: 100%;
-        height: 160px; /* Altura reducida para evitar el zoom excesivo */
+        height: 160px; 
         object-fit: cover;
-        object-position: center 15%; /* Enfoca un poco más arriba para ver los rostros */
+        object-position: center 15%;
     }
     .card-text {
         padding: 15px;
-        /* Forzamos que el área de texto siempre mida lo mismo */
-        min-height: 130px; 
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
+        /* Este bloque ocupará todo el espacio sobrante empujando lo que esté debajo */
+        flex-grow: 1; 
     }
     .card-text h3 {
         color: #ff4b4b !important;
@@ -471,51 +471,37 @@ st.markdown("""
     .card-text p {
         color: #bbb !important;
         font-size: 0.85rem !important;
-        margin: 0 !important;
+        line-height: 1.3;
+    }
+    /* Estilizamos el contenedor del botón para que siempre esté al fondo */
+    .button-container {
+        padding: 0 15px 15px 15px;
     }
 </style>
 """, unsafe_allow_html=True)
 
-# --- SECCIÓN PORTAFOLIO ---
 st.header("🎨 Mi Portafolio")
 
 col1, col2, col3 = st.columns(3)
 
-# Digimon
-with col1:
-    st.markdown(f'''<div class="card">
-        <img src="https://i.postimg.cc/4NVvxmL4/20260502-113047.jpg" class="card-img">
-        <div class="card-text">
-            <h3>Digimon</h3>
-            <p>{t['desc_digimon']}</p>
-        </div>
-    </div>''', unsafe_allow_html=True)
-    if st.button("🔍 Detalles", key="btn_digi", use_container_width=True):
-        mostrar_imagen_grande("https://i.postimg.cc/4NVvxmL4/20260502-113047.jpg", "Digimon", t['desc_digimon'])
+# Estructura repetible para las 3 columnas
+def crear_tarjeta(columna, imagen, titulo, descripcion, llave):
+    with columna:
+        st.markdown(f'''<div class="card">
+            <img src="{imagen}" class="card-img">
+            <div class="card-text">
+                <h3>{titulo}</h3>
+                <p>{descripcion}</p>
+            </div>
+        </div>''', unsafe_allow_html=True)
+        # El botón ahora está "anclado" visualmente por el margen de la tarjeta
+        if st.button("🔍 Detalles", key=llave, use_container_width=True):
+            mostrar_imagen_grande(imagen, titulo, descripcion)
 
-# Hyoga
-with col2:
-    st.markdown(f'''<div class="card">
-        <img src="https://i.postimg.cc/tJC0CKyn/20260331-230329.jpg" class="card-img">
-        <div class="card-text">
-            <h3>Hyoga</h3>
-            <p>{t['desc_hyoga']}</p>
-        </div>
-    </div>''', unsafe_allow_html=True)
-    if st.button("🔍 Detalles", key="btn_hyo", use_container_width=True):
-        mostrar_imagen_grande("https://i.postimg.cc/tJC0CKyn/20260331-230329.jpg", "Hyoga", t['desc_hyoga'])
-
-# Albafica
-with col3:
-    st.markdown(f'''<div class="card">
-        <img src="https://i.postimg.cc/76wdmFCv/20250718-124326.jpg" class="card-img">
-        <div class="card-text">
-            <h3>Albafica</h3>
-            <p>{t['desc_albafica']}</p>
-        </div>
-    </div>''', unsafe_allow_html=True)
-    if st.button("🔍 Detalles", key="btn_alba", use_container_width=True):
-        mostrar_imagen_grande("https://i.postimg.cc/76wdmFCv/20250718-124326.jpg", "Albafica", t['desc_albafica'])
+# Renderizado
+crear_tarjeta(col1, "https://i.postimg.cc/4NVvxmL4/20260502-113047.jpg", "Digimon", t['desc_digimon'], "btn_d")
+crear_tarjeta(col2, "https://i.postimg.cc/tJC0CKyn/20260331-230329.jpg", "Hyoga", t['desc_hyoga'], "btn_h")
+crear_tarjeta(col3, "https://i.postimg.cc/76wdmFCv/20250718-124326.jpg", "Albafica", t['desc_albafica'], "btn_a")
 # --- 8. REDES SOCIALES ---
 st.markdown(f"#### {t['social_title']}")
 col_social = st.columns(4)
