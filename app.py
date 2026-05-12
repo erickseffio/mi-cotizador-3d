@@ -213,8 +213,8 @@ else:
 
         # Generamos el mensaje usando la nueva variable 'moneda_diseno'
     # Definimos lo que falta para que no salga el error rojo
-        ahorro_wsp = 0.0  # Puedes cambiarlo por tu lógica de descuento
-        simbolo = "S/." if idioma == "Español (Perú)" else "€"
+    ahorro_wsp = 0.0  # Puedes cambiarlo por tu lógica de descuento
+    simbolo = "S/." if idioma == "Español (Perú)" else "€"
         # Generamos el mensaje limpio
     msg = (f"{t['wa_header']}\n"
                f"--------------------------\n"
