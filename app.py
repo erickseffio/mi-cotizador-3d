@@ -208,8 +208,8 @@ else:
         
         # Lógica para el DISEÑO en WhatsApp (¡Aquí estaba el detalle!)
         # Asumiendo que tienes una variable con el costo en soles o la calculas aquí
-    diseno_pen = diseno_eur * st.session_state.tasa  
-    moneda_diseno = f"S/. {diseno_pen:.2f}" if idioma == "Español (Perú)" else f"€ {diseno_eur:.2f}"
+    diseno_pen = costo_d * st.session_state.tasa  
+    moneda_diseno = f"S/. {diseno_pen:.2f}" if idioma == "Español (Perú)" else f"€ {costo_d:.2f}"
 
         # Generamos el mensaje usando la nueva variable 'moneda_diseno'
         # Generamos el mensaje limpio
