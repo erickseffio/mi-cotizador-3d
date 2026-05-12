@@ -304,18 +304,32 @@ tab1, tab2, tab3 = st.tabs([t["tab_print"], t["tab_paint"], t["tab_design"]])
 with tab1:
     altura = st.number_input(t["height_label"], 5, 100, 15)
     st.caption(t["height_help"])
+    
+    # 1. Seleccionamos la opción por nombre
     dif = st.select_slider(t["comp_label"], options=t["comp_opts"])
+    
+    # 2. Calculamos el volumen
     vol = (altura ** 2.2) * 0.15
-    extra = {t["comp_opts"][0]: 1.5, t["comp_opts"][1]: 3.0, t["comp_opts"][2]: 6.0}[dif]
+    
+    # 3. CORRECCIÓN DEL ERROR: Mapeamos el costo según la posición del nombre elegido
+    idx_comp = t["comp_opts"].index(dif) # Buscamos si es el 0, 1 o 2
+    valores_extra = [1.5, 3.0, 6.0]      # Los costos asociados a cada nivel
+    extra = valores_extra[idx_comp]
+    
     costo_imp = (vol * st.session_state.resina) + extra
-
+    
 with tab2:
     quiere_p = st.checkbox(t["paint_check"])
     nv_p, costo_p = "No", 0.0
     if quiere_p:
         nv_p = st.select_slider(t["paint_level"], options=t["paint_opts"])
-        mult = {t["paint_opts"][0]: 1, t["paint_opts"][1]: 2.5, t["paint_opts"][2]: 5}
-        horas_p = (altura/5) * mult[nv_p]
+        
+        # CORRECCIÓN AQUÍ TAMBIÉN:
+        idx_p = t["paint_opts"].index(nv_p)
+        multiplicadores = [1, 2.5, 5]
+        mult = multiplicadores[idx_p]
+        
+        horas_p = (altura/5) * mult
         costo_p = horas_p * st.session_state.pintura
 
 with tab3:
