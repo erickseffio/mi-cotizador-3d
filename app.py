@@ -213,7 +213,7 @@ else:
 
         # Generamos el mensaje usando la nueva variable 'moneda_diseno'
         # Generamos el mensaje limpio
-        msg = (f"{t['wa_header']}\n"
+          msg = (f"{t['wa_header']}\n"
                f"--------------------------\n"
                f"👤 Cliente: {nombre_c}\n"
                f"👾 Figura: {nombre_p}\n"
