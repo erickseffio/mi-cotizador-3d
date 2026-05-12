@@ -317,15 +317,18 @@ html_portafolio = """
 
         <div class="gallery">
             <div class="gallery-item">
+                <img src="URL_DE_TU_FOTO_SHANKS.jpg" style="width:100%; height:200px; object-fit:cover;">
                 <div class="gallery-text">
                     <h3><i class="fas fa-fire" style="color: #ff4500;"></i> Shanks (40cm)</h3>
-                    <p>Nuestra pieza maestra. Aplicación de sombras dinámicas y barniz de protección UV.</p>
+                    <p>Aplicación de sombras dinámicas y barniz de protección UV.</p>
                 </div>
             </div>
+            
             <div class="gallery-item">
+                <img src="URL_DE_OTRA_FIGURA.jpg" style="width:100%; height:200px; object-fit:cover;">
                 <div class="gallery-text">
                     <h3><i class="fas fa-dragon" style="color: #70a1ff;"></i> Anime Series</h3>
-                    <p>Reproducción fiel de personajes de One Piece y Jujutsu Kaisen con calidad de exhibición.</p>
+                    <p>Calidad de exhibición para personajes de One Piece y Jujutsu Kaisen.</p>
                 </div>
             </div>
         </div>
