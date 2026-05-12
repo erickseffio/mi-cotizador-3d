@@ -43,6 +43,9 @@ texts = {
         "thanks": "✅ **¡Gracias por tu solicitud!** Al abrir WhatsApp, **no olvides adjuntar tu imagen de referencia**.",
         "social_title": "📱 ¡Síguenos en nuestras redes!",
         "social_proof": "Envíos seguros a todo el Perú y el extranjero 📦",
+        "desc_digimon": "Tai y Agumon (20cm) - Acabado vibrante con sombreado anime.",
+        "desc_hyoga": "Hyoga de Cisne (12cm) - Miniatura detallada con efectos metálicos.",
+        "desc_albafica": "Albafica de Piscis (40cm) - Gran formato con peana escénica de rosas.",
         "port_h2_resina": "🎨 Arte en Resina de Alta Gama",
         "port_p_resina": "En <b>Maker 3D Perú</b> transformamos archivos digitales en piezas de colección únicas. Especialistas en acabados artísticos detallados y esculturas de gran formato.",
         "port_shanks_desc": "Aplicación de sombras dinámicas y barniz de protección UV.",
@@ -84,6 +87,9 @@ texts = {
         "thanks": "✅ **¡Gracias por tu solicitud!** Al abrir WhatsApp, **no olvides adjuntar tu imagen de referencia**.",
         "social_title": "📱 ¡Síguenos en nuestras redes!",
         "social_proof": "Envíos seguros a todo el Perú y el extranjero 📦",
+        "desc_digimon": "Tai y Agumon (20cm) - Acabado vibrante con sombreado anime.",
+        "desc_hyoga": "Hyoga de Cisne (12cm) - Miniatura detallada con efectos metálicos.",
+        "desc_albafica": "Albafica de Piscis (40cm) - Gran formato con peana escénica de rosas.",
         "port_h2_resina": "🎨 Arte en Resina de Alta Gama",
         "port_p_resina": "En <b>Maker 3D Perú</b> transformamos archivos digitales en piezas de colección únicas. Especialistas en acabados artísticos detallados y esculturas de gran formato.",
         "port_shanks_desc": "Aplicación de sombras dinámicas y barniz de protección UV.",
@@ -125,6 +131,9 @@ texts = {
         "thanks": "✅ **Thank you!** When WhatsApp opens, **please attach your reference image**.",
         "social_title": "📱 Follow us!",
         "social_proof": "Secure shipping throughout Peru and abroad 📦",
+        "desc_digimon": "Tai & Agumon (20cm) - Vibrant finish with anime shading.",
+        "desc_hyoga": "Cygnus Hyoga (12cm) - Detailed miniature with metallic effects.",
+        "desc_albafica": "Pisces Albafica (40cm) - Large format with scenic rose base.",
         "port_h2_resina": "🎨 High-End Resin Art",
         "port_p_resina": "At <b>Maker 3D Perú</b> we transform digital files into unique collector's items. Specialists in detailed artistic finishes and large-format sculptures.",
         "port_shanks_desc": "Application of dynamic shadows and UV protection varnish.",
@@ -166,6 +175,9 @@ texts = {
         "thanks": "✅ **Grazie!** Quando si apre WhatsApp, **non dimenticare di allegare l'immagine**.",
         "social_title": "📱 Seguici sui social!",
         "social_proof": "Spedizione sicura in tutto il Perù e all'estero 📦",
+        "desc_digimon": "Tai e Agumon (20cm) - Finitura vibrante con sfumature anime.",
+        "desc_hyoga": "Hyoga del Cigno (12cm) - Miniatura dettagliata con effetti metallici.",
+        "desc_albafica": "Albafica dei Pesci (40cm) - Grande formato con base scenica di rose.",
         "port_h2_resina": "🎨 Arte in Resina di Alta Gamma",
         "port_p_resina": "In <b>Maker 3D Perú</b> trasformiamo file digitali in pezzi da collezione unici. Specialisti in finiture artistiche dettagliate e sculture di grande formato.",
         "port_shanks_desc": "Applicazione di ombre dinamiche e vernice protettiva UV.",
@@ -345,18 +357,26 @@ html_portafolio = f"""
         .card {{ background: linear-gradient(145deg, #161b22, #0d1117); border-radius: 20px; padding: 25px; margin-bottom: 25px; border: 1px solid #30363d; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: transform 0.3s ease, border-color 0.3s ease; }}
         .card:hover {{ transform: translateY(-5px); border-color: #ffa500; }}
         h2 {{ color: #ffa500; font-size: 28px; margin-top: 0; display: flex; align-items: center; gap: 10px; }}
-        h3 {{ color: #ffffff; margin-bottom: 10px; }}
-        p {{ line-height: 1.6; color: #8b949e; }}
+        h3 {{ color: #ffffff; font-size: 18px; margin-bottom: 10px; }}
+        p {{ line-height: 1.6; color: #8b949e; font-size: 14px; }}
         .badge-container {{ display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }}
         .badge {{ background: rgba(255, 165, 0, 0.1); color: #ffa500; padding: 6px 15px; border-radius: 50px; font-size: 13px; font-weight: bold; border: 1px solid rgba(255, 165, 0, 0.3); }}
-        .gallery {{ display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }}
-        .gallery-item {{ position: relative; border-radius: 15px; overflow: hidden; background: #21262d; border: 1px solid #30363d; }}
-        .gallery-text {{ padding: 15px; }}
+        
+        /* Galería de 3 Columnas */
+        .gallery {{ display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-bottom: 25px; }}
+        .gallery-item {{ border-radius: 15px; overflow: hidden; background: #21262d; border: 1px solid #30363d; }}
+        .gallery-text {{ padding: 12px; }}
+        
         .stats {{ display: flex; justify-content: space-between; gap: 15px; margin-top: 10px; }}
         .stat-item {{ flex: 1; text-align: center; background: #161b22; padding: 15px; border-radius: 15px; border: 1px solid #30363d; }}
-        .stat-num {{ font-size: 26px; font-weight: bold; color: #ffa500; display: block; }}
-        .stat-label {{ font-size: 12px; color: #8b949e; text-transform: uppercase; letter-spacing: 1px; }}
+        .stat-num {{ font-size: 24px; font-weight: bold; color: #ffa500; display: block; }}
+        .stat-label {{ font-size: 11px; color: #8b949e; text-transform: uppercase; letter-spacing: 1px; }}
         .footer {{ text-align: center; padding: 20px; color: #8b949e; font-style: italic; }}
+
+        /* Adaptabilidad para móviles */
+        @media (max-width: 600px) {{
+            .gallery {{ grid-template-columns: 1fr; }}
+        }}
     </style>
 </head>
 <body>
@@ -365,27 +385,34 @@ html_portafolio = f"""
             <h2><i class="fas fa-palette"></i> {t['port_h2_resina']}</h2>
             <p>{t['port_p_resina']}</p>
             <div class="badge-container">
-                <span class="badge">Resina 8K Ultra-Detail</span>
-                <span class="badge">Aerografía Profesional</span>
+                <span class="badge">Resina 8K</span>
+                <span class="badge">Aerografía</span>
                 <span class="badge">Custom Paint</span>
-                <span class="badge">Escala Real</span>
             </div>
         </div>
 
         <div class="gallery">
             <div class="gallery-item">
-                <img src="https://raw.githubusercontent.com/TuUsuario/TuRepo/main/shanks.jpg" style="width:100%; height:200px; object-fit:cover;">
+                <img src="https://i.postimg.cc/8P6pT50f/1001655300.jpg" style="width:100%; height:180px; object-fit:cover;">
                 <div class="gallery-text">
-                    <h3><i class="fas fa-fire" style="color: #ff4500;"></i> Shanks (40cm)</h3>
-                    <p>{t['port_shanks_desc']}</p>
+                    <h3>Digimon (20cm)</h3>
+                    <p>{t['desc_digimon']}</p>
                 </div>
             </div>
             
             <div class="gallery-item">
-                <img src="https://raw.githubusercontent.com/TuUsuario/TuRepo/main/anime.jpg" style="width:100%; height:200px; object-fit:cover;">
+                <img src="https://i.postimg.cc/QMcY5fyz/1001655303.jpg" style="width:100%; height:180px; object-fit:cover;">
                 <div class="gallery-text">
-                    <h3><i class="fas fa-dragon" style="color: #70a1ff;"></i> Anime Series</h3>
-                    <p>{t['port_anime_desc']}</p>
+                    <h3>Hyoga (12cm)</h3>
+                    <p>{t['desc_hyoga']}</p>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="https://i.postimg.cc/j5GfR5y3/1001655528.jpg" style="width:100%; height:180px; object-fit:cover;">
+                <div class="gallery-text">
+                    <h3>Albafica (40cm)</h3>
+                    <p>{t['desc_albafica']}</p>
                 </div>
             </div>
         </div>
@@ -416,7 +443,7 @@ html_portafolio = f"""
 </html>
 """
 
-st.components.v1.html(html_portafolio, height=850, scrolling=True)
+st.components.v1.html(html_portafolio, height=1100 if st.session_state.get('is_mobile') else 600, scrolling=True)
 st.divider()
 
 # --- 8. REDES SOCIALES ---
