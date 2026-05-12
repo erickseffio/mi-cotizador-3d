@@ -448,7 +448,7 @@ st.markdown("""
         border-radius: 12px;
         border: 1px solid #333;
         overflow: hidden;
-        height: 400px; 
+        height: 300px; 
         display: flex;
         flex-direction: column;
         margin-bottom: 20px;
