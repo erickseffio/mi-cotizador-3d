@@ -50,7 +50,7 @@ texts = {
     "Español (España)": {
         "title": "Maker3DPeru-Italia",
         "slogan": "✨ Hiper-realismo en Resina: Del archivo digital a tu vitrina.",
-        "delivery": "🕒 Entrega: 3 semanas (Desde el depósito del 50%)",
+        "delivery": "🕒 Entrega: 2 semanas (Desde el depósito del 50%)",
         "wa_num": "393924043068",
         "p_name_label": "Tu Nombre", "char_name_label": "Personaje", "ref_label": "Subir Referencia",
         "p_name_ph": "Ej: Javier García",
