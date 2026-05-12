@@ -437,54 +437,57 @@ else:
     st.link_button(t["wa_btn"], wa_link, use_container_width=True, type="primary")
     st.success(t["thanks"])
 import streamlit.components.v1 as components
-st.markdown("""
-<style>
-    /* Estilo para el contenedor de la tarjeta */
-    .gallery-card {
-        background-color: #1e1e1e;
-        border-radius: 10px;
-        border: 1px solid #333;
-        margin-bottom: 10px;
-        transition: transform 0.3s ease;
-    }
-    .gallery-card:hover {
-        transform: translateY(-5px);
-        border-color: #ff4b4b;
-    }
-    /* Hacer que la imagen de Streamlit parezca parte de la tarjeta */
-    .stImage > img {
-        cursor: pointer;
-        border-radius: 10px 10px 0 0;
-    }
-</style>
-""", unsafe_allow_html=True)
 
+from st_clickable_images import clickable_images
 # --- SECCIÓN PORTAFOLIO ---
 st.header("🎨 Mi Portafolio")
-st.caption("Haz clic en cualquier imagen para verla en tamaño original")
+st.caption("Toca la imagen para ampliar")
 
-col1, col2, col3 = st.columns(3)
+# 1. Definimos la lista de imágenes
+imagenes = [
+    "https://i.postimg.cc/4NVvxmL4/20260502-113047.jpg", # Digimon
+    "https://i.postimg.cc/tJC0CKyn/20260331-230329.jpg", # Hyoga
+    "https://i.postimg.cc/76wdmFCv/20250718-124326.jpg"  # Albafica
+]
 
-with col1:
-    # Contenedor de la tarjeta
-    with st.container():
-        # LA IMAGEN ES EL BOTÓN:
-        # Usamos una columna vacía o un contenedor para detectar el clic
-        if st.image("https://i.postimg.cc/4NVvxmL4/20260502-113047.jpg", use_container_width=True):
-            # En Streamlit, para detectar clic puro en imagen sin botón 
-            # lo más limpio es poner un botón invisible o usar este método:
-            if st.button("🔍 Ampliar Digimon", key="img_digi", use_container_width=True):
-                mostrar_imagen_grande("https://i.postimg.cc/4NVvxmL4/20260502-113047.jpg", "Digimon (20cm)", t['desc_digimon'])
-        
-        # EL TEXTO DEBAJO (HTML para el estilo de tarjeta)
-        st.markdown(f"""
-            <div style="background-color: #1e1e1e; padding: 15px; border-radius: 0 0 10px 10px; border: 1px solid #333; border-top: none;">
-                <h3 style="margin:0; color:#ff4b4b; font-size:1.1rem;">Digimon (20cm)</h3>
-                <p style="margin:5px 0 0 0; color:#cccccc; font-size:0.85rem;">{t['desc_digimon']}</p>
-            </div>
-        """, unsafe_allow_html=True)
+# 2. Mostramos las imágenes que detectan CLIC
+clicked = clickable_images(
+    imagenes,
+    titles=[f"Digimon", f"Hyoga", f"Albafica"],
+    div_style={
+        "display": "flex",
+        "justify-content": "center",
+        "flex-wrap": "wrap",
+        "gap": "20px"
+    },
+    img_style={
+        "cursor": "pointer",
+        "width": "250px",
+        "height": "180px",
+        "object-fit": "cover",
+        "border-radius": "10px",
+        "border": "2px solid #333",
+        "transition": "transform 0.3s"
+    },
+)
 
-# Repites la misma estructura para Hyoga y Albafica...
+# 3. Lógica para abrir el "Cuadro Aparte" (Modal) al hacer clic
+if clicked > -1:
+    if clicked == 0:
+        mostrar_imagen_grande(imagenes[0], "Digimon (20cm)", t['desc_digimon'])
+    elif clicked == 1:
+        mostrar_imagen_grande(imagenes[1], "Hyoga (12cm)", t['desc_hyoga'])
+    elif clicked == 2:
+        mostrar_imagen_grande(imagenes[2], "Albafica (40cm)", t['desc_albafica'])
+
+# 4. Texto descriptivo debajo (Solo para mantener la estética de tarjeta)
+col_t1, col_t2, col_t3 = st.columns(3)
+with col_t1:
+    st.markdown(f"**Digimon (20cm)**  \n{t['desc_digimon']}")
+with col_t2:
+    st.markdown(f"**Hyoga (12cm)**  \n{t['desc_hyoga']}")
+with col_t3:
+    st.markdown(f"**Albafica (40cm)**  \n{t['desc_albafica']}")
 # --- 8. REDES SOCIALES ---
 st.markdown(f"#### {t['social_title']}")
 col_social = st.columns(4)
