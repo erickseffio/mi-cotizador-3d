@@ -255,14 +255,59 @@ html_portafolio = """
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    </head>
+    <style>
+        body { font-family: 'Helvetica', sans-serif; background-color: #0e1117; color: white; margin: 0; padding: 20px; }
+        .card { background: #1a1c23; border-radius: 15px; padding: 20px; margin-bottom: 25px; border-left: 5px solid #ffa500; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        h2 { color: #ffa500; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        .skill-tag { background: #333; padding: 5px 12px; border-radius: 20px; font-size: 12px; margin-right: 5px; color: #ffa500; border: 1px solid #ffa500; }
+        .stat-box { text-align: center; padding: 15px; background: #262730; border-radius: 10px; }
+        .stat-num { font-size: 24px; font-weight: bold; color: #ffa500; }
+    </style>
+</head>
 <body>
-    </body>
+
+    <div class="card">
+        <h2>🚀 Ingeniería & Arte 3D</h2>
+        <p>Especialista en impresión de alta resolución y acabados artísticos de nivel coleccionista.</p>
+        <div>
+            <span class="skill-tag">Resina 8K</span>
+            <span class="skill-tag">Aerografía Pro</span>
+            <span class="skill-tag">Cybersecurity</span>
+            <span class="skill-tag">Python Dev</span>
+        </div>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <h3>🔥 Pieza Maestra: Shanks</h3>
+            <p>Escultura de 40cm con acabado premium. Trabajo de texturas y sombreado manual detallado.</p>
+        </div>
+        <div class="card">
+            <h3>👾 Anime & Manga</h3>
+            <p>Expertise en figuras de One Piece y Jujutsu Kaisen con fidelidad total al diseño original.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>📊 Garantía Maker 3D</h3>
+        <div class="grid" style="grid-template-columns: 1fr 1fr 1fr;">
+            <div class="stat-box"><div class="stat-num">+200</div><div>Proyectos</div></div>
+            <div class="stat-box"><div class="stat-num">100%</div><div>Seguridad</div></div>
+            <div class="stat-box"><div class="stat-num">Envío</div><div>Nacional</div></div>
+        </div>
+    </div>
+
+    <div class="card" style="text-align: center;">
+        <p><i>"Donde el código se convierte en arte tangible."</i></p>
+    </div>
+
+</body>
 </html>
 """
 
 # Esta línea es la que hace la magia de mostrarlo en la web
-components.html(html_portafolio, height=800, scrolling=True)
+components.html(html_portafolio, height=700, scrolling=True)
 st.divider()
 
 # --- 8. REDES SOCIALES ---
