@@ -438,62 +438,79 @@ else:
     st.success(t["thanks"])
 import streamlit.components.v1 as components
 
-# --- SECCIÓN PORTAFOLIO ---
-st.header("🎨 Mi Portafolio")
-
-# CSS para ocultar el botón y que parezca que clicamos la imagen
+# --- SECCIÓN PORTAFOLIO PREMIUM ---
 st.markdown("""
 <style>
-    /* Estilo para la tarjeta */
-    .portafolio-card {
-        position: relative;
-        background-color: #1e1e1e;
-        border-radius: 10px;
+    .main-gallery {
+        display: flex;
+        gap: 20px;
+        padding: 10px;
+    }
+    .card {
+        background: #1e1e1e;
+        border-radius: 15px;
         border: 1px solid #333;
+        transition: all 0.3s ease;
         overflow: hidden;
-        margin-bottom: 20px;
     }
-    /* Estilo para el botón invisible que cubre la imagen */
-    .stButton > button {
-        background-color: transparent !important;
-        border: none !important;
-        color: transparent !important;
-        height: 180px !important;
-        width: 100% !important;
-        position: absolute;
-        top: 0;
-        z-index: 10;
+    .card:hover {
+        transform: translateY(-10px);
+        border-color: #ff4b4b;
+        box-shadow: 0 10px 20px rgba(255, 75, 75, 0.2);
     }
-    .stButton > button:hover {
-        background-color: rgba(255, 75, 75, 0.1) !important; /* Brillo rojo suave al pasar el mouse */
-        cursor: pointer;
+    .card-text {
+        padding: 15px;
+        background: #1e1e1e;
+    }
+    .card-text h3 {
+        color: #ff4b4b !important;
+        font-size: 1.2rem !important;
+        margin-bottom: 5px !important;
+    }
+    .card-text p {
+        color: #bbb !important;
+        font-size: 0.85rem !important;
+        line-height: 1.2 !important;
     }
 </style>
 """, unsafe_allow_html=True)
 
+st.header("🎨 Mi Portafolio")
+
 col1, col2, col3 = st.columns(3)
 
 with col1:
-    st.markdown('<div class="portafolio-card">', unsafe_allow_html=True)
-    st.image("https://i.postimg.cc/4NVvxmL4/20260502-113047.jpg", use_container_width=True)
-    # Este botón es invisible y está ENCIMA de la imagen
-    if st.button("ver_digimon", key="img_btn1"):
-        mostrar_imagen_grande("https://i.postimg.cc/4NVvxmL4/20260502-113047.jpg", "Digimon (20cm)", t['desc_digimon'])
-    st.markdown(f'<div style="padding:15px;"><h4>Digimon</h4><p style="font-size:0.8rem;">{t["desc_digimon"]}</p></div></div>', unsafe_allow_html=True)
+    st.markdown(f'''<div class="card">
+        <img src="https://i.postimg.cc/4NVvxmL4/20260502-113047.jpg" style="width:100%; height:250px; object-fit:cover;">
+        <div class="card-text">
+            <h3>Digimon</h3>
+            <p>{t['desc_digimon']}</p>
+        </div>
+    </div>''', unsafe_allow_html=True)
+    if st.button("🔎 Zoom Artístico", key="z1", use_container_width=True):
+        mostrar_imagen_grande("https://i.postimg.cc/4NVvxmL4/20260502-113047.jpg", "Digimon", t['desc_digimon'])
 
 with col2:
-    st.markdown('<div class="portafolio-card">', unsafe_allow_html=True)
-    st.image("https://i.postimg.cc/tJC0CKyn/20260331-230329.jpg", use_container_width=True)
-    if st.button("ver_hyoga", key="img_btn2"):
-        mostrar_imagen_grande("https://i.postimg.cc/tJC0CKyn/20260331-230329.jpg", "Hyoga (12cm)", t['desc_hyoga'])
-    st.markdown(f'<div style="padding:15px;"><h4>Hyoga</h4><p style="font-size:0.8rem;">{t["desc_hyoga"]}</p></div></div>', unsafe_allow_html=True)
+    st.markdown(f'''<div class="card">
+        <img src="https://i.postimg.cc/tJC0CKyn/20260331-230329.jpg" style="width:100%; height:250px; object-fit:cover;">
+        <div class="card-text">
+            <h3>Hyoga</h3>
+            <p>{t['desc_hyoga']}</p>
+        </div>
+    </div>''', unsafe_allow_html=True)
+    if st.button("🔎 Zoom Artístico", key="z2", use_container_width=True):
+        mostrar_imagen_grande("https://i.postimg.cc/tJC0CKyn/20260331-230329.jpg", "Hyoga", t['desc_hyoga'])
 
 with col3:
-    st.markdown('<div class="portafolio-card">', unsafe_allow_html=True)
-    st.image("https://i.postimg.cc/76wdmFCv/20250718-124326.jpg", use_container_width=True)
-    if st.button("ver_albafica", key="img_btn3"):
-        mostrar_imagen_grande("https://i.postimg.cc/76wdmFCv/20250718-124326.jpg", "Albafica (40cm)", t['desc_albafica'])
-    st.markdown(f'<div style="padding:15px;"><h4>Albafica</h4><p style="font-size:0.8rem;">{t["desc_albafica"]}</p></div></div>', unsafe_allow_html=True)
+    st.markdown(f'''<div class="card">
+        <img src="https://i.postimg.cc/76wdmFCv/20250718-124326.jpg" style="width:100%; height:250px; object-fit:cover;">
+        <div class="card-text">
+            <h3>Albafica</h3>
+            <p>{t['desc_albafica']}</p>
+        </div>
+    </div>''', unsafe_allow_html=True)
+    if st.button("🔎 Zoom Artístico", key="z3", use_container_width=True):
+        mostrar_imagen_grande("https://i.postimg.cc/76wdmFCv/20250718-124326.jpg", "Albafica", t['desc_albafica'])
 # --- 8. REDES SOCIALES ---
 st.markdown(f"#### {t['social_title']}")
 col_social = st.columns(4)
