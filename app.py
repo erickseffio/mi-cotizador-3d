@@ -244,7 +244,25 @@ else:
     """, unsafe_allow_html=True)
     st.link_button(t["wa_btn"], wa_link, use_container_width=True, type="primary")
     st.success(t["thanks"])
+import streamlit.components.v1 as components
 
+# --- SECCIÓN DEL PORTAFOLIO ---
+st.divider() # Esto pone una línea divisoria estética
+st.header("✨ Portafolio Premium - Maker 3D Perú")
+
+# Aquí es donde pegas el código HTML largo que te envié antes
+html_portafolio = """
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    </head>
+<body>
+    </body>
+</html>
+"""
+
+# Esta línea es la que hace la magia de mostrarlo en la web
+components.html(html_portafolio, height=1200, scrolling=True)
 st.divider()
 
 # --- 8. REDES SOCIALES ---
