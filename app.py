@@ -301,36 +301,54 @@ with c2:
 st.header(t["step2"])
 tab1, tab2, tab3 = st.tabs([t["tab_print"], t["tab_paint"], t["tab_design"]])
 
+# --- TAB 1: ESTRUCTURA Y ESCALA ---
 with tab1:
     altura = st.number_input(t["height_label"], 5, 100, 15)
     st.caption(t["height_help"])
     
-    # 1. Seleccionamos la opción por nombre
-    dif = st.select_slider(t["comp_label"], options=t["comp_opts"])
+    # Obtenemos la lista de opciones del diccionario
+    opciones_comp = t["comp_opts"]
     
-    # 2. Calculamos el volumen
+    # 1. Slider de Complejidad con protección de error
+    try:
+        dif = st.select_slider(t["comp_label"], options=opciones_comp)
+    except:
+        # Si cambias el idioma y el valor viejo no existe, reiniciamos al primero
+        dif = opciones_comp[0]
+        st.rerun()
+
+    # 2. Lógica de cálculo (basada en posición 0, 1, 2 para evitar errores de nombre)
+    idx_comp = opciones_comp.index(dif)
+    valores_extra = [1.5, 3.0, 6.0] # Costos asociados a cada nivel
+    extra = valores_extra[min(idx_comp, len(valores_extra)-1)]
+    
     vol = (altura ** 2.2) * 0.15
-    
-    # 3. CORRECCIÓN DEL ERROR: Mapeamos el costo según la posición del nombre elegido
-    idx_comp = t["comp_opts"].index(dif) # Buscamos si es el 0, 1 o 2
-    valores_extra = [1.5, 3.0, 6.0]      # Los costos asociados a cada nivel
-    extra = valores_extra[idx_comp]
-    
     costo_imp = (vol * st.session_state.resina) + extra
-    
+
+# --- TAB 2: ACABADO ARTÍSTICO ---
 with tab2:
     quiere_p = st.checkbox(t["paint_check"])
     nv_p, costo_p = "No", 0.0
+    
     if quiere_p:
-        nv_p = st.select_slider(t["paint_level"], options=t["paint_opts"])
+        opciones_p = t["paint_opts"]
         
-        # CORRECCIÓN AQUÍ TAMBIÉN:
-        idx_p = t["paint_opts"].index(nv_p)
-        multiplicadores = [1, 2.5, 5]
-        mult = multiplicadores[idx_p]
+        # 1. Slider de Pintura con protección de error
+        try:
+            nv_p = st.select_slider(t["paint_level"], options=opciones_p)
+        except:
+            nv_p = opciones_p[0]
+            st.rerun()
+            
+        # 2. Lógica de cálculo basada en posición
+        idx_p = opciones_p.index(nv_p)
+        multiplicadores = [1, 2.5, 5] # Multiplicador de tiempo/dificultad
+        mult = multiplicadores[min(idx_p, len(multiplicadores)-1)]
         
-        horas_p = (altura/5) * mult
+        horas_p = (altura / 5) * mult
         costo_p = horas_p * st.session_state.pintura
+
+# --- TAB 3: DISEÑO --- (Se mantiene tu lógica actual)
 
 with tab3:
     st.subheader(t["design_label"])
