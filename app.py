@@ -156,7 +156,7 @@ with c2:
                 st.image(archivo_referencia, caption="✅ Imagen cargada correctamente", use_container_width=True)
                 st.success("¡Imagen lista para la cotización!")
             except Exception:
-            st.error("Hubo un problema al cargar la imagen. Por favor, intenta de nuevo.")
+                st.error("Hubo un problema al cargar la imagen. Por favor, intenta de nuevo.")
 else:
     # Mensaje informativo si no hay nada subido aún
     st.info("Sube una foto de tu modelo para una mejor estimación visual.")
