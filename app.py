@@ -186,7 +186,8 @@ with st.container(border=True):
             st.metric(label=t["final_price_label"], value=f"€ {total_eur:.2f}")
             st.caption(f"Ref: S/. {total_pen:.2f}")
     with col_res2:
-        ahorro_est = (total_eur * 0.25) 
+        ahorro_est = (total_eur * 0.25)
+        ahorro_pen = ahorro_est * st.session_state.tasa
         if idioma == "Español (Perú)":
             st.success(f"{t['savings_title']} **¡Ahorraste S/. {ahorro_pen:.2f}!**")
         else:
