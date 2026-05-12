@@ -439,7 +439,7 @@ else:
 import streamlit.components.v1 as components
 
 # --- SECCIÓN PORTAFOLIO REFINADA ---
-# --- ESTILOS REFORZADOS ---
+# --- ESTILOS ADAPTABLES (MÓVIL Y PC) ---
 st.markdown("""
 <style>
     .card {
@@ -447,70 +447,50 @@ st.markdown("""
         border-radius: 12px;
         border: 1px solid #333;
         overflow: hidden;
-        /* Forzamos que toda la tarjeta tenga la misma altura */
-        height: 380px; 
+        height: 420px; /* Aumentamos un poco para dar aire al texto en móvil */
         display: flex;
         flex-direction: column;
+        margin-bottom: 20px;
     }
     .card-img {
         width: 100%;
-        height: 120px; 
+        height: 140px; 
         object-fit: cover;
-        object-position: center;
+        object-position: center center;
     }
     .card-text {
-        padding: 12px;
-        /* Este bloque ocupará todo el espacio sobrante empujando lo que esté debajo */
+        padding: 15px;
         flex-grow: 1; 
     }
     .card-text h3 {
         color: #ff4b4b !important;
-        font-size: 1.1rem !important;
-        margin-bottom: 5px !important;
+        font-size: 1.2rem !important; /* Título un poco más grande */
+        margin-bottom: 8px !important;
     }
+    
+    /* TEXTO PARA PC (Escritorio) */
     .card-text p {
         color: #bbb !important;
-        font-size: 0.82rem !important;
-        line-height: 1.2;
+        font-size: 0.95rem !important;
+        line-height: 1.4;
     }
-    /* Estilizamos el contenedor del botón para que siempre esté al fondo */
-    .button-container {
-        padding: 0 15px 15px 15px;
+
+    /* AJUSTE PARA CELULARES (Pantallas menores a 768px) */
+    @media only screen and (max-width: 768px) {
+        .card {
+            height: auto; /* En el celular la tarjeta crece según el texto */
+            min-height: 400px;
+        }
+        .card-text p {
+            font-size: 1.1rem !important; /* Letra más grande para el pulgar y la vista */
+            color: #ffffff !important;   /* Un poco más blanco para mejor contraste */
+        }
+        .card-text h3 {
+            font-size: 1.4rem !important;
+        }
     }
 </style>
 """, unsafe_allow_html=True)
-
-# --- TÍTULO DE SECCIÓN PERSONALIZADO ---
-st.markdown("""
-    <div style="display: flex; align-items: center; margin-bottom: 20px;">
-        <span style="font-size: 2.2rem; margin-right: 12px;">🎨</span>
-        <h1 style="margin: 0; font-size: 2rem; font-weight: 800; color: #ffffff;">
-            Mi Portafolio <span style="color: #ff4b4b; font-size: 0.9rem; vertical-align: middle;">| Proyectos Destacados</span>
-        </h1>
-    </div>
-""", unsafe_allow_html=True)
-
-col1, col2, col3 = st.columns(3)
-
-# Estructura repetible para las 3 columnas
-def crear_tarjeta(columna, imagen, titulo, descripcion, llave):
-    with columna:
-        st.markdown(f'''<div class="card">
-            <img src="{imagen}" class="card-img">
-            <div class="card-text">
-                <h3>{titulo}</h3>
-                <p>{descripcion}</p>
-            </div>
-        </div>''', unsafe_allow_html=True)
-        # El botón ahora está "anclado" visualmente por el margen de la tarjeta
-        if st.button("🔍 Detalles", key=llave, use_container_width=True):
-            mostrar_imagen_grande(imagen, titulo, descripcion)
-
-# Renderizado
-crear_tarjeta(col1, "https://i.postimg.cc/4NVvxmL4/20260502-113047.jpg", "Digimon", t['desc_digimon'], "btn_d")
-crear_tarjeta(col2, "https://i.postimg.cc/tJC0CKyn/20260331-230329.jpg", "Hyoga", t['desc_hyoga'], "btn_h")
-crear_tarjeta(col3, "https://i.postimg.cc/76wdmFCv/20250718-124326.jpg", "Albafica", t['desc_albafica'], "btn_a")
-
 # --- 8. REDES SOCIALES ---
 st.markdown(f"#### {t['social_title']}")
 col_social = st.columns(4)
