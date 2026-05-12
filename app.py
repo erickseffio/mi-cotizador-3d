@@ -433,7 +433,13 @@ else:
     diseno_pen = costo_d * st.session_state.tasa  
     moneda_diseno = f"S/. {diseno_pen:.2f}" if idioma == "Español (Perú)" else f"€ {costo_d:.2f}"
 
-        # Generamos el mensaje usando la nueva variable 'moneda_diseno'
+    mapa_detalles = {}
+    for lang in texts:
+        opts = texts[lang]["design_opts"]
+        details = texts[lang]["design_details"]
+        for i in range(len(opts)):
+            mapa_detalles[opts[i]] = details[i]
+            
     # Definimos lo que falta para que no salga el error rojo
     ahorro_wsp = 0.0  # Puedes cambiarlo por tu lógica de descuento
     simbolo = "S/." if idioma == "Español (Perú)" else "€"
