@@ -482,9 +482,7 @@ html_portafolio = f"""
 
         <div class="gallery">
             <div class="gallery-item">
-                <a href="https://i.postimg.cc/4NVvxmL4/20260502-113047.jpg" target="_blank">
-                    <img src="https://i.postimg.cc/4NVvxmL4/20260502-113047.jpg" style="width:100%; height:180px; object-fit:cover;">
-                </a>
+                <img src="https://i.postimg.cc/4NVvxmL4/20260502-113047.jpg" style="width:100%; height:180px; object-fit:cover;">
                 <div class="gallery-text">
                     <h3>Digimon (20cm)</h3>
                     <p>{t['desc_digimon']}</p>
