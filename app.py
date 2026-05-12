@@ -4,6 +4,14 @@ import urllib.parse
 # 1. Configuración de la página
 st.set_page_config(page_title="Maker3DPeru-Italia", page_icon="Logo.jpg")
 
+@st.dialog("Vista de Obra - Maker 3D Perú", width="large")
+def mostrar_imagen_grande(url, titulo, descripcion):
+    st.image(url, use_container_width=True)
+    st.subheader(titulo)
+    st.write(descripcion)
+    if st.button("Cerrar"):
+        st.rerun()
+        
 # --- 2. VALORES ADMINISTRABLES ---
 if 'resina' not in st.session_state: st.session_state.resina = 0.03
 if 'blender' not in st.session_state: st.session_state.blender = 11.0
@@ -430,110 +438,40 @@ else:
     st.success(t["thanks"])
 import streamlit.components.v1 as components
 
-# --- SECCIÓN DEL PORTAFOLIO ---
-st.divider() # Esto pone una línea divisoria estética
-st.header(t["port_header"])
+# --- SECCIÓN PORTAFOLIO ---
+st.write("### 🎨 Portafolio de Trabajos")
 
-# Aquí es donde pegas el código HTML largo que te envié antes
-html_portafolio = f"""
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        body {{ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0e1117; color: #e0e0e0; margin: 0; padding: 10px; }}
-        .main-container {{ max-width: 900px; margin: auto; }}
-        .card {{ background: linear-gradient(145deg, #161b22, #0d1117); border-radius: 20px; padding: 25px; margin-bottom: 25px; border: 1px solid #30363d; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: transform 0.3s ease, border-color 0.3s ease; }}
-        .card:hover {{ transform: translateY(-5px); border-color: #ffa500; }}
-        h2 {{ color: #ffa500; font-size: 28px; margin-top: 0; display: flex; align-items: center; gap: 10px; }}
-        h3 {{ color: #ffffff; font-size: 18px; margin-bottom: 10px; }}
-        p {{ line-height: 1.6; color: #8b949e; font-size: 14px; }}
-        .badge-container {{ display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }}
-        .badge {{ background: rgba(255, 165, 0, 0.1); color: #ffa500; padding: 6px 15px; border-radius: 50px; font-size: 13px; font-weight: bold; border: 1px solid rgba(255, 165, 0, 0.3); }}
-        
-        /* Galería de 3 Columnas */
-        .gallery {{ display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-bottom: 25px; }}
-        .gallery-item {{ border-radius: 15px; overflow: hidden; background: #21262d; border: 1px solid #30363d; }}
-        .gallery-text {{ padding: 12px; }}
-        
-        .stats {{ display: flex; justify-content: space-between; gap: 15px; margin-top: 10px; }}
-        .stat-item {{ flex: 1; text-align: center; background: #161b22; padding: 15px; border-radius: 15px; border: 1px solid #30363d; }}
-        .stat-num {{ font-size: 24px; font-weight: bold; color: #ffa500; display: block; }}
-        .stat-label {{ font-size: 11px; color: #8b949e; text-transform: uppercase; letter-spacing: 1px; }}
-        .footer {{ text-align: center; padding: 20px; color: #8b949e; font-style: italic; }}
+col1, col2, col3 = st.columns(3)
 
-        /* Adaptabilidad para móviles */
-        @media (max-width: 600px) {{
-            .gallery {{ grid-template-columns: 1fr; }}
-        }}
-    </style>
-</head>
-<body>
-    <div class="main-container">
-        <div class="card">
-            <h2><i class="fas fa-palette"></i> {t['port_h2_resina']}</h2>
-            <p>{t['port_p_resina']}</p>
-            <div class="badge-container">
-                <span class="badge">Resina 8K</span>
-                <span class="badge">Aerografía</span>
-                <span class="badge">Custom Paint</span>
-            </div>
-        </div>
+with col1:
+    st.image("https://i.postimg.cc/4NVvxmL4/20260502-113047.jpg", use_container_width=True)
+    st.caption("Digimon (20cm)")
+    if st.button("🔍 Ver Original", key="btn_digimon"):
+        mostrar_imagen_grande(
+            "https://i.postimg.cc/4NVvxmL4/20260502-113047.jpg", 
+            "Digimon (20cm)", 
+            t['desc_digimon']
+        )
 
-        <div class="gallery">
-            <div class="gallery-item">
-                <img src="https://i.postimg.cc/4NVvxmL4/20260502-113047.jpg" style="width:100%; height:180px; object-fit:cover;">
-                <div class="gallery-text">
-                    <h3>Digimon (20cm)</h3>
-                    <p>{t['desc_digimon']}</p>
-                </div>
-            </div>
-            
-            <div class="gallery-item">
-                <img src="https://i.postimg.cc/tJC0CKyn/20260331-230329.jpg" style="width:100%; height:180px; object-fit:cover;">
-                <div class="gallery-text">
-                    <h3>Hyoga (12cm)</h3>
-                    <p>{t['desc_hyoga']}</p>
-                </div>
-            </div>
+with col2:
+    st.image("https://i.postimg.cc/tJC0CKyn/20260331-230329.jpg", use_container_width=True)
+    st.caption("Hyoga (12cm)")
+    if st.button("🔍 Ver Original", key="btn_hyoga"):
+        mostrar_imagen_grande(
+            "https://i.postimg.cc/tJC0CKyn/20260331-230329.jpg", 
+            "Hyoga de Cisne (12cm)", 
+            t['desc_hyoga']
+        )
 
-            <div class="gallery-item">
-                <img src="https://i.postimg.cc/76wdmFCv/20250718-124326.jpg" style="width:100%; height:180px; object-fit:cover;">
-                <div class="gallery-text">
-                    <h3>Albafica (40cm)</h3>
-                    <p>{t['desc_albafica']}</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="card">
-            <h2>{t['port_h2_calidad']}</h2>
-            <div class="stats">
-                <div class="stat-item">
-                    <span class="stat-num">+200</span>
-                    <span class="stat-label">{t['port_stat_fig']}</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-num">Premium</span>
-                    <span class="stat-label">{t['port_stat_pint']}</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-num">Full Speed</span>
-                    <span class="stat-label">{t['port_stat_env']}</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="footer">
-            {t['port_footer']}
-        </div>
-    </div>
-</body>
-</html>
-"""
-
-st.components.v1.html(html_portafolio, height=1100 if st.session_state.get('is_mobile') else 600, scrolling=True)
-st.divider()
+with col3:
+    st.image("https://i.postimg.cc/76wdmFCv/20250718-124326.jpg", use_container_width=True)
+    st.caption("Albafica (40cm)")
+    if st.button("🔍 Ver Original", key="btn_albafica"):
+        mostrar_imagen_grande(
+            "https://i.postimg.cc/76wdmFCv/20250718-124326.jpg", 
+            "Albafica de Piscis (40cm)", 
+            t['desc_albafica']
+        )
 
 # --- 8. REDES SOCIALES ---
 st.markdown(f"#### {t['social_title']}")
