@@ -242,7 +242,7 @@ else:
         </p>
     </div>
     """, unsafe_allow_html=True)
-          st.link_button(t["wa_btn"], wa_link, use_container_width=True, type="primary")
+    st.link_button(t["wa_btn"], wa_link, use_container_width=True, type="primary")
     st.success(t["thanks"])
 
 st.divider()
