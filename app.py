@@ -39,6 +39,8 @@ texts = {
         "p_name_ph": "Ej: Juan Pérez",
         "char_name_ph": "Ej: Iron Man Mark 85",
         "step1": "1️⃣ Datos del Proyecto", "step2": "2️⃣ Configuración Artística", "step3": "3️⃣ Presupuesto Final",
+        "final_quote": "Inversión Estimada", 
+        "wa_header": "¡Hola Maker 3D Perú! Solicito información sobre esta inversión:",
         "tab_print": "💧 Impresión", "tab_paint": "🖌️ Pintura", "tab_design": "🧊 Diseño",
         "height_label": "Altura (cm)", "comp_label": "Complejidad", "comp_opts": ["Simple", "Orgánico", "Épico"],
         "paint_check": "¿Incluir Pintura Profesional?", "paint_level": "Nivel de acabado", "paint_opts": ["Básico", "Vitrina", "Museo"],
@@ -94,6 +96,8 @@ texts = {
         "p_name_ph": "Ej: Javier García",
         "char_name_ph": "Ej: Batman (Hush)",
         "step1": "1️⃣ Datos del Proyecto", "step2": "2️⃣ Configuración Artística", "step3": "3️⃣ Presupuesto Final",
+        "final_quote": "Inversión Estimada", 
+        "wa_header": "¡Hola Maker 3D Perú! Solicito información sobre esta inversión:",
         "tab_print": "💧 Impresión", "tab_paint": "🖌️ Pintura", "tab_design": "🧊 Diseño",
         "height_label": "Altura (cm)", "comp_label": "Complejidad", "comp_opts": ["Simple", "Orgánico", "Épico"],
         "paint_check": "¿Incluir Pintura Profesional?", "paint_level": "Nivel de acabado", "paint_opts": ["Básico", "Vitrina", "Museo"],
@@ -149,6 +153,8 @@ texts = {
         "p_name_ph": "e.g. John Doe",
         "char_name_ph": "e.g. Spider-Man",
         "step1": "1️⃣ Project Details", "step2": "2️⃣ Artistic Configuration", "step3": "3️⃣ Final Budget",
+        "final_quote": "Estimated Investment",
+        "wa_header": "Hello Maker 3D Perú! I'm interested in this investment:",
         "tab_print": "💧 Printing", "tab_paint": "🖌️ Painting", "tab_design": "🧊 Design",
         "height_label": "Height (cm)", "comp_label": "Complexity", "comp_opts": ["Simple", "Organic", "Epic"],
         "paint_check": "Include Professional Painting?", "paint_level": "Finish Level", "paint_opts": ["Basic", "Display", "Museum"],
@@ -204,6 +210,8 @@ texts = {
         "p_name_ph": "es: Alessandro Rossi",
         "char_name_ph": "es: Darth Vader",
         "step1": "1️⃣ Dettagli Progetto", "step2": "2️⃣ Configurazione Artistica", "step3": "3️⃣ Preventivo Finale",
+        "final_quote": "Investimento Stimato",
+        "wa_header": "Ciao Maker 3D Perú! Richiedo informazioni su questo investimento:",
         "tab_print": "💧 Stampa", "tab_paint": "🖌️ Pittura", "tab_design": "🧊 Design",
         "height_label": "Altezza (cm)", "comp_label": "Complessità", "comp_opts": ["Semplice", "Organico", "Epico"],
         "paint_check": "Includere Pittura Professionale?", "paint_level": "Livello di finitura", "paint_opts": ["Base", "Vetrina", "Museo"],
@@ -356,7 +364,7 @@ with st.container(border=True):
         st.markdown(f"""
             <div style="padding:10px;">
                 <p style="color:#808495; margin:0; text-transform:uppercase; font-size:0.8rem; font-weight:bold;">
-                    {t["final_price_label"]}
+                    {t["final_quote"]}
                 </p>
                 <h1 style="margin:0; color:white; font-size:3.5rem; line-height:1.2;">
                     {monto_principal}
