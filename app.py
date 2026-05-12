@@ -213,7 +213,7 @@ else:
 
         # Generamos el mensaje usando la nueva variable 'moneda_diseno'
         # Generamos el mensaje limpio
-    msg = (f"{t['wa_header']}\n"
+        msg = (f"{t['wa_header']}\n"
                f"--------------------------\n"
                f"👤 Cliente: {nombre_c}\n"
                f"👾 Figura: {nombre_p}\n"
@@ -222,10 +222,9 @@ else:
                f"🖌️ Pintura: {nv_p}\n"
                f"🧊 Diseño: {moneda_diseno}\n"
                f"--------------------------\n"
-               f"💰 TOTAL ESTIMADO: {moneda_wa}")
-    
-    wa_link = f"https://wa.me/{t['wa_num']}?text={urllib.parse.quote(msg)}"
-    st.markdown("""
+               f"💰 TOTAL ESTIMADO {moneda_wa}")
+        wa_link = f"https://wa.me/{t['wa_num']}?text={urllib.parse.quote(msg)}"
+        st.markdown("""
     <div style="background-color: #f0f2f6; border-left: 5px solid #ffa500; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
         <small style="color: #31333F;">
             💡 <b>Nota del Experto:</b> Este presupuesto es una estimación base. 
@@ -234,7 +233,7 @@ else:
         </small>
     </div>
     """, unsafe_allow_html=True)
-    st.markdown("""
+        st.markdown("""
     <div style="background-color: #1A1C24; border: 2px solid #FF4B2B; padding: 15px; border-radius: 10px; text-align: center; margin-bottom: 20px;">
         <span style="font-size: 20px;">📲</span> 
         <strong style="color: #FF4B2B;">¿Los botones no funcionan?</strong><br>
@@ -243,7 +242,7 @@ else:
         </p>
     </div>
     """, unsafe_allow_html=True)
-    st.link_button(t["wa_btn"], wa_link, use_container_width=True, type="primary")
+        st.link_button(t["wa_btn"], wa_link, use_container_width=True, type="primary")
     st.success(t["thanks"])
 
 st.divider()
