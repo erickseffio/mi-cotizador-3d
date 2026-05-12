@@ -35,7 +35,12 @@ texts = {
         "height_label": "Altura (cm)", "comp_label": "Complejidad", "comp_opts": ["Simple", "Orgánico", "Épico"],
         "paint_check": "¿Incluir Pintura Profesional?", "paint_level": "Nivel de acabado", "paint_opts": ["Básico", "Vitrina", "Museo"],
         "design_label": "Edición Digital",
-        "design_opts": ["Listo para imprimir (0€)", "Ajuste Básico (10€)", "Personalizado (25€)", "Premium (60€)"],
+        "design_opts": [
+            "Listo para imprimir - El archivo no requiere cambios",
+            "Ajuste Básico - Escalado, reparación o cortes básicos",
+            "Personalizado - Cambio de pose o añadir nombres",
+            "Premium - Modelado desde cero o escultura compleja"
+        ],
         "final_price_label": "PRECIO ESTIMADO", "saving_label": "Ahorro Aplicado",
         "savings_title": "✨ ¡Descuento de Taller Aplicado!", 
         "wa_btn": "📲 Enviar Pedido a WhatsApp", "note": "⚠️ El inicio de producción requiere el 50% de adelanto.",
@@ -85,7 +90,12 @@ texts = {
         "height_label": "Altura (cm)", "comp_label": "Complejidad", "comp_opts": ["Simple", "Orgánico", "Épico"],
         "paint_check": "¿Incluir Pintura Profesional?", "paint_level": "Nivel de acabado", "paint_opts": ["Básico", "Vitrina", "Museo"],
         "design_label": "Edición Digital",
-        "design_opts": ["Listo para imprimir (0€)", "Ajuste Básico (10€)", "Personalizado (25€)", "Premium (60€)"],
+        "design_opts": [
+            "Listo para imprimir - El archivo no requiere cambios",
+            "Ajuste Básico - Escalado, reparación o cortes básicos",
+            "Personalizado - Cambio de pose o añadir nombres",
+            "Premium - Modelado desde cero o escultura compleja"
+        ],
         "final_price_label": "PRECIO ESTIMADO", "saving_label": "Ahorro Aplicado",
         "savings_title": "✨ ¡Descuento de Taller Aplicado!", 
         "wa_btn": "📲 Enviar Pedido a WhatsApp", "note": "⚠️ El inicio de producción requiere el 50% de adelanto.",
@@ -135,7 +145,12 @@ texts = {
         "height_label": "Height (cm)", "comp_label": "Complexity", "comp_opts": ["Simple", "Organic", "Epic"],
         "paint_check": "Include Professional Painting?", "paint_level": "Finish Level", "paint_opts": ["Basic", "Display", "Museum"],
         "design_label": "Digital Editing",
-        "design_opts": ["Ready to print (0€)", "Basic Fix (10€)", "Customization (25€)", "Premium (60€)"],
+        "design_opts": [
+            "Ready to print - File needs no changes",
+            "Basic Adjustment - Scaling, mesh repair, or basic cuts",
+            "Customized - Pose modification or adding names",
+            "Premium - Modeling from scratch or complex sculpture"
+        ],
         "final_price_label": "ESTIMATED PRICE", "saving_label": "Total Savings",
         "savings_title": "✨ Workshop Discount Applied!",
         "wa_btn": "📲 Send Order to WhatsApp", "note": "⚠️ Production starts after 50% deposit.",
@@ -185,7 +200,12 @@ texts = {
         "height_label": "Altezza (cm)", "comp_label": "Complessità", "comp_opts": ["Semplice", "Organico", "Epico"],
         "paint_check": "Includere Pittura Professionale?", "paint_level": "Livello di finitura", "paint_opts": ["Base", "Vetrina", "Museo"],
         "design_label": "Modifica Digitale",
-        "design_opts": ["Pronto da stampare (0€)", "Base (10€)", "Personalizzato (25€)", "Premium (60€)"],
+        "design_opts": [
+            "Pronto per la stampa - Il file non richiede modifiche",
+            "Regolazione Base - Scalatura, riparazione mesh o tagli",
+            "Personalizzato - Modifica della posa o aggiunta nomi",
+            "Premium - Modellazione da zero o scultura complessa"
+        ],
         "final_price_label": "PREZZO STIMATO", "saving_label": "Risparmio Applicato",
         "savings_title": "✨ Sconto per il workshop applicato!",
         "wa_btn": "📲 Invia Ordine su WhatsApp", "note": "⚠️ Il lavoro inizia dopo l'acconto del 50%.",
@@ -283,11 +303,25 @@ with tab2:
         costo_p = horas_p * st.session_state.pintura
 
 with tab3:
-    mapa_detalles = dict(zip(t["design_opts"], t["design_details"]))
-    tipo_d = st.selectbox(t["design_label"], t["design_opts"])
-    st.caption(f"ℹ️ {mapa_detalles[tipo_d]}")
-    costo_d = {t["design_opts"][0]: 0.0, t["design_opts"][1]: 10.0, t["design_opts"][2]: 25.0, t["design_opts"][3]: 60.0}[tipo_d]
-
+    st.subheader(t["design_label"])
+    
+    # El cliente ve la descripción completa sin el precio
+    tipo_d = st.selectbox("Opciones de diseño:", t["design_opts"])
+    
+    # Obtenemos la posición de la opción elegida (0, 1, 2 o 3)
+    idx = t["design_opts"].index(tipo_d)
+    
+    # Definimos los precios fijos en una lista que coincida con el orden de las opciones
+    # 0 = Gratis, 1 = 10€, 2 = 25€, 3 = 60€
+    precios = [0.0, 10.0, 25.0, 60.0]
+    
+    # Asignamos el costo basado en el índice
+    costo_d = precios[idx]
+    
+    # (Opcional) Puedes mostrar una confirmación discreta del costo extra
+    if costo_d > 0:
+        st.caption(f"Adicional por edición: +{costo_d} {moneda}")
+        
 # --- 6. PRESUPUESTO ---
 st.header(t["step3"])
 total_eur = costo_imp + costo_p + costo_d
