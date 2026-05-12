@@ -262,7 +262,7 @@ html_portafolio = """
 """
 
 # Esta línea es la que hace la magia de mostrarlo en la web
-components.html(html_portafolio, height=1200, scrolling=True)
+components.html(html_portafolio, height=800, scrolling=True)
 st.divider()
 
 # --- 8. REDES SOCIALES ---
