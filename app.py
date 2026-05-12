@@ -325,8 +325,13 @@ st.header(t["step3"])
 total_eur = costo_imp + costo_p + costo_d
 total_pen = total_eur * st.session_state.tasa
 
-# Definimos variables dinámicas según el idioma para el bloque visual
-if idioma == "Español (Perú S/.)": # Asegúrate que el nombre coincida exactamente con tu diccionario
+# 1. Calculamos los ahorros primero para que las variables existan siempre
+ahorro_est = (total_eur * 0.25)
+ahorro_pen = ahorro_est * st.session_state.tasa
+
+# 2. Definimos qué textos mostrar según el idioma
+# IMPORTANTE: Revisa si tu idioma es "Español (Perú S/.)" o "Español (Perú)"
+if "Perú" in idioma: 
     monto_principal = f"S/. {total_pen:.2f}"
     sub_ref = f"Ref: € {total_eur:.2f}"
     ahorro_texto = f"S/. {ahorro_pen:.2f}"
@@ -335,11 +340,11 @@ else:
     sub_ref = f"Ref: S/. {total_pen:.2f}"
     ahorro_texto = f"€ {ahorro_est:.2f}"
 
+# 3. Diseño visual
 with st.container(border=True):
-    col_res1, col_res2 = st.columns([1.5, 1]) # Ajustamos el ancho para que el precio tenga más espacio
+    col_res1, col_res2 = st.columns([1.5, 1])
     
     with col_res1:
-        # Diseño del Precio Grande
         st.markdown(f"""
             <div style="padding:10px;">
                 <p style="color:#808495; margin:0; text-transform:uppercase; font-size:0.8rem; font-weight:bold;">
@@ -355,10 +360,7 @@ with st.container(border=True):
         """, unsafe_allow_html=True)
 
     with col_res2:
-        ahorro_est = (total_eur * 0.25)
-        ahorro_pen = ahorro_est * st.session_state.tasa
-        
-        # Bloque de Ahorro con diseño tipo tarjeta verde
+        # Bloque de Ahorro tipo tarjeta verde
         st.markdown(f"""
             <div style="background-color:#142d1a; padding:20px; border-radius:10px; border: 1px solid #234d2c; margin-top:15px;">
                 <p style="color:#4ecb71; margin:0; font-size:1rem; font-weight:bold;">
@@ -370,8 +372,6 @@ with st.container(border=True):
             </div>
         """, unsafe_allow_html=True)
 
-# Advertencia final (Mantenemos tu lógica original)
-st.warning(t["payment_note"])
 
 # --- 7. CIERRE Y WHATSAPP (Lógica Corregida) ---
 st.warning(t["note"])
