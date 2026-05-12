@@ -203,12 +203,25 @@ st.markdown(f"<div style='text-align: center; padding: 10px; background-color: #
 if not nombre_c or not nombre_p:
     st.info(t["warning_input"]) # Aquí sale el aviso que pides
 else:
-    moneda_wa = f"S/. {total_pen:.2f}" if idioma == "Español (Perú)" else f"€ {total_eur:.2f}"
-    # Si ya puso los datos, generamos el mensaje y el botón
-    msg = (f"{t['wa_header']}\n--------------------------\n"
-           f"👤 Cliente: {nombre_c}\n👾 Figura: {nombre_p}\n📏 Altura: {altura}cm\n"
-           f"💧 Impresión: {dif}\n🖌️ Pintura: {nv_p}\n🧊 Diseño: {tipo_d}\n"
-           f"--------------------------\n💰 TOTAL ESTIMADO: {moneda_wa}")
+        # Lógica para el TOTAL en WhatsApp
+        moneda_wa = f"S/. {total_pen:.2f}" if idioma == "Español (Perú)" else f"€ {total_eur:.2f}"
+        
+        # Lógica para el DISEÑO en WhatsApp (¡Aquí estaba el detalle!)
+        # Asumiendo que tienes una variable con el costo en soles o la calculas aquí
+        diseno_pen = diseno_eur * st.session_state.tasa  
+        moneda_diseno = f"S/. {diseno_pen:.2f}" if idioma == "Español (Perú)" else f"€ {diseno_eur:.2f}"
+
+        # Generamos el mensaje usando la nueva variable 'moneda_diseno'
+        msg = (f"{t['wa_header']}\n"
+               f"--------------------------\n"
+               f"👤 Cliente: {nombre_c}\n"
+               f"👾 Figura: {nombre_p}\n"
+               f"📏 Altura: {altura}cm\n"
+               f"💧 Impresión: {dif}\n"
+               f"🖌️ Pintura: {nv_p}\n"
+               f"🧊 Diseño: {moneda_diseno}\n"  # <--- CAMBIADO AQUÍ
+               f"--------------------------\n"
+               f"💰 TOTAL ESTIMADO: {moneda_wa}")
     
     wa_link = f"https://wa.me/{t['wa_num']}?text={urllib.parse.quote(msg)}"
     st.markdown("""
