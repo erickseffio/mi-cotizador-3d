@@ -480,7 +480,15 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-st.header("🎨 Mi Portafolio")
+# --- TÍTULO DE SECCIÓN PERSONALIZADO ---
+st.markdown("""
+    <div style="display: flex; align-items: center; margin-bottom: 20px;">
+        <span style="font-size: 2.5rem; margin-right: 15px;">🎨</span>
+        <h1 style="margin: 0; font-size: 2.2rem; font-weight: 800; color: #ffffff;">
+            Mi Portafolio <span style="color: #ff4b4b; font-size: 1rem; vertical-align: middle;">| Proyectos Destacados</span>
+        </h1>
+    </div>
+""", unsafe_allow_html=True)
 
 col1, col2, col3 = st.columns(3)
 
@@ -502,6 +510,7 @@ def crear_tarjeta(columna, imagen, titulo, descripcion, llave):
 crear_tarjeta(col1, "https://i.postimg.cc/4NVvxmL4/20260502-113047.jpg", "Digimon", t['desc_digimon'], "btn_d")
 crear_tarjeta(col2, "https://i.postimg.cc/tJC0CKyn/20260331-230329.jpg", "Hyoga", t['desc_hyoga'], "btn_h")
 crear_tarjeta(col3, "https://i.postimg.cc/76wdmFCv/20250718-124326.jpg", "Albafica", t['desc_albafica'], "btn_a")
+
 # --- 8. REDES SOCIALES ---
 st.markdown(f"#### {t['social_title']}")
 col_social = st.columns(4)
