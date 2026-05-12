@@ -393,7 +393,7 @@ html_portafolio = f"""
 
         <div class="gallery">
             <div class="gallery-item">
-                <img src="https://i.postimg.cc/8P6pT50f/1001655300.jpg" style="width:100%; height:180px; object-fit:cover;">
+                <img src="https://i.postimg.cc/4NVvxmL4/20260502-113047.jpg" style="width:100%; height:180px; object-fit:cover;">
                 <div class="gallery-text">
                     <h3>Digimon (20cm)</h3>
                     <p>{t['desc_digimon']}</p>
@@ -401,7 +401,7 @@ html_portafolio = f"""
             </div>
             
             <div class="gallery-item">
-                <img src="https://i.postimg.cc/QMcY5fyz/1001655303.jpg" style="width:100%; height:180px; object-fit:cover;">
+                <img src="https://i.postimg.cc/tJC0CKyn/20260331-230329.jpg" style="width:100%; height:180px; object-fit:cover;">
                 <div class="gallery-text">
                     <h3>Hyoga (12cm)</h3>
                     <p>{t['desc_hyoga']}</p>
@@ -409,7 +409,7 @@ html_portafolio = f"""
             </div>
 
             <div class="gallery-item">
-                <img src="https://i.postimg.cc/j5GfR5y3/1001655528.jpg" style="width:100%; height:180px; object-fit:cover;">
+                <img src="https://i.postimg.cc/76wdmFCv/20250718-124326.jpg" style="width:100%; height:180px; object-fit:cover;">
                 <div class="gallery-text">
                     <h3>Albafica (40cm)</h3>
                     <p>{t['desc_albafica']}</p>
