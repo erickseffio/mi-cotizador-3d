@@ -43,9 +43,18 @@ texts = {
         "thanks": "✅ **¡Gracias por tu solicitud!** Al abrir WhatsApp, **no olvides adjuntar tu imagen de referencia**.",
         "social_title": "📱 ¡Síguenos en nuestras redes!",
         "social_proof": "Envíos seguros a todo el Perú y el extranjero 📦",
-        "port_title": "🎨 Mi Portafolio",
-        "port_subtitle": "Trabajos recientes en impresión 3D y pintura artística",
-        "port_view_details": "Ver detalles del proyecto",
+        "port_h2_resina": "🎨 Arte en Resina de Alta Gama",
+        "port_p_resina": "En <b>Maker 3D Perú</b> transformamos archivos digitales en piezas de colección únicas. Especialistas en acabados artísticos detallados y esculturas de gran formato.",
+        "port_shanks_desc": "Aplicación de sombras dinámicas y barniz de protección UV.",
+        "port_anime_desc": "Calidad de exhibición para personajes de One Piece y Jujutsu Kaisen.",
+        "port_h2_calidad": "✅ Calidad Maker 3D",
+        "port_stat_fig": "Figuras Entregadas",
+        "port_stat_pint": "Acabado de Pintura",
+        "port_stat_env": "Envíos Garantizados",
+        "port_footer": '"Cada figura es una obra de arte, no solo una impresión."',
+        "port_header": "✨ Portafolio Premium - Maker 3D Perú",
+        "port_tag": "GALERÍA DE TRABAJOS",
+        "port_desc": "Explora nuestras últimas creaciones en resina y pintura artística.",
         "loading_img": "Procesando imagen de referencia...",
         "img_caption": "✅ Imagen cargada correctamente",
         "img_success": "¡Imagen lista para la cotización!",
@@ -75,9 +84,18 @@ texts = {
         "thanks": "✅ **¡Gracias por tu solicitud!** Al abrir WhatsApp, **no olvides adjuntar tu imagen de referencia**.",
         "social_title": "📱 ¡Síguenos en nuestras redes!",
         "social_proof": "Envíos seguros a todo el Perú y el extranjero 📦",
-        "port_title": "🎨 Mi Portafolio",
-        "port_subtitle": "Trabajos recientes en impresión 3D y pintura artística",
-        "port_view_details": "Ver detalles del proyecto",
+        "port_h2_resina": "🎨 Arte en Resina de Alta Gama",
+        "port_p_resina": "En <b>Maker 3D Perú</b> transformamos archivos digitales en piezas de colección únicas. Especialistas en acabados artísticos detallados y esculturas de gran formato.",
+        "port_shanks_desc": "Aplicación de sombras dinámicas y barniz de protección UV.",
+        "port_anime_desc": "Calidad de exhibición para personajes de One Piece y Jujutsu Kaisen.",
+        "port_h2_calidad": "✅ Calidad Maker 3D",
+        "port_stat_fig": "Figuras Entregadas",
+        "port_stat_pint": "Acabado de Pintura",
+        "port_stat_env": "Envíos Garantizados",
+        "port_footer": '"Cada figura es una obra de arte, no solo una impresión."',
+        "port_header": "✨ Portafolio Premium - Maker 3D Perú",
+        "port_tag": "GALERÍA DE TRABAJOS",
+        "port_desc": "Explora nuestras últimas creaciones en resina y pintura artística.",
         "loading_img": "Procesando imagen de referencia...",
         "img_caption": "✅ Imagen cargada correctamente",
         "img_success": "¡Imagen lista para la cotización!",
@@ -107,9 +125,18 @@ texts = {
         "thanks": "✅ **Thank you!** When WhatsApp opens, **please attach your reference image**.",
         "social_title": "📱 Follow us!",
         "social_proof": "Secure shipping throughout Peru and abroad 📦",
-        "port_title": "🎨 My Portfolio",
-        "port_subtitle": "Recent works in 3D printing and artistic painting",
-        "port_view_details": "View project details",
+        "port_h2_resina": "🎨 High-End Resin Art",
+        "port_p_resina": "At <b>Maker 3D Perú</b> we transform digital files into unique collector's items. Specialists in detailed artistic finishes and large-format sculptures.",
+        "port_shanks_desc": "Application of dynamic shadows and UV protection varnish.",
+        "port_anime_desc": "Exhibition quality for One Piece and Jujutsu Kaisen characters.",
+        "port_h2_calidad": "✅ Maker 3D Quality",
+        "port_stat_fig": "Figures Delivered",
+        "port_stat_pint": "Paint Finish",
+        "port_stat_env": "Guaranteed Shipping",
+        "port_footer": '"Each figure is a work of art, not just a print."',
+        "port_header": "✨ Premium Portfolio - Maker 3D Perú",
+        "port_tag": "WORK GALLERY",
+        "port_desc": "Explore our latest creations in resin and artistic painting.",
         "loading_img": "Processing reference image...",
         "img_caption": "✅ Image uploaded successfully",
         "img_success": "Image ready for quotation!",
@@ -139,9 +166,18 @@ texts = {
         "thanks": "✅ **Grazie!** Quando si apre WhatsApp, **non dimenticare di allegare l'immagine**.",
         "social_title": "📱 Seguici sui social!",
         "social_proof": "Spedizione sicura in tutto il Perù e all'estero 📦",
-        "port_title": "🎨 Il Mio Portfolio",
-        "port_subtitle": "Lavori recenti in stampa 3D e pittura artistica",
-        "port_view_details": "Visualizza dettagli del progetto",
+        "port_h2_resina": "🎨 Arte in Resina di Alta Gamma",
+        "port_p_resina": "In <b>Maker 3D Perú</b> trasformiamo file digitali in pezzi da collezione unici. Specialisti in finiture artistiche dettagliate e sculture di grande formato.",
+        "port_shanks_desc": "Applicazione di ombre dinamiche e vernice protettiva UV.",
+        "port_anime_desc": "Qualità da esposizione per i personaggi di One Piece e Jujutsu Kaisen.",
+        "port_h2_calidad": "✅ Qualità Maker 3D",
+        "port_stat_fig": "Figure Consegnate",
+        "port_stat_pint": "Finitura di Pittura",
+        "port_stat_env": "Spedizioni Garantite",
+        "port_footer": '"Ogni figura è un\'opera d\'arte, non solo una stampa."',
+        "port_header": "✨ Portfolio Premium - Maker 3D Perú",
+        "port_tag": "GALLERIA LAVORI",
+        "port_desc": "Esplora le nostre ultime creazioni in resina y pittura artistica.",
         "loading_img": "Elaborazione dell'immagine...",
         "img_caption": "✅ Immagine caricata correttamente",
         "img_success": "Immagine pronta per el preventivo!",
@@ -295,65 +331,39 @@ import streamlit.components.v1 as components
 
 # --- SECCIÓN DEL PORTAFOLIO ---
 st.divider() # Esto pone una línea divisoria estética
-st.header("✨ Portafolio Premium - Maker 3D Perú")
+st.header(t["port_header"])
 
 # Aquí es donde pegas el código HTML largo que te envié antes
-html_portafolio = """
+html_portafolio = f"""
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0e1117; color: #e0e0e0; margin: 0; padding: 10px; }
-        .main-container { max-width: 900px; margin: auto; }
-        
-        /* Tarjetas con Efecto de Profundidad */
-        .card { 
-            background: linear-gradient(145deg, #161b22, #0d1117); 
-            border-radius: 20px; 
-            padding: 25px; 
-            margin-bottom: 25px; 
-            border: 1px solid #30363d;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            transition: transform 0.3s ease, border-color 0.3s ease;
-        }
-        .card:hover { transform: translateY(-5px); border-color: #ffa500; }
-        
-        h2 { color: #ffa500; font-size: 28px; margin-top: 0; display: flex; align-items: center; gap: 10px; }
-        h3 { color: #ffffff; margin-bottom: 10px; }
-        p { line-height: 1.6; color: #8b949e; }
-
-        /* Etiquetas de Especialidad */
-        .badge-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
-        .badge { 
-            background: rgba(255, 165, 0, 0.1); 
-            color: #ffa500; 
-            padding: 6px 15px; 
-            border-radius: 50px; 
-            font-size: 13px; 
-            font-weight: bold; 
-            border: 1px solid rgba(255, 165, 0, 0.3); 
-        }
-
-        /* Galería de Impacto */
-        .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .gallery-item { position: relative; border-radius: 15px; overflow: hidden; background: #21262d; border: 1px solid #30363d; }
-        .gallery-text { padding: 15px; }
-
-        /* Sección de Métricas */
-        .stats { display: flex; justify-content: space-between; gap: 15px; margin-top: 10px; }
-        .stat-item { flex: 1; text-align: center; background: #161b22; padding: 15px; border-radius: 15px; border: 1px solid #30363d; }
-        .stat-num { font-size: 26px; font-weight: bold; color: #ffa500; display: block; }
-        .stat-label { font-size: 12px; color: #8b949e; text-transform: uppercase; letter-spacing: 1px; }
-
-        .footer { text-align: center; padding: 20px; color: #8b949e; font-style: italic; }
+        body {{ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0e1117; color: #e0e0e0; margin: 0; padding: 10px; }}
+        .main-container {{ max-width: 900px; margin: auto; }}
+        .card {{ background: linear-gradient(145deg, #161b22, #0d1117); border-radius: 20px; padding: 25px; margin-bottom: 25px; border: 1px solid #30363d; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: transform 0.3s ease, border-color 0.3s ease; }}
+        .card:hover {{ transform: translateY(-5px); border-color: #ffa500; }}
+        h2 {{ color: #ffa500; font-size: 28px; margin-top: 0; display: flex; align-items: center; gap: 10px; }}
+        h3 {{ color: #ffffff; margin-bottom: 10px; }}
+        p {{ line-height: 1.6; color: #8b949e; }}
+        .badge-container {{ display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }}
+        .badge {{ background: rgba(255, 165, 0, 0.1); color: #ffa500; padding: 6px 15px; border-radius: 50px; font-size: 13px; font-weight: bold; border: 1px solid rgba(255, 165, 0, 0.3); }}
+        .gallery {{ display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }}
+        .gallery-item {{ position: relative; border-radius: 15px; overflow: hidden; background: #21262d; border: 1px solid #30363d; }}
+        .gallery-text {{ padding: 15px; }}
+        .stats {{ display: flex; justify-content: space-between; gap: 15px; margin-top: 10px; }}
+        .stat-item {{ flex: 1; text-align: center; background: #161b22; padding: 15px; border-radius: 15px; border: 1px solid #30363d; }}
+        .stat-num {{ font-size: 26px; font-weight: bold; color: #ffa500; display: block; }}
+        .stat-label {{ font-size: 12px; color: #8b949e; text-transform: uppercase; letter-spacing: 1px; }}
+        .footer {{ text-align: center; padding: 20px; color: #8b949e; font-style: italic; }}
     </style>
 </head>
 <body>
     <div class="main-container">
         <div class="card">
-            <h2><i class="fas fa-palette"></i> Arte en Resina de Alta Gama</h2>
-            <p>En <b>Maker 3D Perú</b> transformamos archivos digitales en piezas de colección únicas. Especialistas en acabados artísticos detallados y esculturas de gran formato.</p>
+            <h2><i class="fas fa-palette"></i> {t['port_h2_resina']}</h2>
+            <p>{t['port_p_resina']}</p>
             <div class="badge-container">
                 <span class="badge">Resina 8K Ultra-Detail</span>
                 <span class="badge">Aerografía Profesional</span>
@@ -364,49 +374,49 @@ html_portafolio = """
 
         <div class="gallery">
             <div class="gallery-item">
-                <img src="URL_DE_TU_FOTO_SHANKS.jpg" style="width:100%; height:200px; object-fit:cover;">
+                <img src="https://raw.githubusercontent.com/TuUsuario/TuRepo/main/shanks.jpg" style="width:100%; height:200px; object-fit:cover;">
                 <div class="gallery-text">
                     <h3><i class="fas fa-fire" style="color: #ff4500;"></i> Shanks (40cm)</h3>
-                    <p>Aplicación de sombras dinámicas y barniz de protección UV.</p>
+                    <p>{t['port_shanks_desc']}</p>
                 </div>
             </div>
             
             <div class="gallery-item">
-                <img src="URL_DE_OTRA_FIGURA.jpg" style="width:100%; height:200px; object-fit:cover;">
+                <img src="https://raw.githubusercontent.com/TuUsuario/TuRepo/main/anime.jpg" style="width:100%; height:200px; object-fit:cover;">
                 <div class="gallery-text">
                     <h3><i class="fas fa-dragon" style="color: #70a1ff;"></i> Anime Series</h3>
-                    <p>Calidad de exhibición para personajes de One Piece y Jujutsu Kaisen.</p>
+                    <p>{t['port_anime_desc']}</p>
                 </div>
             </div>
         </div>
 
         <div class="card">
-            <h2><i class="fas fa-check-circle"></i> Calidad Maker 3D</h2>
+            <h2>{t['port_h2_calidad']}</h2>
             <div class="stats">
                 <div class="stat-item">
                     <span class="stat-num">+200</span>
-                    <span class="stat-label">Figuras Entregadas</span>
+                    <span class="stat-label">{t['port_stat_fig']}</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-num">Premium</span>
-                    <span class="stat-label">Acabado de Pintura</span>
+                    <span class="stat-label">{t['port_stat_pint']}</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-num">Todo el Perú</span>
-                    <span class="stat-label">Envíos Garantizados</span>
+                    <span class="stat-num">Full Speed</span>
+                    <span class="stat-label">{t['port_stat_env']}</span>
                 </div>
             </div>
         </div>
 
         <div class="footer">
-            "Cada figura es una obra de arte, no solo una impresión."
+            {t['port_footer']}
         </div>
     </div>
 </body>
 </html>
 """
 
-components.html(html_portafolio, height=850, scrolling=True)
+st.components.v1.html(html_portafolio, height=850, scrolling=True)
 st.divider()
 
 # --- 8. REDES SOCIALES ---
