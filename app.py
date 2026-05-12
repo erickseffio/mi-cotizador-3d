@@ -41,8 +41,8 @@ texts = {
         "step1": "1️⃣ Datos del Proyecto", "step2": "2️⃣ Configuración Artística", "step3": "3️⃣ Inversión Estimada",
         "final_quote": "Inversión Estimada", 
         "wa_header": "¡Hola Maker 3D Perú! Solicito información sobre esta inversión:",
-        "tab_print": "💧 Impresión", "tab_paint": "🖌️ Pintura", "tab_design": "🧊 Diseño",
-        "height_label": "Altura (cm)", "comp_label": "Complejidad", "comp_opts": ["Simple", "Orgánico", "Épico"],
+        "tab_print": "💧 Estructura y Escala ", "tab_paint": "🖌️ Acabado Artístico", "tab_design": "🧊 Diseño",
+        "height_label": "Altura (cm)", "comp_label": "Complejidad", "comp_opts": ["Coleccionista, Épico, Obra Maestra"],
         "paint_check": "¿Incluir Pintura Profesional?", "paint_level": "Nivel de acabado", "paint_opts": ["Básico", "Vitrina", "Museo"],
         "design_label": "Edición Digital",
         "design_opts": [
@@ -98,8 +98,8 @@ texts = {
         "step1": "1️⃣ Datos del Proyecto", "step2": "2️⃣ Configuración Artística", "step3": "3️⃣ Inversión Estimada",
         "final_quote": "Inversión Estimada", 
         "wa_header": "¡Hola Maker 3D Perú! Solicito información sobre esta inversión:",
-        "tab_print": "💧 Impresión", "tab_paint": "🖌️ Pintura", "tab_design": "🧊 Diseño",
-        "height_label": "Altura (cm)", "comp_label": "Complejidad", "comp_opts": ["Simple", "Orgánico", "Épico"],
+        "tab_print": "💧 Estructura y Escala ", "tab_paint": "🖌️ Acabado Artístico", "tab_design": "🧊 Diseño",
+        "height_label": "Altura (cm)", "comp_label": "Complejidad", "comp_opts": ["Coleccionista, Épico, Obra Maestra"],
         "paint_check": "¿Incluir Pintura Profesional?", "paint_level": "Nivel de acabado", "paint_opts": ["Básico", "Vitrina", "Museo"],
         "design_label": "Edición Digital",
         "design_opts": [
@@ -212,8 +212,8 @@ texts = {
         "step1": "1️⃣ Dettagli Progetto", "step2": "2️⃣ Configurazione Artistica", "step3": "3️⃣ Investimento Stimato",
         "final_quote": "Investimento Stimato",
         "wa_header": "Ciao Maker 3D Perú! Richiedo informazioni su questo investimento:",
-        "tab_print": "💧 Stampa", "tab_paint": "🖌️ Pittura", "tab_design": "🧊 Design",
-        "height_label": "Altezza (cm)", "comp_label": "Complessità", "comp_opts": ["Semplice", "Organico", "Epico"],
+        "tab_print": "💧 Struttura e proporzioni", "tab_paint": "🖌️ finitura artistica", "tab_design": "🧊 Design",
+        "height_label": "Altezza (cm)", "comp_label": "Complessità", "comp_opts": ["Oggetto da collezione, epico, capolavoro"],
         "paint_check": "Includere Pittura Professionale?", "paint_level": "Livello di finitura", "paint_opts": ["Base", "Vetrina", "Museo"],
         "design_label": "Modifica Digitale",
         "design_opts": [
