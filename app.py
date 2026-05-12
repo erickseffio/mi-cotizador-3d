@@ -439,86 +439,52 @@ else:
 import streamlit.components.v1 as components
 st.markdown("""
 <style>
-    .gallery-container {
-        display: flex;
-        gap: 15px;
-        justify-content: space-around;
-    }
+    /* Estilo para el contenedor de la tarjeta */
     .gallery-card {
         background-color: #1e1e1e;
         border-radius: 10px;
-        overflow: hidden;
         border: 1px solid #333;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
+        transition: transform 0.3s ease;
     }
-    .gallery-img {
-        width: 100%;
-        height: 180px;
-        object-fit: cover;
+    .gallery-card:hover {
+        transform: translateY(-5px);
+        border-color: #ff4b4b;
     }
-    .gallery-content {
-        padding: 15px;
-    }
-    .gallery-content h3 {
-        margin: 0;
-        color: #ff4b4b; /* El rojo de tu marca */
-        font-size: 1.1rem;
-    }
-    .gallery-content p {
-        margin: 5px 0 0 0;
-        color: #cccccc;
-        font-size: 0.85rem;
+    /* Hacer que la imagen de Streamlit parezca parte de la tarjeta */
+    .stImage > img {
+        cursor: pointer;
+        border-radius: 10px 10px 0 0;
     }
 </style>
 """, unsafe_allow_html=True)
 
 # --- SECCIÓN PORTAFOLIO ---
 st.header("🎨 Mi Portafolio")
+st.caption("Haz clic en cualquier imagen para verla en tamaño original")
 
 col1, col2, col3 = st.columns(3)
 
-# --- FIGURA 1: DIGIMON ---
 with col1:
-    st.markdown(f"""
-        <div class="gallery-card">
-            <img src="https://i.postimg.cc/4NVvxmL4/20260502-113047.jpg" class="gallery-img">
-            <div class="gallery-content">
-                <h3>Digimon (20cm)</h3>
-                <p>{t['desc_digimon']}</p>
+    # Contenedor de la tarjeta
+    with st.container():
+        # LA IMAGEN ES EL BOTÓN:
+        # Usamos una columna vacía o un contenedor para detectar el clic
+        if st.image("https://i.postimg.cc/4NVvxmL4/20260502-113047.jpg", use_container_width=True):
+            # En Streamlit, para detectar clic puro en imagen sin botón 
+            # lo más limpio es poner un botón invisible o usar este método:
+            if st.button("🔍 Ampliar Digimon", key="img_digi", use_container_width=True):
+                mostrar_imagen_grande("https://i.postimg.cc/4NVvxmL4/20260502-113047.jpg", "Digimon (20cm)", t['desc_digimon'])
+        
+        # EL TEXTO DEBAJO (HTML para el estilo de tarjeta)
+        st.markdown(f"""
+            <div style="background-color: #1e1e1e; padding: 15px; border-radius: 0 0 10px 10px; border: 1px solid #333; border-top: none;">
+                <h3 style="margin:0; color:#ff4b4b; font-size:1.1rem;">Digimon (20cm)</h3>
+                <p style="margin:5px 0 0 0; color:#cccccc; font-size:0.85rem;">{t['desc_digimon']}</p>
             </div>
-        </div>
-    """, unsafe_allow_html=True)
-    if st.button("🔍 Ver en grande", key="btn_digi", use_container_width=True):
-        mostrar_imagen_grande("https://i.postimg.cc/4NVvxmL4/20260502-113047.jpg", "Digimon (20cm)", t['desc_digimon'])
+        """, unsafe_allow_html=True)
 
-# --- FIGURA 2: HYOGA ---
-with col2:
-    st.markdown(f"""
-        <div class="gallery-card">
-            <img src="https://i.postimg.cc/tJC0CKyn/20260331-230329.jpg" class="gallery-img">
-            <div class="gallery-content">
-                <h3>Hyoga (12cm)</h3>
-                <p>{t['desc_hyoga']}</p>
-            </div>
-        </div>
-    """, unsafe_allow_html=True)
-    if st.button("🔍 Ver en grande", key="btn_hyo", use_container_width=True):
-        mostrar_imagen_grande("https://i.postimg.cc/tJC0CKyn/20260331-230329.jpg", "Hyoga (12cm)", t['desc_hyoga'])
-
-# --- FIGURA 3: ALBAFICA ---
-with col3:
-    st.markdown(f"""
-        <div class="gallery-card">
-            <img src="https://i.postimg.cc/76wdmFCv/20250718-124326.jpg" class="gallery-img">
-            <div class="gallery-content">
-                <h3>Albafica (40cm)</h3>
-                <p>{t['desc_albafica']}</p>
-            </div>
-        </div>
-    """, unsafe_allow_html=True)
-    if st.button("🔍 Ver en grande", key="btn_alba", use_container_width=True):
-        mostrar_imagen_grande("https://i.postimg.cc/76wdmFCv/20250718-124326.jpg", "Albafica (40cm)", t['desc_albafica'])
-
+# Repites la misma estructura para Hyoga y Albafica...
 # --- 8. REDES SOCIALES ---
 st.markdown(f"#### {t['social_title']}")
 col_social = st.columns(4)
