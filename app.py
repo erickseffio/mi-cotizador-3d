@@ -438,39 +438,41 @@ else:
     st.success(t["thanks"])
 import streamlit.components.v1 as components
 
-# --- SECCIÓN PORTAFOLIO PREMIUM ---
+# --- SECCIÓN PORTAFOLIO REFINADA ---
 st.markdown("""
 <style>
-    .main-gallery {
-        display: flex;
-        gap: 20px;
-        padding: 10px;
-    }
     .card {
         background: #1e1e1e;
-        border-radius: 15px;
+        border-radius: 12px;
         border: 1px solid #333;
-        transition: all 0.3s ease;
+        transition: all 0.4s ease; /* Transición más lenta = más elegante */
         overflow: hidden;
+        margin-bottom: 15px;
     }
     .card:hover {
-        transform: translateY(-10px);
+        /* Un movimiento casi imperceptible pero que da vida */
+        transform: translateY(-4px); 
         border-color: #ff4b4b;
-        box-shadow: 0 10px 20px rgba(255, 75, 75, 0.2);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    }
+    .card-img {
+        width: 100%;
+        height: 200px; /* Altura moderada para no deformar */
+        object-fit: cover;
+        object-position: center 20%; /* Ajusta para que se vea mejor la parte superior */
     }
     .card-text {
-        padding: 15px;
-        background: #1e1e1e;
+        padding: 12px;
     }
     .card-text h3 {
         color: #ff4b4b !important;
-        font-size: 1.2rem !important;
-        margin-bottom: 5px !important;
+        font-size: 1.1rem !important;
+        margin: 0 !important;
     }
     .card-text p {
-        color: #bbb !important;
+        color: #aaa !important;
         font-size: 0.85rem !important;
-        line-height: 1.2 !important;
+        margin-top: 5px !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -481,35 +483,35 @@ col1, col2, col3 = st.columns(3)
 
 with col1:
     st.markdown(f'''<div class="card">
-        <img src="https://i.postimg.cc/4NVvxmL4/20260502-113047.jpg" style="width:100%; height:250px; object-fit:cover;">
+        <img src="https://i.postimg.cc/4NVvxmL4/20260502-113047.jpg" class="card-img">
         <div class="card-text">
             <h3>Digimon</h3>
             <p>{t['desc_digimon']}</p>
         </div>
     </div>''', unsafe_allow_html=True)
-    if st.button("🔎 Zoom Artístico", key="z1", use_container_width=True):
+    if st.button("🔎 Detalles", key="z1", use_container_width=True):
         mostrar_imagen_grande("https://i.postimg.cc/4NVvxmL4/20260502-113047.jpg", "Digimon", t['desc_digimon'])
 
 with col2:
     st.markdown(f'''<div class="card">
-        <img src="https://i.postimg.cc/tJC0CKyn/20260331-230329.jpg" style="width:100%; height:250px; object-fit:cover;">
+        <img src="https://i.postimg.cc/tJC0CKyn/20260331-230329.jpg" class="card-img">
         <div class="card-text">
             <h3>Hyoga</h3>
             <p>{t['desc_hyoga']}</p>
         </div>
     </div>''', unsafe_allow_html=True)
-    if st.button("🔎 Zoom Artístico", key="z2", use_container_width=True):
+    if st.button("🔎 Detalles", key="z2", use_container_width=True):
         mostrar_imagen_grande("https://i.postimg.cc/tJC0CKyn/20260331-230329.jpg", "Hyoga", t['desc_hyoga'])
 
 with col3:
     st.markdown(f'''<div class="card">
-        <img src="https://i.postimg.cc/76wdmFCv/20250718-124326.jpg" style="width:100%; height:250px; object-fit:cover;">
+        <img src="https://i.postimg.cc/76wdmFCv/20250718-124326.jpg" class="card-img">
         <div class="card-text">
             <h3>Albafica</h3>
             <p>{t['desc_albafica']}</p>
         </div>
     </div>''', unsafe_allow_html=True)
-    if st.button("🔎 Zoom Artístico", key="z3", use_container_width=True):
+    if st.button("🔎 Detalles", key="z3", use_container_width=True):
         mostrar_imagen_grande("https://i.postimg.cc/76wdmFCv/20250718-124326.jpg", "Albafica", t['desc_albafica'])
 # --- 8. REDES SOCIALES ---
 st.markdown(f"#### {t['social_title']}")
