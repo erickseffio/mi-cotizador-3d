@@ -393,7 +393,7 @@ html_portafolio = f"""
 
         <div class="gallery">
             <div class="gallery-item">
-                <a href="https://i.postimg.cc/j5GfR5y3/1001655528.jpg" target="_blank">
+                <a href="https://i.postimg.cc/4NVvxmL4/20260502-113047.jpg" target="_blank">
                     <img src="https://i.postimg.cc/4NVvxmL4/20260502-113047.jpg" style="width:100%; height:180px; object-fit:cover;">
                 </a>
                 <div class="gallery-text">
