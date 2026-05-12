@@ -306,20 +306,20 @@ with tab1:
     altura = st.number_input(t["height_label"], 5, 100, 15)
     st.caption(t["height_help"])
     
-    # Obtenemos la lista de opciones del diccionario
-    opciones_comp = t["comp_opts"]
+    # Creamos una 'key' única basada en el idioma seleccionado
+    # Esto obliga al slider a reiniciarse sin errores al cambiar de idioma
+    idioma_key = t["final_quote"].replace(" ", "_") 
     
-    # 1. Slider de Complejidad con protección de error
-    try:
-        dif = st.select_slider(t["comp_label"], options=opciones_comp)
-    except:
-        # Si cambias el idioma y el valor viejo no existe, reiniciamos al primero
-        dif = opciones_comp[0]
-        st.rerun()
+    opciones_comp = t.get("comp_opts", ["Básico", "Medio", "Alto"])
+    
+    dif = st.select_slider(
+        t["comp_label"], 
+        options=opciones_comp,
+        key=f"slider_comp_{idioma_key}" # <--- LA SOLUCIÓN ESTÁ AQUÍ
+    )
 
-    # 2. Lógica de cálculo (basada en posición 0, 1, 2 para evitar errores de nombre)
     idx_comp = opciones_comp.index(dif)
-    valores_extra = [1.5, 3.0, 6.0] # Costos asociados a cada nivel
+    valores_extra = [1.5, 3.0, 6.0]
     extra = valores_extra[min(idx_comp, len(valores_extra)-1)]
     
     vol = (altura ** 2.2) * 0.15
@@ -331,25 +331,20 @@ with tab2:
     nv_p, costo_p = "No", 0.0
     
     if quiere_p:
-        opciones_p = t["paint_opts"]
+        opciones_p = t.get("paint_opts", ["Básico", "Vitrina", "Museo"])
         
-        # 1. Slider de Pintura con protección de error
-        try:
-            nv_p = st.select_slider(t["paint_level"], options=opciones_p)
-        except:
-            nv_p = opciones_p[0]
-            st.rerun()
+        nv_p = st.select_slider(
+            t["paint_level"], 
+            options=opciones_p,
+            key=f"slider_paint_{idioma_key}" # <--- LA SOLUCIÓN ESTÁ AQUÍ
+        )
             
-        # 2. Lógica de cálculo basada en posición
         idx_p = opciones_p.index(nv_p)
-        multiplicadores = [1, 2.5, 5] # Multiplicador de tiempo/dificultad
+        multiplicadores = [1, 2.5, 5]
         mult = multiplicadores[min(idx_p, len(multiplicadores)-1)]
         
         horas_p = (altura / 5) * mult
         costo_p = horas_p * st.session_state.pintura
-
-# --- TAB 3: DISEÑO --- (Se mantiene tu lógica actual)
-
 with tab3:
     st.subheader(t["design_label"])
     
