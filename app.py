@@ -146,7 +146,7 @@ with c1:
     nombre_p = st.text_input(t["char_name_label"], placeholder=t["char_name_ph"])
 with c2:
     # Guardamos el archivo en una variable
-archivo_referencia = st.file_uploader(t["ref_label"], type=['png', 'jpg', 'jpeg'])
+    archivo_referencia = st.file_uploader(t["ref_label"], type=['png', 'jpg', 'jpeg'])
 
 if archivo_reference is not None:
     # Mostramos un indicador de carga animado
