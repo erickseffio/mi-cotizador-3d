@@ -7,20 +7,34 @@ st.set_page_config(page_title="Maker3DPeru-Italia", page_icon="Logo.jpg")
 # --- AJUSTE DE TAMAÑO Y LIMPIEZA DE INTERFAZ (CSS AGRESIVO) ---
 st.markdown("""
     <style>
-        /* 1. Recuperar cabecera y espacio superior */
-        .main .block-container {
-            padding-top: 5rem !important;
-        }
+    /* 1. Mantenemos tu espacio superior */
+    .main .block-container {
+        padding-top: 5rem !important;
+    }
 
-        /* 2. Ocultar menús y botones de Streamlit (GitHub, Share, Star) */
-        header {visibility: hidden;}
-        #MainMenu {visibility: hidden;}
-        footer {visibility: hidden;}
-        .stAppDeployButton {display:none;}
-        
-        /* Ocultar el botón de "Manage app" si aparece */
-        [data-testid="stStatusWidget"] {display: none;}
-    </style>
+    /* 2. OCULTAR SOLO LOS ICONOS DE LA DERECHA (GitHub, Share, Menú) */
+    /* Esto mantiene el botón de la barra lateral (flecha) funcional */
+    [data-testid="stHeaderActionElements"] {
+        display: none !important;
+    }
+
+    /* Ocultamos el menú de tres puntos pero NO todo el header */
+    #MainMenu {
+        display: none !important;
+    }
+
+    /* Ocultamos el botón de Deploy si aparece */
+    .stAppDeployButton {
+        display: none !important;
+    }
+
+    /* 3. OPCIONAL: Si quieres que la barra superior sea invisible 
+       pero que el botón de la sidebar siga ahí, usamos esto: */
+    header {
+        background-color: rgba(0,0,0,0) !important;
+        border-bottom: none !important;
+    }
+</style>
 """, unsafe_allow_html=True)
 
 @st.dialog("Vista de Obra - Maker 3D Perú", width="medium") # Volvemos al ancho que te gusta
