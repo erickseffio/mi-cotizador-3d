@@ -516,7 +516,7 @@ st.markdown("""
         width: 100%;
         height: 160px; /* Aumentamos un poco el alto del contenedor */
         object-fit: contain; /* Esto evita que la imagen se corte o se estire */
-        padding-top: 25px; /* <--- ESTO ES LO QUE BAJA LA FOTO */
+        padding-top: 30px; /* <--- ESTO ES LO QUE BAJA LA FOTO */
         background-color: #1e1e1e; /* Asegura que el fondo combine con la tarjeta */
     }
     
