@@ -1,5 +1,38 @@
 import streamlit as st
 import urllib.parse
+from fpdf import FPDF
+
+def generar_pdf(resina, diseño, pintura, tasa, total, idioma_textos):
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font("Arial", 'B', 16)
+    
+    # Encabezado
+    pdf.cell(0, 10, "MAKER 3D PERU - ITALIA", ln=True, align='C')
+    pdf.set_font("Arial", '', 12)
+    pdf.cell(0, 10, "Presupuesto de Escultura Personalizada", ln=True, align='C')
+    pdf.ln(10)
+    
+    # Detalles del presupuesto
+    pdf.set_font("Arial", 'B', 12)
+    pdf.cell(0, 10, "Detalle de Costos:", ln=True)
+    pdf.set_font("Arial", '', 11)
+    pdf.cell(0, 8, f"- Resina: {resina}", ln=True)
+    pdf.cell(0, 8, f"- Diseño 3D: {diseño}", ln=True)
+    pdf.cell(0, 8, f"- Pintura Artistica: {pintura}", ln=True)
+    pdf.ln(5)
+    
+    # Total resaltado
+    pdf.set_font("Arial", 'B', 14)
+    pdf.cell(0, 10, f"TOTAL: {total}", ln=True)
+    
+    # Nota de depósito (Muy importante para tu negocio)
+    pdf.ln(10)
+    pdf.set_font("Arial", 'I', 10)
+    pdf.multi_cell(0, 5, "Para iniciar el proyecto se requiere el 50% de deposito inicial. Tiempo estimado de entrega: 3 semanas.")
+    
+    return pdf.output(dest='S').encode('latin-1')
+
 
 # 1. Configuración de la página (ACTUALIZADO)
 st.set_page_config(
@@ -487,6 +520,41 @@ with st.container(border=True):
                 </h2>
             </div>
         """, unsafe_allow_html=True)
+        
+# --- NUEVA SECCIÓN: GENERAR PDF ---
+st.write("---")
+col_pdf, col_wa = st.columns(2)
+
+with col_pdf:
+    if st.button("📥 Generar Ticket PDF"):
+        if not nombre_c or not nombre_p:
+            st.error(t["warning_input"])
+        else:
+            try:
+                # Generamos los bytes
+                pdf_bytes = generar_pdf(
+                    f"€ {costo_imp:.2f}",
+                    f"€ {costo_d:.2f}",
+                    f"€ {costo_p:.2f}",
+                    st.session_state.tasa,
+                    monto_principal, # Usa el monto que ya calculaste (S/. o €)
+                    t
+                )
+                
+                # Botón real de descarga
+                st.download_button(
+                    label="💾 Guardar Archivo PDF",
+                    data=pdf_bytes,
+                    file_name=f"Presupuesto_{nombre_p}_{nombre_c}.pdf",
+                    mime="application/pdf"
+                )
+            except Exception as e:
+                st.error(f"Error: {e}")
+
+with col_wa:
+    # Aquí iría tu botón de WhatsApp actual para que salgan uno al lado del otro
+    if nombre_c and nombre_p:
+         st.markdown(f'<a href="{wa_link}" target="_blank" style="text-decoration:none;"><button style="width:100%; height:45px; border-radius:5px; background-color:#25D366; color:white; border:none; cursor:pointer;">🟢 Enviar por WhatsApp</button></a>', unsafe_allow_html=True)
 
 
 # --- 7. CIERRE Y WHATSAPP (Lógica Corregida) ---
