@@ -20,7 +20,7 @@ st.markdown("""
     }
 
     /* Quitamos el margen de la imagen para que no se sume al padding */
-    [data-testid="stImage"] img {
+    div[role="dialog"] [data-testid="stImage"] {
         margin-top: 0px !important;
     }
 
