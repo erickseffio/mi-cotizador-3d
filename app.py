@@ -4,27 +4,31 @@ import urllib.parse
 # 1. Configuración de la página
 st.set_page_config(page_title="Maker3DPeru-Italia", page_icon="Logo.jpg")
 # --- AJUSTE DE TAMAÑO PARA DETALLES (CSS AGRESIVO) ---
+# --- COPIA Y REEMPLAZA TU BLOQUE DE CSS POR ESTE ---
 st.markdown("""
     <style>
-    /* 1. Solo afecta a las imágenes que están dentro del portafolio */
-    /* Ajustamos el margen superior de la imagen para que baje un poco */
-    [data-testid="stImage"] img {
-        margin-top: 25px !important; 
-        margin-bottom: 10px !important;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        transition: transform .2s; /* Un efecto suave por si quieres añadir hover luego */
+    /* 1. Resetear el espacio de la página para que no se expanda arriba */
+    .block-container {
+        padding-top: 2rem !important;
     }
 
-    /* 2. Aseguramos que el contenedor de la imagen no empuje el resto */
-    [data-testid="stVerticalBlock"] > div:has(img) {
-        gap: 0rem !important;
+    /* 2. Aplicar el espacio SOLO a las columnas del portafolio */
+    /* Esto busca las columnas y les da aire arriba para que la imagen baje */
+    [data-testid="column"] [data-testid="stVerticalBlock"] {
+        padding-top: 40px !important; /* Ajusta este número para bajar la foto */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
-    /* 3. Mantenemos el título del portafolio y los textos limpios */
-    .stMarkdown h3 {
-        padding-top: 10px !important;
+    /* 3. Centrar el texto debajo de la imagen */
+    [data-testid="column"] .stMarkdown {
+        text-align: center !important;
+    }
+
+    /* 4. Evitar que las alertas de arriba se muevan */
+    [data-testid="stNotification"] {
+        margin-top: 0px !important;
     }
     </style>
     """, unsafe_allow_html=True)
