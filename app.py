@@ -52,7 +52,7 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
     pdf.set_font("Helvetica", 'B', 14)
     pdf.cell(0, 10, f"{formatear_texto(t.get('final_quote', 'Total'))}: {formatear_texto(simbolo)} {total_final:.2f}", ln=True)
 
-    return pdf.output()
+    return bytes(pdf.output())
     
 # 1. Configuración de la página (ACTUALIZADO)
 st.set_page_config(
@@ -631,24 +631,28 @@ if hay_calculo:
     col_pdf, col_wa = st.columns(2)
 
     with col_pdf:
-        # Preparamos datos
-        simb = t.get("simbolo", "€")
-        v_imp = f"{costo_imp:.2f}" if 'costo_imp' in locals() else "0.00"
-        v_dis = str(moneda_diseno).replace(simb, "").strip() if 'moneda_diseno' in locals() else "0.00"
-        v_pin = f"{costo_p:.2f}" if 'costo_p' in locals() else "0.00"
-        v_desc = ahorro_wsp_val if 'ahorro_wsp_val' in locals() else 0.0
-        t_pagar = total_pen if "Perú" in idioma else total_eur
+    try:
+        # ... (tus preparaciones de variables v_imp, v_dis, etc.) ...
 
-        # Generar PDF
-        pdf_data = generar_pdf(v_imp, v_dis, v_pin, st.session_state.tasa, t_pagar, t, "Logo.jpg", archivo_reference, v_desc, simb)
+        # Generamos los bytes reales del PDF
+        pdf_output = generar_pdf(
+            v_imp, v_dis, v_pin, st.session_state.tasa, 
+            t_pagar, t, "Logo.jpg", archivo_reference, v_desc, simb
+        )
         
+        # IMPORTANTE: Asegurarnos de que enviamos bytes
+        pdf_bytes = bytes(pdf_output)
+
         st.download_button(
             label="📥 Descargar PDF con Foto",
-            data=pdf_data,
-            file_name=f"Presupuesto_{nombre_p if nombre_p else 'Maker3D'}.pdf",
+            data=pdf_bytes,  # Aquí pasamos los bytes procesados
+            file_name=f"Presupuesto_{nombre_p}.pdf",
             mime="application/pdf",
+            key="download_pdf_btn", # Añadimos una key para evitar conflictos
             use_container_width=True
         )
+    except Exception as e:
+        st.error(f"Error técnico: {e}")
     
     with col_wa:
         if 'wa_link' in locals() and wa_link:
