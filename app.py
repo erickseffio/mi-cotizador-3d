@@ -1,6 +1,7 @@
 import streamlit as st
 import urllib.parse
 from fpdf import FPDF
+import tempfile
 
 def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_figura, descuento_val, simbolo):
     pdf = FPDF()
@@ -19,14 +20,18 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
     pdf.ln(10)
 
         # --- FOTO DE LA FIGURA ---
-    if imagen_figura:
-        try: # <--- 4 ESPACIOS DE SANGRÍA
-            # Si es un objeto de Streamlit, FPDF suele aceptar el path o el objeto binario
-            # Pero asegúrate de que no sea None antes de entrar aquí
-            pdf.image(imagen_figura, x=140, y=40, w=50)
-        except Exception as e: # <--- ALINEADO CON EL TRY
-            st.error(f"Error al procesar la imagen: {e}")   
-    
+    if imagen_figura is not None:
+        try:
+            # Creamos un archivo temporal para que FPDF pueda leerlo
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".png") as tmp_file:
+                tmp_file.write(imagen_figura.getvalue())
+                tmp_path = tmp_file.name
+            
+            # Usamos la ruta del archivo temporal
+            pdf.image(tmp_path, x=140, y=40, w=50)
+        except Exception as e:
+            st.error(f"Error al procesar la imagen: {e}")  
+        
         # --- TABLA DE COSTOS ---
         pdf.set_font("Arial", size=12)
         pdf.cell(0, 10, f"{t['pdf_imp']}: {c_imp}", ln=True)
