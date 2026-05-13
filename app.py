@@ -521,7 +521,7 @@ with st.container(border=True):
             </div>
         """, unsafe_allow_html=True)
         
-# --- 7. CIERRE Y WHATSAPP (Lógica Corregida con PDF) ---
+# --- 7. CIERRE Y ACCIONES (Versión Final Corregida) ---
 st.warning(t["note"])
 st.markdown(f"<div style='text-align: center; padding: 10px; background-color: #fdf2d9; border-radius: 5px; border: 1px solid #f9e2af; color: #856404; margin: 15px 0;'>{t['social_proof']}</div>", unsafe_allow_html=True)
 
@@ -529,7 +529,7 @@ st.markdown(f"<div style='text-align: center; padding: 10px; background-color: #
 if not nombre_c or not nombre_p:
     st.info(t["warning_input"]) 
 else:
-    # 1. Definir Moneda y Totales para el mensaje (Ya lo tienes)
+    # 1. Definición de Monedas y Totales
     if "Perú" in idioma:
         moneda_wa = f"S/. {total_pen:.2f}"
         moneda_diseno = f"S/. {(costo_d * st.session_state.tasa):.2f}"
@@ -541,7 +541,7 @@ else:
         ahorro_wsp_val = ahorro_est 
         simbolo = "€"
 
-    # 2. Mapa de detalles de diseño (Ya lo tienes)
+    # 2. Generación del Mensaje de WhatsApp
     mapa_detalles = {}
     for lang in texts:
         opts = texts[lang]["design_opts"]
@@ -549,7 +549,6 @@ else:
         for i in range(len(opts)):
             mapa_detalles[opts[i]] = details[i]
             
-    # 3. Generamos el mensaje para WhatsApp (Ya lo tienes)
     msg = (f"{t['wa_header']}\n"
            f"--------------------------\n"
            f"👤 Cliente: {nombre_c}\n"
@@ -566,13 +565,32 @@ else:
     import urllib.parse
     wa_link = f"https://wa.me/{t['wa_num']}?text={urllib.parse.quote(msg)}"
 
-    # --- NUEVA SUB-SECCIÓN DE BOTONES ---
-    st.write("---")
-    col1, col2 = st.columns(2)
+    # 3. Bloques de Información Estética
+    st.markdown("""
+    <div style="background-color: #f0f2f6; border-left: 5px solid #ffa500; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
+        <small style="color: #31333F;">
+            💡 <b>Nota del Experto:</b> Este presupuesto es una estimación base. El precio final se confirma tras revisar la complejidad del diseño 3D.
+        </small>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown(f"""
+    <div style="background-color: #1A1C24; border: 1px solid #FF4B2B; padding: 15px; border-radius: 10px; text-align: center; margin-bottom: 20px;">
+        <span style="font-size: 20px;">📲</span> 
+        <strong style="color: #FF4B2B;">¿Los botones no funcionan?</strong><br>
+        <p style="font-size: 0.8rem; color: white; margin-top: 5px;">
+        Si vienes de TikTok, pulsa los <b>tres puntos (⋮)</b> y elige <b>'Abrir en navegador'</b> para descargar el PDF.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
 
-    with col1:
-        # BOTÓN DE PDF
+    # 4. BOTONES EN COLUMNAS (AQUÍ ESTÁ LA MAGIA)
+    st.write("---")
+    col_pdf, col_wa = st.columns(2)
+
+    with col_pdf:
         try:
+            # Generamos los bytes del PDF usando las variables locales seguras
             pdf_bytes = generar_pdf(
                 f"{simbolo} {costo_imp:.2f}" if "Perú" not in idioma else f"S/. {(costo_imp * st.session_state.tasa):.2f}",
                 moneda_diseno,
@@ -591,26 +609,8 @@ else:
         except Exception as e:
             st.error(f"Error PDF: {e}")
 
-    with col2:
-        # BOTÓN DE WHATSAPP (Usando el link_button original para evitar errores)
+    with col_wa:
         st.link_button(t["wa_btn"], wa_link, use_container_width=True, type="primary")
-
-    # Notas finales y advertencia de TikTok
-    st.markdown("""
-    <div style="background-color: #f0f2f6; border-left: 5px solid #ffa500; padding: 10px; border-radius: 5px; margin-top: 20px;">
-        <small style="color: #31333F;">
-            💡 <b>Nota del Experto:</b> Este presupuesto es una estimación base. El precio final se confirma tras revisar la complejidad del diseño 3D.
-        </small>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    st.markdown("""
-    <div style="background-color: #1A1C24; border: 1px solid #FF4B2B; padding: 10px; border-radius: 10px; text-align: center; margin-top: 10px;">
-        <p style="font-size: 0.8rem; color: white; margin: 0;">
-            📲 <b>¿Vienes de TikTok?</b> Pulsa los 3 puntos (⋮) y elige <b>'Abrir en navegador'</b> para descargar el PDF.
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
 
     st.success(t["thanks"])
 # --- SECCIÓN PORTAFOLIO REFINADA ---
