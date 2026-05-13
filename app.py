@@ -633,7 +633,7 @@ else:
     </div>
     """, unsafe_allow_html=True)
 
-    # 4. BOTONES EN COLUMNAS (VERSIÓN FINAL BLINDADA)
+    # 4. BOTONES EN COLUMNAS (VERSIÓN FINAL DEFINITIVA)
 st.write("---")
 
 # Solo mostramos los botones si ya se calculó un total
@@ -644,13 +644,15 @@ if 'total_eur' in locals() or 'total_pen' in locals():
         try:
             logo_file = "Logo.jpg" 
 
-            # EXTRAEMOS EL SÍMBOLO DIRECTAMENTE DEL DICCIONARIO PARA EVITAR EL ERROR
-            # Si 'simbolo' no existe como variable, lo saca de t["simbolo"]
+            # --- CAPA DE SEGURIDAD PARA VARIABLES ---
             simbolo_pdf = t.get("simbolo", "€") 
-            
             val_dis = moneda_diseno if 'moneda_diseno' in locals() else f"{simbolo_pdf} 0.00"
-            val_imp = f"{costo_imp:.2f}"
-            val_pin = f"{costo_p:.2f}"
+            val_imp = f"{costo_imp:.2f}" if 'costo_imp' in locals() else "0.00"
+            val_pin = f"{costo_p:.2f}" if 'costo_p' in locals() else "0.00"
+            
+            # Si el descuento no existe, lo ponemos en 0.0
+            descuento_final = ahorro_wsp_val if 'ahorro_wsp_val' in locals() else 0.0
+            # ----------------------------------------
 
             pdf_bytes = generar_pdf(
                 c_imp = val_imp,
@@ -661,8 +663,8 @@ if 'total_eur' in locals() or 'total_pen' in locals():
                 t = t,
                 logo_path = logo_file,
                 imagen_figura = archivo_reference,
-                descuento_val = ahorro_wsp_val,
-                simbolo = simbolo_pdf # Usamos la variable segura que acabamos de crear
+                descuento_val = descuento_final, # Usamos la variable segura
+                simbolo = simbolo_pdf
             )
             
             st.download_button(
