@@ -598,37 +598,38 @@ else:
     col_pdf, col_wa = st.columns(2)
 
     with col_pdf:
-    try:
-        # Ruta de tu logo (asegúrate de que el archivo existe en tu carpeta)
-        logo_file = "logo_maker3d.png" 
+        try:
+            # Ruta de tu logo (asegúrate de que el archivo existe en tu carpeta)
+            logo_file = "logo_maker3d.png" 
 
-        pdf_bytes = generar_pdf(
-            c_imp = f"{simbolo} {costo_imp:.2f}" if "Perú" not in idioma else f"S/. {(costo_imp * st.session_state.tasa):.2f}",
-            c_dis = moneda_diseno,
-            c_pin = f"{simbolo} {costo_p:.2f}" if "Perú" not in idioma else f"S/. {(costo_p * st.session_state.tasa):.2f}",
-            tasa = st.session_state.tasa,
-            total_final = (total_pen if "Perú" in idioma else total_eur),
-            t = t,
-            logo_path = logo_file,
-            imagen_figura = foto_subida, # Asegúrate de que este es el nombre de tu variable de st.file_uploader
-            descuento_val = ahorro_wsp_val,
-            simbolo = simbolo
-        )
-        
-        st.download_button(
-            label="📥 Descargar PDF con Foto",
-            data=pdf_bytes,
-            file_name=f"Presupuesto_{nombre_p}.pdf",
-            mime="application/pdf",
-            use_container_width=True
-        )
-    except Exception as e:
-        st.error(f"Error al incluir elementos en el PDF: {e}")
+            pdf_bytes = generar_pdf(
+                c_imp = f"{simbolo} {costo_imp:.2f}" if "Perú" not in idioma else f"S/. {(costo_imp * st.session_state.tasa):.2f}",
+                c_dis = moneda_diseno,
+                c_pin = f"{simbolo} {costo_p:.2f}" if "Perú" not in idioma else f"S/. {(costo_p * st.session_state.tasa):.2f}",
+                tasa = st.session_state.tasa,
+                total_final = (total_pen if "Perú" in idioma else total_eur),
+                t = t,
+                logo_path = logo_file,
+                imagen_figura = foto_subida, # Asegúrate de que este es el nombre de tu variable de st.file_uploader
+                descuento_val = ahorro_wsp_val,
+                simbolo = simbolo
+            )
+            
+            st.download_button(
+                label="📥 Descargar PDF con Foto",
+                data=pdf_bytes,
+                file_name=f"Presupuesto_{nombre_p}.pdf",
+                mime="application/pdf",
+                use_container_width=True
+            )
+        except Exception as e:
+            st.error(f"Error al incluir elementos en el PDF: {e}")
 
     with col_wa:
         st.link_button(t["wa_btn"], wa_link, use_container_width=True, type="primary")
 
     st.success(t["thanks"])
+    
 # --- SECCIÓN PORTAFOLIO REFINADA ---
 # --- SECCIÓN PORTAFOLIO RECUPERADA Y ADAPTABLE ---
 st.markdown("""
