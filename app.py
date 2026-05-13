@@ -11,11 +11,17 @@ st.markdown("""
         padding-top: 5rem !important;
     }
 
-    /* ESTE ES EL QUE MANDA: Apunta a la imagen por su contenedor de datos */
-    div[data-testid="stImage"] > img {
-        margin-top: 50px !important; /* Prueba con 50px primero */
-        margin-bottom: 20px !important;
-        border: 2px solid rgba(255,255,255,0.1); /* Opcional: un borde fino */
+ /* Apuntamos al contenedor del contenedor para forzar el aire */
+    [data-testid="stImage"] {
+        padding-top: 60px !important; /* Subimos de 50 a 60 para que se note */
+        padding-bottom: 20px !important;
+        display: flex;
+        justify-content: center;
+    }
+
+    /* Quitamos el margen de la imagen para que no se sume al padding */
+    [data-testid="stImage"] img {
+        margin-top: 0px !important;
     }
 
     /* Centrar los textos debajo de la imagen */
