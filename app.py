@@ -10,7 +10,11 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
         if not isinstance(texto, str): return texto
         return texto.encode('ascii', 'ignore').decode('ascii')
 
-    simbolo_pdf = simbolo.replace("€", "EUR")
+    # Forzamos la eliminación de cualquier carácter que no sea ASCII (como el símbolo €)
+    simbolo_pdf = simbolo.replace("€", "EUR").encode('ascii', 'ignore').decode('ascii')
+    if not simbolo_pdf.strip(): # Si el símbolo era solo el € y quedó vacío, le asignamos EUR
+        simbolo_pdf = "EUR"
+        
     pdf = FPDF()
     pdf.add_page()
 
@@ -65,6 +69,7 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
 
     # El return debe estar al final de todo, alineado con el inicio de la función
     return pdf.output(dest='S').encode('latin-1', errors='ignore')
+    
 # 1. Configuración de la página (ACTUALIZADO)
 st.set_page_config(
     page_title="Maker3DPeru-Italia", 
