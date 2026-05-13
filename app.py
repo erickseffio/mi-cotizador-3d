@@ -2,23 +2,30 @@ import streamlit as st
 import urllib.parse
 from fpdf import FPDF
 import tempfile
+import re
 
 def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_figura, descuento_val, simbolo):
+    # --- BLOQUE A: Función interna limpiadora ---
+    def limpiar_texto(texto):
+        if not isinstance(texto, str): return texto
+        # Filtra emojis para que el PDF no explote
+        return texto.encode('ascii', 'ignore').decode('ascii')
     pdf = FPDF()
     pdf.add_page()
-    
-    # --- LOGO ---
-    try:
-        # Coloca tu logo en la esquina superior izquierda
-        pdf.image(logo_path, 10, 8, 33) 
-    except:
-        pdf.set_font("Arial", 'B', 15)
-        pdf.cell(40, 10, "MAKER 3D PERÚ")
 
+    # --- BLOQUE C: El Título ---
     pdf.set_font("Arial", 'B', 16)
-    pdf.cell(0, 10, t.get("pdf_title", "PRESUPUESTO"), ln=True, align='C')
+    titulo_limpio = limpiar_texto(t.get("pdf_title", "PRESUPUESTO"))
+    pdf.cell(0, 10, titulo_limpio, ln=True, align='C')
     pdf.ln(10)
 
+    # --- BLOQUE D: El Logo (con seguridad) ---
+    if logo_path:
+        try:
+            pdf.image(logo_path, 10, 8, 33)
+        except:
+            pass # Si falla el logo, no se detiene el programa
+            
        # --- FOTO DE LA FIGURA (Solo si existe) ---
     if imagen_figura is not None:
         try:
@@ -33,13 +40,13 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
         
         # --- TABLA DE COSTOS ---
         pdf.set_font("Arial", size=12)
-        pdf.cell(0, 10, f"{t['pdf_imp']}: {c_imp}", ln=True)
-        pdf.cell(0, 10, f"{t['pdf_dis']}: {c_dis}", ln=True)
-        pdf.cell(0, 10, f"{t['pdf_pin']}: {c_pin}", ln=True)
+        pdf.cell(0, 10, f"{limpiar_texto(t['pdf_imp'])}: {c_imp}", ln=True)
+        pdf.cell(0, 10, f"{limpiar_texto(t['pdf_dis'])}: {c_dis}", ln=True)
+        pdf.cell(0, 10, f"{limpiar_texto(t['pdf_pin'])}: {c_pin}", ln=True)
         
         # --- SECCIÓN DE DESCUENTO ---
         pdf.set_text_color(255, 0, 0) # Rojo para el descuento
-        pdf.cell(0, 10, f"✨ DESCUENTO APLICADO: -{simbolo} {descuento_val:.2f}", ln=True)
+        pdf.cell(0, 10, f"{limpiar_texto(t['final_quote'])}: {simbolo} {total_final:.2f}", ln=True)
         pdf.set_text_color(0, 0, 0) # Volver a negro
         
         pdf.ln(5)
