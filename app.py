@@ -18,31 +18,31 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
     pdf.cell(0, 10, t["pdf_title"], ln=True, align='C')
     pdf.ln(10)
 
-    # --- FOTO DE LA FIGURA ---
-if imagen_figura:
-    try: # <--- 4 ESPACIOS DE SANGRÍA
-        # Si es un objeto de Streamlit, FPDF suele aceptar el path o el objeto binario
-        # Pero asegúrate de que no sea None antes de entrar aquí
-        pdf.image(imagen_figura, x=140, y=40, w=50)
-    except Exception as e: # <--- ALINEADO CON EL TRY
-        st.error(f"Error al procesar la imagen: {e}")   
-
-    # --- TABLA DE COSTOS ---
-    pdf.set_font("Arial", size=12)
-    pdf.cell(0, 10, f"{t['pdf_imp']}: {c_imp}", ln=True)
-    pdf.cell(0, 10, f"{t['pdf_dis']}: {c_dis}", ln=True)
-    pdf.cell(0, 10, f"{t['pdf_pin']}: {c_pin}", ln=True)
+        # --- FOTO DE LA FIGURA ---
+    if imagen_figura:
+        try: # <--- 4 ESPACIOS DE SANGRÍA
+            # Si es un objeto de Streamlit, FPDF suele aceptar el path o el objeto binario
+            # Pero asegúrate de que no sea None antes de entrar aquí
+            pdf.image(imagen_figura, x=140, y=40, w=50)
+        except Exception as e: # <--- ALINEADO CON EL TRY
+            st.error(f"Error al procesar la imagen: {e}")   
     
-    # --- SECCIÓN DE DESCUENTO ---
-    pdf.set_text_color(255, 0, 0) # Rojo para el descuento
-    pdf.cell(0, 10, f"✨ DESCUENTO APLICADO: -{simbolo} {descuento_val:.2f}", ln=True)
-    pdf.set_text_color(0, 0, 0) # Volver a negro
-    
-    pdf.ln(5)
-    pdf.set_font("Arial", 'B', 14)
-    pdf.cell(0, 10, f"{t['final_quote']}: {simbolo} {total_final:.2f}", ln=True)
-    
-    return pdf.output(dest='S').encode('latin-1')
+        # --- TABLA DE COSTOS ---
+        pdf.set_font("Arial", size=12)
+        pdf.cell(0, 10, f"{t['pdf_imp']}: {c_imp}", ln=True)
+        pdf.cell(0, 10, f"{t['pdf_dis']}: {c_dis}", ln=True)
+        pdf.cell(0, 10, f"{t['pdf_pin']}: {c_pin}", ln=True)
+        
+        # --- SECCIÓN DE DESCUENTO ---
+        pdf.set_text_color(255, 0, 0) # Rojo para el descuento
+        pdf.cell(0, 10, f"✨ DESCUENTO APLICADO: -{simbolo} {descuento_val:.2f}", ln=True)
+        pdf.set_text_color(0, 0, 0) # Volver a negro
+        
+        pdf.ln(5)
+        pdf.set_font("Arial", 'B', 14)
+        pdf.cell(0, 10, f"{t['final_quote']}: {simbolo} {total_final:.2f}", ln=True)
+        
+        return pdf.output(dest='S').encode('latin-1')
 
 # 1. Configuración de la página (ACTUALIZADO)
 st.set_page_config(
