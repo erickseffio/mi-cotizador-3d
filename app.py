@@ -4,89 +4,67 @@ from fpdf import FPDF
 import tempfile
 import re
 
+from fpdf import FPDF # fpdf2 usa el mismo nombre de importación
+
 def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_figura, descuento_val, simbolo):
-    # --- FUNCIÓN LIMPIADORA ---
-    def limpiar_texto(texto):
-        if not isinstance(texto, str): return texto
-        # 1. Reemplazo preventivo de símbolos problemáticos
-        texto = texto.replace("€", "EUR").replace("S/.", "S/.")
-        # 2. Eliminación de emojis/Unicode para FPDF
-        return texto.encode('ascii', 'ignore').decode('ascii')
-
-    # --- LIMPIEZA INICIAL DE TODO EL DICCIONARIO ---
-    t_limpio = {k: limpiar_texto(v) for k, v in t.items()}
+    # Con fpdf2 YA NO necesitas la función limpiar_texto que borraba caracteres
     
-    # Limpiamos el símbolo de moneda
-    simbolo_pdf = limpiar_texto(simbolo)
-    if not simbolo_pdf.strip(): 
-        simbolo_pdf = "EUR" if "€" in simbolo else "USD"
-
+    # 1. Instanciamos FPDF (soporta UTF-8 por defecto)
     pdf = FPDF()
     pdf.add_page()
     
-    # --- BLOQUE C: El Título ---
-    pdf.ln(20)
-    pdf.set_font("Arial", 'B', 16)
-    # Usamos t_limpio para garantizar que no haya rastros de Unicode
-    titulo_pdf = t_limpio.get("pdf_title", "PRESUPUESTO")
-    pdf.cell(0, 10, titulo_pdf, ln=True, align='C')
+    # 2. Usamos una fuente estándar que soporte Unicode (ej. Helvetica o Arial)
+    pdf.set_font("Helvetica", size=12)
+
+    # --- BLOQUE: El Título ---
+    pdf.ln(10)
+    pdf.set_font("Helvetica", 'B', 16)
+    # Ahora puedes usar t.get directamente con tildes y símbolos
+    pdf.cell(0, 10, t.get("pdf_title", "PRESUPUESTO"), ln=True, align='C')
     pdf.ln(10)
 
-    # --- BLOQUE D: El Logo (con seguridad) ---
-    if logo_path is not None:
+    # --- BLOQUE: Logo e Imagen de Referencia ---
+    if logo_path:
         try:
             pdf.image(logo_path, 10, 8, 33)
-        except Exception as e:
-            print(f"Error con el logo: {e}")
-            pdf.set_font("Arial", 'B', 12)
-            pdf.cell(0, 10, "MAKER 3D PERU", ln=True)
-            
-    # --- FOTO DE LA FIGURA ---
-    if imagen_figura is not None:
+        except:
+            pass
+
+    if imagen_figura:
         try:
             import tempfile
-            datos_imagen = imagen_figura.getvalue()
-            if datos_imagen: 
-                with tempfile.NamedTemporaryFile(delete=False, suffix=".png") as tmp_file:
-                    tmp_file.write(datos_imagen)
-                    tmp_path = tmp_file.name
-                pdf.image(tmp_path, x=150, y=50, w=45)
-        except Exception as e:
-            print(f"No se pudo cargar la imagen: {e}")
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".png") as tmp:
+                tmp.write(imagen_figura.getvalue())
+                # Ubicamos la foto de la obra (ej. Shanks o Gojo)
+                pdf.image(tmp.name, x=150, y=45, w=45)
+        except:
+            pass
 
-    # --- IMPORTANTE: El código de abajo DEBE estar fuera de los bloques 'if' anteriores ---
-    # Alinea esto a la misma altura que los 'if'
+    # --- TABLA DE COSTOS (Soporta € y S/. sin errores) ---
+    pdf.set_font("Helvetica", size=12)
     
-   # --- TABLA DE COSTOS (CORREGIDO) ---
-    pdf.set_font("Arial", size=12)
-    # Usamos directamente t_limpio y simbolo_pdf
-    pdf.cell(0, 10, f"{t_limpio['pdf_imp']}: {simbolo_pdf} {c_imp}", ln=True)
-    pdf.cell(0, 10, f"{t_limpio['pdf_dis']}: {simbolo_pdf if 'pdf_dis' in t_limpio else 'Diseno'}: {simbolo_pdf} {c_dis}", ln=True)
-    # Nota: Para Italiano el campo es 'pdf_it', asegúrate de que coincida o usa un .get()
-    etiqueta_imp = t_limpio.get('pdf_imp', t_limpio.get('pdf_it', 'Costo'))
-    # Sugerencia para evitar errores si las llaves varían entre idiomas:
-    pdf.cell(0, 10, f"{t_limpio.get('pdf_imp', 'Costo')}: {simbolo_pdf} {c_imp}", ln=True)
-    pdf.cell(0, 10, f"{t_limpio.get('pdf_dis', 'Diseno')}: {simbolo_pdf} {c_dis}", ln=True)
-    pdf.cell(0, 10, f"{t_limpio.get('pdf_pin', 'Pintura')}: {simbolo_pdf} {c_pin}", ln=True)
+    # Manejo de llaves para Italiano y otros idiomas
+    label_imp = t.get('pdf_imp', t.get('pdf_it', 'Costo Impresión'))
+    
+    pdf.cell(0, 10, f"{label_imp}: {simbolo} {c_imp}", ln=True)
+    pdf.cell(0, 10, f"{t.get('pdf_dis', 'Costo Diseño')}: {simbolo} {c_dis}", ln=True)
+    pdf.cell(0, 10, f"{t.get('pdf_pin', 'Costo Pintura')}: {simbolo} {c_pin}", ln=True)
             
     # --- SECCIÓN DE DESCUENTO ---
     if descuento_val > 0:
-        pdf.set_text_color(255, 0, 0)
-        # Aquí también podrías añadir una frase limpia si la tienes en el diccionario
-        pdf.cell(0, 10, f"DESCUENTO: -{simbolo_pdf} {descuento_val:.2f}", ln=True)
+        pdf.set_text_color(255, 0, 0) # Rojo para el ahorro
+        pdf.cell(0, 10, f"DESCUENTO: -{simbolo} {descuento_val:.2f}", ln=True)
         pdf.set_text_color(0, 0, 0)
         
-    # --- SECCIÓN DE TOTAL ---
     pdf.ln(5)
-    pdf.set_font("Arial", 'B', 14)
-    texto_total = f"{t_limpio['final_quote']}: {simbolo_pdf} {total_final:.2f}"
+    pdf.set_font("Helvetica", 'B', 14)
+    # El total final con el símbolo de moneda real
+    texto_total = f"{t.get('final_quote', 'Total')}: {simbolo} {total_final:.2f}"
     pdf.cell(0, 10, texto_total, ln=True)
 
-    # --- RETURN FINAL (EL FILTRO DE SEGURIDAD) ---
-    pdf_output = pdf.output(dest='S')
-    if isinstance(pdf_output, str):
-        return pdf_output.encode('latin-1', errors='ignore')
-    return bytes(pdf_output).decode('latin-1', 'ignore').encode('latin-1', 'ignore')
+    # --- RETORNO PROFESIONAL (Binario directo) ---
+    # fpdf2 devuelve bytes directamente con output(), mucho más simple
+    return pdf.output()
     
 # 1. Configuración de la página (ACTUALIZADO)
 st.set_page_config(
@@ -655,41 +633,47 @@ else:
     """, unsafe_allow_html=True)
 
     # 4. BOTONES EN COLUMNAS (AQUÍ ESTÁ LA MAGIA)
-    st.write("---")
-    col_pdf, col_wa = st.columns(2)
+st.write("---")
+col_pdf, col_wa = st.columns(2)
 
-    with col_pdf:
-        try:
-            # Ruta de tu logo (asegúrate de que el archivo existe en tu carpeta)
-            logo_file = "Logo.jpg" 
+with col_pdf:
+    try:
+        # Ruta de tu logo
+        logo_file = "Logo.jpg" 
 
-            pdf_bytes = generar_pdf(
-                c_imp = f"{simbolo} {costo_imp:.2f}" if "Perú" not in idioma else f"S/. {(costo_imp * st.session_state.tasa):.2f}",
-                c_dis = moneda_diseno,
-                c_pin = f"{simbolo} {costo_p:.2f}" if "Perú" not in idioma else f"S/. {(costo_p * st.session_state.tasa):.2f}",
-                tasa = st.session_state.tasa,
-                total_final = (total_pen if "Perú" in idioma else total_eur),
-                t = t,
-                logo_path = logo_file,
-                imagen_figura = archivo_reference, # Cambiado de foto_subida a archivo_reference
-                descuento_val = ahorro_wsp_val,
-                simbolo = simbolo
-            )
-            
-            st.download_button(
-                label="📥 Descargar PDF con Foto",
-                data=pdf_bytes,
-                file_name=f"Presupuesto_{nombre_p}.pdf",
-                mime="application/pdf",
-                use_container_width=True
-            )
-        except Exception as e:
-            st.error(f"Error al incluir elementos en el PDF: {e}")
+        # PREPARACIÓN DE DATOS: Limpiamos los valores antes de enviarlos
+        # Así evitamos enviar símbolos de moneda duplicados
+        val_imp = f"{costo_imp:.2f}"
+        val_dis = f"{costo_diseno:.2f}" # Usa la variable numérica directamente
+        val_pin = f"{costo_p:.2f}"
 
-    with col_wa:
-        st.link_button(t["wa_btn"], wa_link, use_container_width=True, type="primary")
+        pdf_bytes = generar_pdf(
+            c_imp = val_imp,
+            c_dis = val_dis,
+            c_pin = val_pin,
+            tasa = st.session_state.tasa,
+            total_final = (total_pen if "Perú" in idioma else total_eur),
+            t = t,
+            logo_path = logo_file,
+            imagen_figura = archivo_reference,
+            descuento_val = ahorro_wsp_val,
+            simbolo = simbolo # Aquí fpdf2 ya sabe qué hacer con el € o S/.
+        )
+        
+        st.download_button(
+            label="📥 Descargar PDF con Foto",
+            data=pdf_bytes,
+            file_name=f"Presupuesto_{nombre_p}.pdf",
+            mime="application/pdf",
+            use_container_width=True
+        )
+    except Exception as e:
+        st.error(f"Error al incluir elementos en el PDF: {e}")
 
-    st.success(t["thanks"])
+with col_wa:
+    st.link_button(t["wa_btn"], wa_link, use_container_width=True, type="primary")
+
+st.success(t["thanks"])
     
 # --- SECCIÓN PORTAFOLIO REFINADA ---
 # --- SECCIÓN PORTAFOLIO RECUPERADA Y ADAPTABLE ---
