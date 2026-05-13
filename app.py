@@ -6,31 +6,23 @@ st.set_page_config(page_title="Maker3DPeru-Italia", page_icon="Logo.jpg")
 # --- AJUSTE DE TAMAÑO PARA DETALLES (CSS AGRESIVO) ---
 st.markdown("""
     <style>
-    /* 1. RECUPERAR CABECERA: Empujamos todo el contenido hacia abajo */
-    /* Esto hará que la palabra 'Idiomas' y el logo vuelvan a aparecer */
+    /* 1. Asegura que la cabecera e idiomas se vean */
     .main .block-container {
-        padding-top: 5rem !important; 
-        max-width: 95% !important;
+        padding-top: 5rem !important;
     }
 
-    /* 2. BAJAR SOLO LAS IMÁGENES DEL PORTAFOLIO */
-    /* Usamos un margen superior solo para las fotos dentro de columnas */
-    /* Esto no afecta a los textos ni a la cabecera */
+    /* 2. BAJAR LAS FOTOS (Ajuste Quirúrgico) */
+    /* Apuntamos al contenedor DIV que sostiene la imagen */
+    [data-testid="column"] div[data-testid="stImage"] {
+        padding-top: 60px !important; /* <--- CAMBIA ESTE NÚMERO AQUÍ */
+        display: flex;
+        justify-content: center;
+    }
+
+    /* 3. Evitar que la imagen se deforme */
     [data-testid="column"] img {
-        margin-top: 40px !important; 
-        border-radius: 35px;
-        transition: transform 0.3s;
-    }
-
-    /* 3. EVITAR ZOOM EN MÓVILES */
-    /* Esto asegura que en pantallas pequeñas no se vea gigante */
-    @media (max-width: 600px) {
-        [data-testid="column"] img {
-            margin-top: 10px !important;
-        }
-        .main .block-container {
-            padding-top: 2rem !important;
-        }
+        margin-top: 0px !important; 
+        border-radius: 10px;
     }
     </style>
     """, unsafe_allow_html=True)
