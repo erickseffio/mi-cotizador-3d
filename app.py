@@ -11,46 +11,48 @@ st.set_page_config(
 # --- AJUSTE DE TAMAÑO Y LIMPIEZA DE INTERFAZ (CSS AGRESIVO) ---
 st.markdown("""
     <style>
-        /* 1. Mantenemos tu espacio superior */
+        /* 1. Mantenemos tu espacio superior para el contenido */
         .main .block-container {
             padding-top: 5rem !important;
         }
 
-        /* 2. ELIMINAR ICONOS SUPERIORES (Fork y GitHub) */
-        /* Oculta el contenedor de acciones de la derecha completamente */
-        [data-testid="stHeaderActionElements"] {
-            display: none !important;
-        }
-        
-        /* Oculta específicamente el botón de Fork */
-        .stActionButton {
-            display: none !important;
-        }
-
-        /* 3. ELIMINAR ICONOS INFERIORES (Usuario y Logo Streamlit) */
-        /* Esto elimina el icono circular del usuario y el logo rojo de abajo */
-        [data-testid="stStatusWidget"] {
-            display: none !important;
-        }
-        
-        footer {
-            display: none !important;
-        }
-
-        /* 4. LIMPIEZA ADICIONAL */
-        #MainMenu {
-            display: none !important;
-        }
-
-        header {
+        /* 2. ELIMINACIÓN RADICAL DE LA BARRA SUPERIOR */
+        /* Esto elimina la franja negra completa donde están Fork y GitHub */
+        header[data-testid="stHeader"] {
             background-color: transparent !important;
             border-bottom: none !important;
         }
 
-        /* 5. MANTENER LA FLECHA DE LA BARRA LATERAL */
-        /* Aseguramos que el botón para abrir tu panel de control siga ahí */
+        /* Oculta todos los elementos de la derecha (Fork, GitHub, Menú) */
+        [data-testid="stHeaderActionElements"] {
+            display: none !important;
+            visibility: hidden !important;
+        }
+
+        /* 3. BORRAR ICONOS INFERIORES (Logo Streamlit y Perfil) */
+        [data-testid="stStatusWidget"], .stDeployButton, footer {
+            display: none !important;
+            visibility: hidden !important;
+        }
+
+        /* 4. EL BOTÓN MAESTRO (La flecha de la izquierda) */
+        /* Forzamos que la flecha para tu panel de control sea lo único vivo */
         button[data-testid="stBaseButton-headerNoPadding"] {
             display: inline-flex !important;
+            position: fixed !important;
+            top: 10px !important;
+            left: 10px !important;
+            z-index: 999999 !important;
+            opacity: 0.2; /* Casi invisible para que no estorbe el diseño */
+        }
+        
+        button[data-testid="stBaseButton-headerNoPadding"]:hover {
+            opacity: 1; /* Se ve claro cuando pasas el mouse */
+        }
+
+        /* Bloqueo extra para el texto "Fork" */
+        .stActionButton, .stAppDeployButton {
+            display: none !important;
         }
     </style>
 """, unsafe_allow_html=True)
