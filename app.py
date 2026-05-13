@@ -498,7 +498,7 @@ st.markdown("""
     
     .card-img {
         width: 100%;
-        height: 120px; 
+        height: 100px; 
         object-fit: cover;
         object-position: center center;
     }
