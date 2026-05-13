@@ -17,8 +17,8 @@ st.markdown("""
     /* Usamos un margen superior solo para las fotos dentro de columnas */
     /* Esto no afecta a los textos ni a la cabecera */
     [data-testid="column"] img {
-        margin-top: 80px !important; 
-        border-radius: 15px;
+        margin-top: 100px !important; 
+        border-radius: 35px;
         transition: transform 0.3s;
     }
 
