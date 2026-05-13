@@ -6,25 +6,33 @@ st.set_page_config(page_title="Maker3DPeru-Italia", page_icon="Logo.jpg")
 # --- AJUSTE DE TAMAÑO PARA DETALLES (CSS AGRESIVO) ---
 st.markdown("""
     <style>
-    /* Recuperar cabecera */
+    /* 1. Recuperar cabecera */
     .main .block-container {
         padding-top: 5rem !important;
     }
 
- /* Apuntamos al contenedor del contenedor para forzar el aire */
-    [data-testid="stImage"] {
-        padding-top: 40px !important; /* Subimos de 50 a 60 para que se note */
-        padding-bottom: 10px !important;
+    /* 2. BAJAR LAS FOTOS EN LA GALERÍA PRINCIPAL */
+    /* Este selector apunta específicamente a las tarjetas del portafolio */
+    [data-testid="column"] [data-testid="stImage"] {
+        padding-top: 55px !important; 
         display: flex;
         justify-content: center;
+        margin-bottom: 10px !important;
     }
 
-    /* Quitamos el margen de la imagen para que no se sume al padding */
-    div[role="dialog"] [data-testid="stImage"] {
+    /* 3. EVITAR QUE LAS FOTOS DEL DIÁLOGO (ZOOM) SE VEAN MAL */
+    /* Esto asegura que al abrir 'Detalles' la imagen no se baje de más */
+    div[data-testid="stDialog"] [data-testid="stImage"] {
+        padding-top: 0px !important;
+    }
+
+    /* 4. ESTILO DE IMAGEN */
+    [data-testid="stImage"] img {
+        border-radius: 12px;
         margin-top: 0px !important;
     }
 
-    /* Centrar los textos debajo de la imagen */
+    /* 5. Centrar los textos debajo de la imagen */
     div[data-testid="column"] .stMarkdown {
         text-align: center !important;
     }
