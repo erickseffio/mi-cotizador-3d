@@ -5,16 +5,23 @@ import tempfile
 import re
 
 def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_figura, descuento_val, simbolo):
-    # --- BLOQUE A: Función interna limpiadora ---
+    # --- FUNCIÓN LIMPIADORA MEJORADA ---
     def limpiar_texto(texto):
         if not isinstance(texto, str): return texto
+        # 1. Cambiamos el Euro por EUR manualmente para evitar el error \u20ac
+        texto = texto.replace("€", "EUR")
+        # 2. Eliminamos emojis y caracteres especiales (como los de tu imagen)
         return texto.encode('ascii', 'ignore').decode('ascii')
 
-    # Forzamos la eliminación de cualquier carácter que no sea ASCII (como el símbolo €)
-    simbolo_pdf = simbolo.replace("€", "EUR").encode('ascii', 'ignore').decode('ascii')
-    if not simbolo_pdf.strip(): # Si el símbolo era solo el € y quedó vacío, le asignamos EUR
-        simbolo_pdf = "EUR"
-        
+    # --- CREAMOS UN DICCIONARIO LIMPIO ---
+    # Esto quita los emojis de TODAS las frases de una vez
+    t_limpio = {k: limpiar_texto(v) for k, v in t.items()}
+    
+    # Limpiamos también el símbolo de moneda
+    simbolo_pdf = limpiar_texto(simbolo)
+    if not simbolo_pdf.strip(): 
+        simbolo_pdf = "EUR" if "€" in simbolo else "USD"
+
     pdf = FPDF()
     pdf.add_page()
 
