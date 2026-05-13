@@ -14,8 +14,8 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
         pdf.set_font("Arial", 'B', 15)
         pdf.cell(40, 10, "MAKER 3D PERÚ")
 
-    pdf.set_font("Arial", 'B', 20)
-    pdf.cell(0, 10, t["pdf_title"], ln=True, align='C')
+    pdf.set_font("Arial", 'B', 16)
+    pdf.cell(0, 10, t.get("pdf_title", "PRESUPUESTO"), ln=True, align='C')
     pdf.ln(10)
 
         # --- FOTO DE LA FIGURA ---
@@ -143,6 +143,8 @@ texts = {
         "p_name_ph": "Ej: Juan Pérez",
         "char_name_ph": "Ej: Iron Man Mark 85",
         "step1": "1️⃣ Datos del Proyecto", "step2": "2️⃣ Configuración Artística", "step3": "3️⃣ Inversión Estimada",
+        "pdf_title": "PRESUPUESTO DE IMPRESIÓN 3D",
+        "pdf_imp": "Costo de Impresión",
         "final_quote": "Inversión Estimada", 
         "wa_header": "¡Hola Maker 3D Perú! Solicito información sobre esta inversión:",
         "tab_print": "💧 Estructura y Escala ", "tab_paint": "🖌️ Acabado Artístico", "tab_design": "🧊 Diseño",
@@ -203,6 +205,8 @@ texts = {
         "p_name_ph": "Ej: Javier García",
         "char_name_ph": "Ej: Batman (Hush)",
         "step1": "1️⃣ Datos del Proyecto", "step2": "2️⃣ Configuración Artística", "step3": "3️⃣ Inversión Estimada",
+        "pdf_title": "PRESUPUESTO DE IMPRESIÓN 3D",
+        "pdf_imp": "Costo de Impresión",
         "final_quote": "Inversión Estimada", 
         "wa_header": "¡Hola Maker 3D Perú! Solicito información sobre esta inversión:",
         "tab_print": "💧 Estructura y Escala ", "tab_paint": "🖌️ Acabado Artístico", "tab_design": "🧊 Diseño",
@@ -263,6 +267,8 @@ texts = {
         "p_name_ph": "e.g. John Doe",
         "char_name_ph": "e.g. Spider-Man",
         "step1": "1️⃣ Project Details", "step2": "2️⃣ Artistic Configuration", "step3": "3️⃣ Estimated Investment",
+        "pdf_title": "3D PRINTING BUDGET",
+        "pdf_imp": "Printing Cost",
         "final_quote": "Estimated Investment",
         "wa_header": "Hello Maker 3D Perú! I'm interested in this investment:",
         "tab_print": "💧 Structure and Scale", "tab_paint": "🖌️ Artistic Finish", "tab_design": "🧊 Design",
@@ -323,6 +329,8 @@ texts = {
         "p_name_ph": "es: Alessandro Rossi",
         "char_name_ph": "es: Darth Vader",
         "step1": "1️⃣ Dettagli Progetto", "step2": "2️⃣ Configurazione Artistica", "step3": "3️⃣ Investimento Stimato",
+        "pdf_title": "PREVENTIVO DI STAMPA 3D",
+        "pdf_it": "Costo di Stampa",
         "final_quote": "Investimento Stimato",
         "wa_header": "Ciao Maker 3D Perú! Richiedo informazioni su questo investimento:",
         "tab_print": "💧 Struttura e proporzioni", "tab_paint": "🖌️ finitura artistica", "tab_design": "🧊 Design",
