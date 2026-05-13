@@ -11,82 +11,87 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
     pdf = FPDF()
     pdf.add_page()
     
-    color_primario = (44, 62, 80) 
-    color_acento = (52, 152, 219)
+    color_primario = (44, 62, 80) # Gris azulado profesional
+    color_acento = (52, 152, 219)  # Azul brillante para líneas
     
-    # Función para limpiar símbolos duplicados y formatear
-    def limpiar_y_formatear(texto, symb):
-        # Quitamos símbolos de moneda que puedan venir en el texto
+    def limpiar_formatear(texto, symb):
         limpio = str(texto).replace("€", "").replace("S/.", "").replace("$", "").strip()
         return f"{symb} {limpio}"
 
     def formatear_texto(texto):
         return str(texto).replace("€", chr(128)).encode('latin-1', 'replace').decode('latin-1')
 
-    # --- ENCABEZADO ---
+    # --- CABECERA ---
     if logo_path:
-        try: pdf.image(logo_path, 10, 10, 35) # Logo un poco más pequeño para dar aire
+        # Logo con más aire (x=12, y=12) y tamaño balanceado (w=32)
+        try: pdf.image(logo_path, 12, 12, 32) 
         except: pass
     
     pdf.set_font("Helvetica", 'B', 18)
     pdf.set_text_color(*color_primario)
-    # Movido a la derecha y con más margen superior
-    pdf.set_y(15)
-    pdf.cell(0, 10, formatear_texto(t.get("pdf_title", "PRESUPUESTO")), ln=True, align='R')
+    pdf.set_y(20) # Bajamos un poco el título
+    pdf.cell(0, 10, formatear_texto(t.get("pdf_title", "PRESUPUESTO")).upper(), ln=True, align='R')
     
-    # Línea decorativa - LA BAJAMOS para que no cruce el logo
+    # Línea decorativa más elegante
     pdf.set_draw_color(*color_acento)
-    pdf.set_line_width(1)
-    pdf.line(10, 48, 200, 48) # Bajada a y=48
-    pdf.ln(25)
+    pdf.set_line_width(0.8)
+    pdf.line(10, 52, 200, 52) # Posición y=52 para evitar cruces
+    pdf.ln(30)
 
-    # --- CUERPO ---
+    # --- CONTENIDO ---
     y_detalle = pdf.get_y()
 
-    pdf.set_font("Helvetica", 'B', 11)
-    pdf.set_text_color(100, 100, 100)
-    pdf.cell(90, 8, "DETALLES DEL PROYECTO", ln=True)
+    # Columna Datos
+    pdf.set_font("Helvetica", 'B', 10)
+    pdf.set_text_color(120, 120, 120)
+    pdf.cell(90, 8, formatear_texto("DETALLES DEL PROYECTO"), ln=True)
     pdf.ln(2)
 
-    def fila_tabla(label, valor_texto):
+    def fila_estilizada(label, valor_texto):
         pdf.set_font("Helvetica", 'B', 10)
         pdf.set_text_color(*color_primario)
-        pdf.cell(60, 10, formatear_texto(label), border='B')
+        pdf.cell(65, 9, formatear_texto(label), border='B')
         pdf.set_font("Helvetica", '', 10)
-        # Usamos la limpieza aquí
-        valor_final = limpiar_y_formatear(valor_texto, simbolo)
-        pdf.cell(35, 10, formatear_texto(valor_final), border='B', ln=True, align='R')
+        valor_final = limpiar_formatear(valor_texto, simbolo)
+        pdf.cell(30, 9, formatear_texto(valor_final), border='B', ln=True, align='R')
 
-    fila_tabla(t.get('pdf_imp', 'Costo de Impresión'), c_imp)
-    fila_tabla(t.get('pdf_dis', 'Costo de Diseño'), c_dis)
-    fila_tabla(t.get('pdf_pin', 'Costo de Pintura'), c_pin)
+    fila_estilizada(t.get('pdf_imp', 'Costo de Impresión'), c_imp)
+    fila_estilizada(t.get('pdf_dis', 'Costo de Diseño'), c_dis)
+    fila_estilizada(t.get('pdf_pin', 'Costo de Pintura'), c_pin)
 
-    # --- IMAGEN DE REFERENCIA ---
+    # --- MARCO DE FOTO ---
     if imagen_figura is not None:
         try:
             img_bytes = imagen_figura.getvalue()
             if img_bytes:
                 img_file = io.BytesIO(img_bytes)
-                # Marco de la foto movido para no solapar
-                pdf.set_draw_color(220, 220, 220)
-                pdf.rect(135, y_detalle, 60, 60)
-                pdf.image(img_file, x=136, y=y_detalle+1, w=58)
+                # Sombra sutil / Marco
+                pdf.set_draw_color(210, 210, 210)
+                pdf.rect(130, y_detalle - 2, 65, 65) # Rectángulo contenedor
+                pdf.image(img_file, x=132, y=y_detalle, w=61)
         except: pass
 
-    # --- TOTAL ---
-    pdf.set_y(y_detalle + 65) # Aseguramos que el total baje después de la foto
+    # --- TOTALES ---
+    pdf.set_y(y_detalle + 70) 
     
     if descuento_val > 0:
-        pdf.set_font("Helvetica", 'I', 11)
+        pdf.set_font("Helvetica", 'I', 10)
         pdf.set_text_color(231, 76, 60)
-        pdf.cell(95, 10, f"{formatear_texto(t.get('pdf_desc', 'Descuento'))}: -{formatear_texto(simbolo)} {descuento_val:.2f}", align='R', ln=True)
+        pdf.cell(100, 8, f"{formatear_texto(t.get('pdf_desc', 'Descuento'))}: -{formatear_texto(simbolo)} {descuento_val:.2f}", align='R', ln=True)
 
+    # Bloque de Total
     pdf.set_fill_color(*color_primario)
     pdf.set_text_color(255, 255, 255)
     pdf.set_font("Helvetica", 'B', 14)
-    # Cambiado a "Inversión Estimada" o el texto que prefieras
-    texto_total = f"{formatear_texto(t.get('final_quote', 'TOTAL'))}: {formatear_texto(simbolo)} {total_final:.2f}"
-    pdf.cell(95, 12, texto_total, ln=True, align='C', fill=True)
+    etiqueta_total = t.get('final_quote', 'Inversión Estimada')
+    texto_total = f"{formatear_texto(etiqueta_total)}: {formatear_texto(simbolo)} {total_final:.2f}"
+    pdf.cell(100, 14, texto_total, ln=True, align='C', fill=True)
+
+    # Pie de página (branding)
+    pdf.set_y(-25)
+    pdf.set_font("Helvetica", 'I', 8)
+    pdf.set_text_color(170, 170, 170)
+    pdf.cell(0, 10, "MAKER 3D PERU - Arte y Tecnologia en cada detalle", align='C')
 
     return bytes(pdf.output())
     
