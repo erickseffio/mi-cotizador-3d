@@ -20,16 +20,16 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
     pdf.ln(10)
 
        # --- FOTO DE LA FIGURA (Solo si existe) ---
-if imagen_figura is not None:
-    try:
-        import tempfile
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".png") as tmp_file:
-            tmp_file.write(imagen_figura.getvalue())
-            tmp_path = tmp_file.name
-        pdf.image(tmp_path, x=140, y=40, w=50)
-    except Exception as e:
-        print(f"No se pudo cargar la imagen: {e}")
-# Si no hay imagen, el código simplemente saltará esta parte y seguirá adelante
+    if imagen_figura is not None:
+        try:
+            import tempfile
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".png") as tmp_file:
+                tmp_file.write(imagen_figura.getvalue())
+                tmp_path = tmp_file.name
+            pdf.image(tmp_path, x=140, y=40, w=50)
+        except Exception as e:
+            print(f"No se pudo cargar la imagen: {e}")
+    # Si no hay imagen, el código simplemente saltará esta parte y seguirá adelante
         
         # --- TABLA DE COSTOS ---
         pdf.set_font("Arial", size=12)
@@ -45,7 +45,7 @@ if imagen_figura is not None:
         pdf.ln(5)
         pdf.set_font("Arial", 'B', 14)
         pdf.cell(0, 10, f"{t['final_quote']}: {simbolo} {total_final:.2f}", ln=True)
-        return pdf.output(dest='S').encode('latin-1', errors='ignore')
+    return pdf.output(dest='S').encode('latin-1', errors='ignore')
 
 # 1. Configuración de la página (ACTUALIZADO)
 st.set_page_config(
