@@ -622,7 +622,7 @@ else:
     with col_pdf:
         try:
             # Ruta de tu logo (asegúrate de que el archivo existe en tu carpeta)
-            logo_file = "logo_maker3d.png" 
+            logo_file = "Logo.jpg" 
 
             pdf_bytes = generar_pdf(
                 c_imp = f"{simbolo} {costo_imp:.2f}" if "Perú" not in idioma else f"S/. {(costo_imp * st.session_state.tasa):.2f}",
