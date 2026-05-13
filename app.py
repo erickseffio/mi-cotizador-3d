@@ -6,35 +6,28 @@ st.set_page_config(page_title="Maker3DPeru-Italia", page_icon="Logo.jpg")
 # --- AJUSTE DE TAMAÑO PARA DETALLES (CSS AGRESIVO) ---
 st.markdown("""
     <style>
-    /* 1. Limitamos el ancho del contenedor total */
-    .stExpander {
-        width: 50% !important; /* Fuerza a que ocupe solo la mitad */
-        margin: 0 auto !important; /* Lo centra */
+    /* 1. Solo afecta a las imágenes que están dentro del portafolio */
+    /* Ajustamos el margen superior de la imagen para que baje un poco */
+    [data-testid="stImage"] img {
+        margin-top: 25px !important; 
+        margin-bottom: 10px !important;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        transition: transform .2s; /* Un efecto suave por si quieres añadir hover luego */
     }
 
-    /* 2. Quitamos el zoom del texto y lo hacemos compacto */
-    .streamlit-expanderHeader {
-        font-size: 0.8em !important;
-        padding-top: 2px !important;
-        padding-bottom: 2px !important;
-        line-height: 1.2 !important;
+    /* 2. Aseguramos que el contenedor de la imagen no empuje el resto */
+    [data-testid="stVerticalBlock"] > div:has(img) {
+        gap: 0rem !important;
     }
 
-    /* 3. Reducimos el espacio del contenido interno */
-    .streamlit-expanderContent {
-        font-size: 0.8em !important;
-        padding: 10px !important;
-        line-height: 1.1 !important; /* Texto más apretado para evitar zoom visual */
-    }
-
-    /* 4. Evita que Streamlit estire el expander en pantallas anchas */
-    [data-testid="stExpander"] {
-        border: 1px solid rgba(255, 255, 255, 0.1) !important;
-        border-radius: 8px !important;
+    /* 3. Mantenemos el título del portafolio y los textos limpios */
+    .stMarkdown h3 {
+        padding-top: 10px !important;
     }
     </style>
     """, unsafe_allow_html=True)
-
 @st.dialog("Vista de Obra - Maker 3D Perú", width="medium")
 def mostrar_imagen_grande(url, titulo, descripcion):
     st.image(url, use_container_width=True)
