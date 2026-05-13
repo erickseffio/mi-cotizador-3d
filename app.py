@@ -555,12 +555,12 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Título de la sección
-st.markdown("""
+# Título de la sección (CORREGIDO PARA IDIOMAS)
+st.markdown(f"""
     <div style="display: flex; align-items: center; margin-bottom: 20px;">
         <span style="font-size: 2.2rem; margin-right: 12px;">🎨</span>
         <h1 style="margin: 0; font-size: 2rem; font-weight: 800; color: #ffffff;">
-            Mi Portafolio <span style="color: #ff4b4b; font-size: 0.9rem; vertical-align: middle;">| Maker 3D Perú</span>
+            {t.get('port_main_title', 'Mi Portafolio')} <span style="color: #ff4b4b; font-size: 0.9rem; vertical-align: middle;">| Maker 3D Perú</span>
         </h1>
     </div>
 """, unsafe_allow_html=True)
