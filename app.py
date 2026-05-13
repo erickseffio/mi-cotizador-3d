@@ -490,7 +490,7 @@ st.markdown("""
         border-radius: 12px;
         border: 1px solid #333;
         overflow: hidden;
-        height: 300px; 
+        height: 150px; 
         display: flex;
         flex-direction: column;
         margin-bottom: 20px;
