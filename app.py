@@ -28,18 +28,16 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
         try: pdf.image(logo_path, 10, 8, 33)
         except: pass
 
-    # --- CORRECCIÓN DEFINITIVA DE IMAGEN ---
-    # Solo procesamos si imagen_figura no es None y tiene datos
+    # --- IMAGEN CON FILTRO DE SEGURIDAD ---
     if imagen_figura is not None:
         try:
-            # Obtenemos los bytes
+            # Solo si es un objeto con datos válidos
             img_bytes = imagen_figura.getvalue()
-            # Si el archivo tiene contenido real (más de 0 bytes)
-            if len(img_bytes) > 0:
-                img_data = io.BytesIO(img_bytes)
-                pdf.image(img_data, x=150, y=45, w=45)
-        except Exception:
-            # Si falla algo con la imagen, no detenemos el PDF
+            if img_bytes and len(img_bytes) > 0:
+                img_file = io.BytesIO(img_bytes)
+                pdf.image(img_file, x=150, y=45, w=45)
+        except:
+            # Si el formato binario falla, no lanzamos error, solo omitimos la foto
             pass
 
     # --- TABLA DE COSTOS ---
@@ -629,61 +627,49 @@ else:
     </div>
     """, unsafe_allow_html=True)
 
-    # 4. BOTONES EN COLUMNAS (CORRECCIÓN DE ARGUMENTOS FALTANTES)
+    # 4. BOTONES EN COLUMNAS (SOLUCIÓN DEFINITIVA DE CARGA)
 st.write("---")
 
-# Solo mostramos los botones y el mensaje de éxito si ya se calculó un total
-if 'total_eur' in locals() or 'total_pen' in locals():
+# CONDICIÓN CRÍTICA: Solo si el total es mayor a 0 (evita errores al cargar la página)
+if ('total_eur' in locals() and total_eur > 0) or ('total_pen' in locals() and total_pen > 0):
     
-    # Movimos el mensaje verde aquí para que NO salga apenas carga la página
     st.success(t.get("thanks", "¡Gracias por tu solicitud!"))
-
     col_pdf, col_wa = st.columns(2)
 
     with col_pdf:
         try:
-            # 1. Preparamos las variables de seguridad para que no falte ningún argumento
             simbolo_pdf = t.get("simbolo", "€") 
             val_dis = moneda_diseno if 'moneda_diseno' in locals() else f"{simbolo_pdf} 0.00"
             val_imp = f"{costo_imp:.2f}" if 'costo_imp' in locals() else "0.00"
             val_pin = f"{costo_p:.2f}" if 'costo_p' in locals() else "0.00"
-            descuento_final = ahorro_wsp_val if 'ahorro_wsp_val' in locals() else 0.0
+            desc_val = ahorro_wsp_val if 'ahorro_wsp_val' in locals() else 0.0
             
-            # Determinamos cuál total usar según el país
-            total_a_pagar = total_pen if "Perú" in idioma else total_eur
+            t_final = total_pen if "Perú" in idioma else total_eur
 
-            # 2. LLAMADA A LA FUNCIÓN CON LOS 10 ARGUMENTOS REQUERIDOS
-            pdf_bytes = generar_pdf(
-                c_imp = val_imp,           # 1
-                c_dis = val_dis,           # 2
-                c_pin = val_pin,           # 3
-                tasa = st.session_state.tasa, # 4
-                total_final = total_a_pagar, # 5
-                t = t,                     # 6
-                logo_path = "Logo.jpg",    # 7
-                imagen_figura = archivo_reference, # 8
-                descuento_val = descuento_final,   # 9
-                simbolo = simbolo_pdf      # 10
+            # Generamos los bytes del PDF
+            pdf_data = generar_pdf(
+                val_imp, val_dis, val_pin, st.session_state.tasa,
+                t_final, t, "Logo.jpg", archivo_reference, desc_val, simbolo_pdf
             )
             
             st.download_button(
                 label="📥 Descargar PDF con Foto",
-                data=pdf_bytes,
+                data=pdf_data,
                 file_name=f"Presupuesto_{nombre_p}.pdf",
                 mime="application/pdf",
                 use_container_width=True
             )
         except Exception as e:
-            st.error(f"Error al generar el PDF: {e}")
-
+            st.error(f"Nota: El PDF se generará cuando completes los datos correctamente.")
+    
     with col_wa:
-        if 'wa_link' in locals():
+        if 'wa_link' in locals() and wa_link:
             st.link_button(t["wa_btn"], wa_link, use_container_width=True, type="primary")
         else:
-            st.warning("Completa los datos para activar WhatsApp")
+            st.warning("Completa nombre y personaje para WhatsApp")
 else:
-    # Mensaje opcional cuando la página está vacía
-    st.info("👋 Bienvenido a Maker 3D Perú. Ingresa los datos para generar tu presupuesto.")
+    # Esto es lo que verá el usuario apenas entre a la web
+    st.info("👋 ¡Bienvenido! Ingresa los costos y el nombre del personaje para generar tu presupuesto.")
     
 # --- SECCIÓN PORTAFOLIO REFINADA ---
 # --- SECCIÓN PORTAFOLIO RECUPERADA Y ADAPTABLE ---
