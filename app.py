@@ -6,23 +6,21 @@ st.set_page_config(page_title="Maker3DPeru-Italia", page_icon="Logo.jpg")
 # --- AJUSTE DE TAMAÑO PARA DETALLES (CSS AGRESIVO) ---
 st.markdown("""
     <style>
-    /* 1. Asegura que la cabecera e idiomas se vean */
+    /* Recuperar cabecera */
     .main .block-container {
         padding-top: 5rem !important;
     }
 
-    /* 2. BAJAR LAS FOTOS (Ajuste Quirúrgico) */
-    /* Apuntamos al contenedor DIV que sostiene la imagen */
-    [data-testid="column"] div[data-testid="stImage"] {
-        padding-top: 100px !important; /* <--- CAMBIA ESTE NÚMERO AQUÍ */
-        display: flex;
-        justify-content: center;
+    /* ESTE ES EL QUE MANDA: Apunta a la imagen por su contenedor de datos */
+    div[data-testid="stImage"] > img {
+        margin-top: 50px !important; /* Prueba con 50px primero */
+        margin-bottom: 20px !important;
+        border: 2px solid rgba(255,255,255,0.1); /* Opcional: un borde fino */
     }
 
-    /* 3. Evitar que la imagen se deforme */
-    [data-testid="column"] img {
-        margin-top: 0px !important; 
-        border-radius: 10px;
+    /* Centrar los textos debajo de la imagen */
+    div[data-testid="column"] .stMarkdown {
+        text-align: center !important;
     }
     </style>
     """, unsafe_allow_html=True)
