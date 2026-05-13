@@ -521,42 +521,6 @@ with st.container(border=True):
             </div>
         """, unsafe_allow_html=True)
         
-# --- NUEVA SECCIÓN: GENERAR PDF ---
-st.write("---")
-col_pdf, col_wa = st.columns(2)
-
-with col_pdf:
-    if st.button("📥 Generar Ticket PDF"):
-        if not nombre_c or not nombre_p:
-            st.error(t["warning_input"])
-        else:
-            try:
-                # Generamos los bytes
-                pdf_bytes = generar_pdf(
-                    f"€ {costo_imp:.2f}",
-                    f"€ {costo_d:.2f}",
-                    f"€ {costo_p:.2f}",
-                    st.session_state.tasa,
-                    monto_principal, # Usa el monto que ya calculaste (S/. o €)
-                    t
-                )
-                
-                # Botón real de descarga
-                st.download_button(
-                    label="💾 Guardar Archivo PDF",
-                    data=pdf_bytes,
-                    file_name=f"Presupuesto_{nombre_p}_{nombre_c}.pdf",
-                    mime="application/pdf"
-                )
-            except Exception as e:
-                st.error(f"Error: {e}")
-
-with col_wa:
-    # Aquí iría tu botón de WhatsApp actual para que salgan uno al lado del otro
-    if nombre_c and nombre_p:
-         st.markdown(f'<a href="{wa_link}" target="_blank" style="text-decoration:none;"><button style="width:100%; height:45px; border-radius:5px; background-color:#25D366; color:white; border:none; cursor:pointer;">🟢 Enviar por WhatsApp</button></a>', unsafe_allow_html=True)
-
-
 # --- 7. CIERRE Y WHATSAPP (Lógica Corregida con PDF) ---
 st.warning(t["note"])
 st.markdown(f"<div style='text-align: center; padding: 10px; background-color: #fdf2d9; border-radius: 5px; border: 1px solid #f9e2af; color: #856404; margin: 15px 0;'>{t['social_proof']}</div>", unsafe_allow_html=True)
