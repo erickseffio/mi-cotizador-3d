@@ -13,8 +13,8 @@ st.markdown("""
 
  /* Apuntamos al contenedor del contenedor para forzar el aire */
     [data-testid="stImage"] {
-        padding-top: 60px !important; /* Subimos de 50 a 60 para que se note */
-        padding-bottom: 20px !important;
+        padding-top: 40px !important; /* Subimos de 50 a 60 para que se note */
+        padding-bottom: 10px !important;
         display: flex;
         justify-content: center;
     }
