@@ -8,7 +8,7 @@ st.markdown("""
     <style>
     /* 1. Limitamos el ancho del contenedor total */
     .stExpander {
-        width: 50% !important; /* Fuerza a que ocupe solo la mitad */
+        width: 20% !important; /* Fuerza a que ocupe solo la mitad */
         margin: 0 auto !important; /* Lo centra */
     }
 
