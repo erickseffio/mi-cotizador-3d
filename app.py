@@ -633,48 +633,55 @@ else:
     </div>
     """, unsafe_allow_html=True)
 
-    # 4. BOTONES EN COLUMNAS (CORREGIDO)
+    # 4. BOTONES EN COLUMNAS (PROTEGIDO)
 st.write("---")
-col_pdf, col_wa = st.columns(2)
 
-with col_pdf:
-    try:
-        # Ruta de tu logo
-        logo_file = "Logo.jpg" 
+# Solo mostramos los botones si ya se calculó un total
+if 'total_eur' in locals() or 'total_pen' in locals():
+    col_pdf, col_wa = st.columns(2)
 
-        # PREPARACIÓN DE DATOS: 
-        # Usamos las variables que ya tienes definidas en tu código principal
-        val_imp = f"{costo_imp:.2f}"
-        val_dis = moneda_diseno  # <--- Usamos la que ya tienes definida arriba
-        val_pin = f"{costo_p:.2f}"
+    with col_pdf:
+        try:
+            logo_file = "Logo.jpg" 
 
-        pdf_bytes = generar_pdf(
-            c_imp = val_imp,
-            c_dis = val_dis,
-            c_pin = val_pin,
-            tasa = st.session_state.tasa,
-            total_final = (total_pen if "Perú" in idioma else total_eur),
-            t = t,
-            logo_path = logo_file,
-            imagen_figura = archivo_reference,
-            descuento_val = ahorro_wsp_val,
-            simbolo = simbolo
-        )
-        
-        st.download_button(
-            label="📥 Descargar PDF con Foto",
-            data=pdf_bytes,
-            file_name=f"Presupuesto_{nombre_p}.pdf",
-            mime="application/pdf",
-            use_container_width=True
-        )
-    except Exception as e:
-        st.error(f"Error al incluir elementos en el PDF: {e}")
+            # Verificamos si existe moneda_diseno, si no, usamos un valor por defecto
+            val_dis = moneda_diseno if 'moneda_diseno' in locals() else f"{simbolo} 0.00"
+            val_imp = f"{costo_imp:.2f}"
+            val_pin = f"{costo_p:.2f}"
 
-with col_wa:
-    st.link_button(t["wa_btn"], wa_link, use_container_width=True, type="primary")
+            pdf_bytes = generar_pdf(
+                c_imp = val_imp,
+                c_dis = val_dis,
+                c_pin = val_pin,
+                tasa = st.session_state.tasa,
+                total_final = (total_pen if "Perú" in idioma else total_eur),
+                t = t,
+                logo_path = logo_file,
+                imagen_figura = archivo_reference,
+                descuento_val = ahorro_wsp_val,
+                simbolo = simbolo
+            )
+            
+            st.download_button(
+                label="📥 Descargar PDF con Foto",
+                data=pdf_bytes,
+                file_name=f"Presupuesto_{nombre_p}.pdf",
+                mime="application/pdf",
+                use_container_width=True
+            )
+        except Exception as e:
+            st.error(f"Error al generar el PDF: {e}")
 
-st.success(t["thanks"])
+    with col_wa:
+        # Verificamos que wa_link exista antes de crear el botón
+        if 'wa_link' in locals():
+            st.link_button(t["wa_btn"], wa_link, use_container_width=True, type="primary")
+        else:
+            st.warning("Completa los datos para activar WhatsApp")
+
+    st.success(t["thanks"])
+else:
+    st.info("👋 ¡Hola! Ingresa los datos arriba para generar tu presupuesto.")
     
 # --- SECCIÓN PORTAFOLIO REFINADA ---
 # --- SECCIÓN PORTAFOLIO RECUPERADA Y ADAPTABLE ---
