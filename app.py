@@ -226,7 +226,7 @@ texts = {
     "Italiano €": {
         "title": "Maker3DPeru-Italia",
         "slogan": "✨ Iperrealismo in resina: dal file digitale alla teca espositiva.",
-        "delivery": "🕒 Consegna: 1.5 settimane (Dall'acconto del 50%)",
+        "delivery": "🕒 Consegna: 1 settimane (Dall'acconto del 50%)",
         "wa_num": "393924043068",
         "p_name_label": "Il tuo Nome", "char_name_label": "Personaggio", "ref_label": "Carica Riferimento",
         "p_name_ph": "es: Alessandro Rossi",
