@@ -57,24 +57,27 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
     # --- IMPORTANTE: El código de abajo DEBE estar fuera de los bloques 'if' anteriores ---
     # Alinea esto a la misma altura que los 'if'
     
-    # --- TABLA DE COSTOS ---
+   # --- TABLA DE COSTOS (Paso 2: Usando t_limpio) ---
     pdf.set_font("Arial", size=12)
-    pdf.cell(0, 10, f"{limpiar_texto(t['pdf_imp'])}: {simbolo_pdf} {c_imp}", ln=True)
-    pdf.cell(0, 10, f"{limpiar_texto(t['pdf_dis'])}: {simbolo_pdf} {c_dis}", ln=True)
-    pdf.cell(0, 10, f"{limpiar_texto(t['pdf_pin'])}: {simbolo_pdf} {c_pin}", ln=True)
+    # Ya no usamos limpiar_texto(...) porque t_limpio ya hizo ese trabajo
+    pdf.cell(0, 10, f"{t_limpio['pdf_imp']}: {simbolo_pdf} {c_imp}", ln=True)
+    pdf.cell(0, 10, f"{t_limpio['pdf_dis']}: {simbolo_pdf} {c_dis}", ln=True)
+    pdf.cell(0, 10, f"{t_limpio['pdf_pin']}: {simbolo_pdf} {c_pin}", ln=True)
             
     # --- SECCIÓN DE DESCUENTO ---
     if descuento_val > 0:
         pdf.set_text_color(255, 0, 0)
-        pdf.cell(0, 10, f"DESCUENTO APLICADO: -{simbolo_pdf} {descuento_val:.2f}", ln=True)
+        # Aquí también podrías añadir una frase limpia si la tienes en el diccionario
+        pdf.cell(0, 10, f"DESCUENTO: -{simbolo_pdf} {descuento_val:.2f}", ln=True)
         pdf.set_text_color(0, 0, 0)
         
     pdf.ln(5)
     pdf.set_font("Arial", 'B', 14)
-    texto_total = f"{limpiar_texto(t['final_quote'])}: {simbolo_pdf} {total_final:.2f}"
+    # Usamos final_quote del diccionario ya procesado
+    texto_total = f"{t_limpio['final_quote']}: {simbolo_pdf} {total_final:.2f}"
     pdf.cell(0, 10, texto_total, ln=True)
 
-    # El return debe estar al final de todo, alineado con el inicio de la función
+    # El return se mantiene igual
     return pdf.output(dest='S').encode('latin-1', errors='ignore')
     
 # 1. Configuración de la página (ACTUALIZADO)
