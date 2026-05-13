@@ -14,7 +14,7 @@ st.markdown("""
     /* 2. BAJAR LAS FOTOS (Ajuste Quirúrgico) */
     /* Apuntamos al contenedor DIV que sostiene la imagen */
     [data-testid="column"] div[data-testid="stImage"] {
-        padding-top: 60px !important; /* <--- CAMBIA ESTE NÚMERO AQUÍ */
+        padding-top: 80px !important; /* <--- CAMBIA ESTE NÚMERO AQUÍ */
         display: flex;
         justify-content: center;
     }
