@@ -434,21 +434,25 @@ with st.container(border=True):
 
 # --- 7. CIERRE Y WHATSAPP (Lógica Corregida) ---
 st.warning(t["note"])
-# Agrégalo justo debajo de st.warning(t["note"])
 st.markdown(f"<div style='text-align: center; padding: 10px; background-color: #fdf2d9; border-radius: 5px; border: 1px solid #f9e2af; color: #856404; margin: 15px 0;'>{t['social_proof']}</div>", unsafe_allow_html=True)
 
 # Si el usuario NO ha puesto el nombre o el personaje
 if not nombre_c or not nombre_p:
-    st.info(t["warning_input"]) # Aquí sale el aviso que pides
+    st.info(t["warning_input"]) 
 else:
-        # Lógica para el TOTAL en WhatsApp
-    moneda_wa = f"S/. {total_pen:.2f}" if idioma == "Español (Perú)" else f"€ {total_eur:.2f}"
-        
-        # Lógica para el DISEÑO en WhatsApp (¡Aquí estaba el detalle!)
-        # Asumiendo que tienes una variable con el costo en soles o la calculas aquí
-    diseno_pen = costo_d * st.session_state.tasa  
-    moneda_diseno = f"S/. {diseno_pen:.2f}" if idioma == "Español (Perú)" else f"€ {costo_d:.2f}"
+    # 1. Definir Moneda y Totales para el mensaje
+    if "Perú" in idioma:
+        moneda_wa = f"S/. {total_pen:.2f}"
+        moneda_diseno = f"S/. {(costo_d * st.session_state.tasa):.2f}"
+        ahorro_wsp_val = ahorro_pen # Usa el ahorro en Soles calculado en la sección 6
+        simbolo = "S/."
+    else:
+        moneda_wa = f"€ {total_eur:.2f}"
+        moneda_diseno = f"€ {costo_d:.2f}"
+        ahorro_wsp_val = ahorro_est # Usa el ahorro en Euros calculado en la sección 6
+        simbolo = "€"
 
+    # 2. Mapa de detalles de diseño
     mapa_detalles = {}
     for lang in texts:
         opts = texts[lang]["design_opts"]
@@ -456,24 +460,23 @@ else:
         for i in range(len(opts)):
             mapa_detalles[opts[i]] = details[i]
             
-    # Definimos lo que falta para que no salga el error rojo
-    ahorro_wsp = 0.0  # Puedes cambiarlo por tu lógica de descuento
-    simbolo = "S/." if idioma == "Español (Perú)" else "€"
-        # Generamos el mensaje limpio
+    # 3. Generamos el mensaje para WhatsApp
     msg = (f"{t['wa_header']}\n"
-               f"--------------------------\n"
-               f"👤 Cliente: {nombre_c}\n"
-               f"👾 Figura: {nombre_p}\n"
-               f"📏 Altura: {altura}cm\n"
-               f"💧 Impresión: {dif}\n"
-               f"🖌️ Pintura: {nv_p}\n"
-               f"🧊 Diseño: {moneda_diseno}\n"
-               f"📝 Detalle: {mapa_detalles[tipo_d]}\n"
-               f"✨ DESCUENTO: {simbolo} {ahorro_wsp:.2f}\n"
-               f"--------------------------\n"
-               f"💎 {t['final_quote']}: {moneda_wa}")
+           f"--------------------------\n"
+           f"👤 Cliente: {nombre_c}\n"
+           f"👾 Figura: {nombre_p}\n"
+           f"📏 Altura: {altura}cm\n"
+           f"💧 Impresión: {dif}\n"
+           f"🖌️ Pintura: {nv_p}\n"
+           f"🧊 Diseño: {moneda_diseno}\n"
+           f"📝 Detalle: {mapa_detalles[tipo_d]}\n"
+           f"✨ DESCUENTO: {simbolo} {ahorro_wsp_val:.2f}\n"
+           f"--------------------------\n"
+           f"💎 {t['final_quote']}: {moneda_wa}")
     
     wa_link = f"https://wa.me/{t['wa_num']}?text={urllib.parse.quote(msg)}"
+
+    # Interfaz de usuario
     st.markdown("""
     <div style="background-color: #f0f2f6; border-left: 5px solid #ffa500; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
         <small style="color: #31333F;">
@@ -483,6 +486,7 @@ else:
         </small>
     </div>
     """, unsafe_allow_html=True)
+    
     st.markdown("""
     <div style="background-color: #1A1C24; border: 2px solid #FF4B2B; padding: 15px; border-radius: 10px; text-align: center; margin-bottom: 20px;">
         <span style="font-size: 20px;">📲</span> 
@@ -492,9 +496,9 @@ else:
         </p>
     </div>
     """, unsafe_allow_html=True)
+
     st.link_button(t["wa_btn"], wa_link, use_container_width=True, type="primary")
     st.success(t["thanks"])
-import streamlit.components.v1 as components
 
 # --- SECCIÓN PORTAFOLIO REFINADA ---
 # --- SECCIÓN PORTAFOLIO RECUPERADA Y ADAPTABLE ---
