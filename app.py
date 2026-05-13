@@ -10,6 +10,7 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
         if not isinstance(texto, str): return texto
         # Filtra emojis para que el PDF no explote
         return texto.encode('ascii', 'ignore').decode('ascii')
+    simbolo_pdf = simbolo.replace("€", "EUR")
     pdf = FPDF()
     pdf.add_page()
 
