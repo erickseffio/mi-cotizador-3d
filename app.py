@@ -92,6 +92,7 @@ texts = {
         "port_desc": "Explora nuestras últimas creaciones en resina y pintura artística.",
         "loading_img": "Procesando imagen de referencia...",
         "img_caption": "✅ Imagen cargada correctamente",
+        "footer_text": "Diseñado por Maker 3D Perú | Envíos nacionales e internacionales",
         "btn_details": "Detalles",
         "img_success": "¡Imagen lista para la cotización!",
         "img_info": "Sube una foto de tu modelo para una mejor estimación.",
@@ -151,6 +152,7 @@ texts = {
         "port_desc": "Explora nuestras últimas creaciones en resina y pintura artística.",
         "loading_img": "Procesando imagen de referencia...",
         "img_caption": "✅ Imagen cargada correctamente",
+        "footer_text": "Diseñado por Maker 3D Perú | Envíos nacionales e internacionales",
         "btn_details": "Detalles",
         "img_success": "¡Imagen lista para la cotización!",
         "img_info": "Sube una foto de tu modelo para una mejor estimación.",
@@ -210,6 +212,7 @@ texts = {
         "port_desc": "Explore our latest creations in resin and artistic painting.",
         "loading_img": "Processing reference image...",
         "img_caption": "✅ Image uploaded successfully",
+        "footer_text": "Designed by Maker 3D Perú | Domestic and international shipping",
         "btn_details": "Details",
         "img_success": "Image ready for quotation!",
         "img_info": "Upload a photo of your model for a better estimation.",
@@ -269,6 +272,7 @@ texts = {
         "port_desc": "Esplora le nostre ultime creazioni in resina y pittura artistica.",
         "loading_img": "Elaborazione dell'immagine...",
         "img_caption": "✅ Immagine caricata correttamente",
+        "footer_text": "Design di Maker 3D Perú | Spedizioni nazionali e internazionali",
         "btn_details": "Dettagli",
         "img_success": "Immagine pronta per el preventivo!",
         "img_info": "Carica una foto del tuo modello per una stima migliore.",
@@ -601,4 +605,8 @@ with col_social[2]: st.link_button("📺 YouTube", "https://www.youtube.com/@Mak
 with col_social[3]: st.link_button("👤 Facebook", "https://www.facebook.com/Maker.3d.Peru", use_container_width=True)
 
 st.write("")
-st.markdown(f"<p style='text-align: center; color: #888888; font-size: 0.8rem;'>❤️ Diseñado por Maker 3D Perú | Envíos nacionales e internacionales</p>", unsafe_allow_html=True)
+st.markdown(f"""
+    <div style="text-align: center; color: #888; padding: 20px; font-size: 0.9rem;">
+        💗 {t['footer_text']}
+    </div>
+""", unsafe_allow_html=True)
