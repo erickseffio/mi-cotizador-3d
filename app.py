@@ -16,14 +16,14 @@ st.markdown("""
             padding-top: 5rem !important;
         }
 
-        /* 2. OCULTAR ICONOS DE LA DERECHA (Share, GitHub, etc.) */
-        /* Buscamos el contenedor de acciones de la barra superior */
-        section[data-testid="stSidebar"] ~ .main header div:nth-child(2) {
+        /* 2. BORRAR ICONOS DE LA DERECHA (Fork, GitHub, etc.) */
+        /* Eliminamos el contenedor completo de las acciones del header derecho */
+        [data-testid="stHeaderActionElements"] {
             display: none !important;
         }
         
-        /* Otra capa de seguridad para los botones de acción */
-        div[data-testid="stHeaderActionElements"] {
+        /* Ocultamos específicamente el botón de Fork si persiste */
+        .stActionButton {
             display: none !important;
         }
 
@@ -32,20 +32,19 @@ st.markdown("""
             display: none !important;
         }
 
-        /* Ocultar el botón de Deploy (la nube) */
-        .stAppDeployButton {
-            display: none !important;
-        }
-
-        /* 3. ASEGURAR QUE LA BARRA LATERAL SEA VISIBLE */
-        /* Forzamos que el botón de la sidebar (flecha) sí se muestre */
-        button[data-testid="stBaseButton-headerNoPadding"] {
-            display: inline-flex !important;
-        }
-        
-        /* Hacemos el fondo del header transparente para que no moleste */
+        /* 3. MANTENER LA FLECHA DE LA IZQUIERDA INVISIBLE PERO FUNCIONAL */
+        /* Hacemos que el header sea transparente para que no se vea la franja negra arriba */
         header {
             background-color: transparent !important;
+            border-bottom: none !important;
+        }
+        
+        /* Opcional: Si quieres que la flecha sea casi invisible hasta que pases el mouse */
+        button[data-testid="stBaseButton-headerNoPadding"] {
+            opacity: 0.1;
+        }
+        button[data-testid="stBaseButton-headerNoPadding"]:hover {
+            opacity: 1;
         }
     </style>
 """, unsafe_allow_html=True)
