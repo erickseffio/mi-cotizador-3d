@@ -168,6 +168,8 @@ texts = {
         "height_label": "Altura (cm)", "comp_label": "Complejidad", "comp_opts": ["Coleccionista", "Épico", "Obra Maestra"],
         "paint_check": "¿Incluir Pintura Profesional?", "paint_level": "Nivel de acabado", "paint_opts": ["Básico", "Vitrina", "Museo"],
         "design_label": "Edición Digital",
+        "btn_download": "Descargar PDF con Foto",
+        "pdf_desc": "DESCUENTO",
         "design_opts": [
             "Listo para imprimir - El archivo no requiere cambios",
             "Ajuste Básico - Escalado, reparación o cortes básicos",
@@ -234,6 +236,8 @@ texts = {
         "height_label": "Altura (cm)", "comp_label": "Complejidad", "comp_opts": ["Coleccionista", "Épico", "Obra Maestra"],
         "paint_check": "¿Incluir Pintura Profesional?", "paint_level": "Nivel de acabado", "paint_opts": ["Básico", "Vitrina", "Museo"],
         "design_label": "Edición Digital",
+        "btn_download": "Descargar PDF con Foto",
+        "pdf_desc": "DESCUENTO",
         "design_opts": [
             "Listo para imprimir - El archivo no requiere cambios",
             "Ajuste Básico - Escalado, reparación o cortes básicos",
@@ -300,6 +304,8 @@ texts = {
         "height_label": "Height (cm)", "comp_label": "Complexity", "comp_opts": ["Collector's Item", "Epic", "Masterpiece"],
         "paint_check": "Include Professional Painting?", "paint_level": "Finish Level", "paint_opts": ["Basic", "Display", "Museum"],
         "design_label": "Digital Editing",
+        "btn_download": "Download PDF with Photo",
+        "pdf_desc": "DISCOUNT",
         "design_opts": [
             "Ready to print - File needs no changes",
             "Basic Adjustment - Scaling, mesh repair, or basic cuts",
@@ -366,6 +372,8 @@ texts = {
         "height_label": "Altezza (cm)", "comp_label": "Complessità", "comp_opts": ["Oggetto da collezione", "epico", "capolavoro"],
         "paint_check": "Includere Pittura Professionale?", "paint_level": "Livello di finitura", "paint_opts": ["Base", "Vetrina", "Museo"],
         "design_label": "Modifica Digitale",
+        "btn_download": "Scarica PDF con Foto",
+        "pdf_desc": "SCONTO",
         "design_opts": [
             "Pronto per la stampa - Il file non richiede modifiche",
             "Regolazione Base - Scalatura, riparazione mesh o tagli",
@@ -666,7 +674,8 @@ if hay_calculo:
             pdf_bytes = bytes(pdf_output)
 
             st.download_button(
-                label="📥 Descargar PDF con Foto",
+                # Cambiamos el texto fijo por t.get(...)
+                label=f"📥 {t.get('btn_download', 'Descargar PDF')}",
                 data=pdf_bytes,
                 file_name=f"Presupuesto_{nombre_p}.pdf",
                 mime="application/pdf",
