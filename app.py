@@ -61,7 +61,7 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
     pdf.set_font("Arial", size=12)
     # Usamos directamente t_limpio y simbolo_pdf
     pdf.cell(0, 10, f"{t_limpio['pdf_imp']}: {simbolo_pdf} {c_imp}", ln=True)
-    pdf.cell(0, 10, f"{t_limpio['pdf_dis']}: {simpio_pdf if 'pdf_dis' in t_limpio else 'Diseno'}: {simbolo_pdf} {c_dis}", ln=True)
+    pdf.cell(0, 10, f"{t_limpio['pdf_dis']}: {simbolo_pdf if 'pdf_dis' in t_limpio else 'Diseno'}: {simbolo_pdf} {c_dis}", ln=True)
     # Nota: Para Italiano el campo es 'pdf_it', asegúrate de que coincida o usa un .get()
     etiqueta_imp = t_limpio.get('pdf_imp', t_limpio.get('pdf_it', 'Costo'))
     # Sugerencia para evitar errores si las llaves varían entre idiomas:
