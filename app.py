@@ -8,7 +8,7 @@ st.markdown("""
     <style>
     /* Esto reduce el ancho del expander a la mitad y lo centra */
     .stExpander {
-        max-width: 20% !important; 
+        max-width: 10% !important; 
         margin: 0 auto !important;
     }
     
