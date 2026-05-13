@@ -19,13 +19,13 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
     pdf.ln(10)
 
     # --- FOTO DE LA FIGURA ---
-    if imagen_figura:
-    try:
+if imagen_figura:
+    try: # <--- 4 ESPACIOS DE SANGRÍA
         # Si es un objeto de Streamlit, FPDF suele aceptar el path o el objeto binario
         # Pero asegúrate de que no sea None antes de entrar aquí
         pdf.image(imagen_figura, x=140, y=40, w=50)
-    except Exception as e:
-        st.error(f"Error al procesar la imagen: {e}")
+    except Exception as e: # <--- ALINEADO CON EL TRY
+        st.error(f"Error al procesar la imagen: {e}")   
 
     # --- TABLA DE COSTOS ---
     pdf.set_font("Arial", size=12)
