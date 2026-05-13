@@ -11,46 +11,49 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
     pdf = FPDF()
     pdf.add_page()
     
-    # --- FUNCIÓN INTERNA PARA EL SÍMBOLO ---
+    # Función para el símbolo del Euro en fuentes estándar
     def formatear_simbolo(texto_simbolo):
-        # fpdf2 usa latin-1 por defecto para fuentes estándar. 
-        # El Euro en latin-1 se representa con el código \x80
         return texto_simbolo.replace("€", chr(128))
 
     simbolo_f = formatear_simbolo(simbolo)
-
-    # 2. Fuente estándar
     pdf.set_font("Helvetica", size=12)
 
-    # --- BLOQUE: El Título ---
+    # --- TÍTULO ---
     pdf.ln(10)
     pdf.set_font("Helvetica", 'B', 16)
     pdf.cell(0, 10, t.get("pdf_title", "PRESUPUESTO").encode('latin-1', 'replace').decode('latin-1'), ln=True, align='C')
     pdf.ln(10)
 
-    # --- BLOQUE: Logo e Imagen ---
+    # --- LOGO ---
     if logo_path:
         try: pdf.image(logo_path, 10, 8, 33)
         except: pass
 
+    # --- IMAGEN DE LA FIGURA (CORRECCIÓN CRÍTICA AQUÍ) ---
     if imagen_figura:
         try:
+            # Creamos un archivo temporal físico para evitar el error de 'bytearray'
             with tempfile.NamedTemporaryFile(delete=False, suffix=".png") as tmp:
-                tmp.write(imagen_figura.getvalue())
-                pdf.image(tmp.name, x=150, y=45, w=45)
-        except: pass
+                # Leemos los bytes del objeto de Streamlit
+                bytes_data = imagen_figura.getvalue()
+                tmp.write(bytes_data)
+                tmp_path = tmp.name
+            
+            # Insertamos la imagen usando la ruta del archivo temporal
+            pdf.image(tmp_path, x=150, y=45, w=45)
+        except Exception as e:
+            # Si falla la imagen, el PDF se genera igual pero sin la foto
+            print(f"Error procesando imagen: {e}")
 
-    # --- TABLA DE COSTOS (Con el símbolo corregido) ---
+    # --- TABLA DE COSTOS ---
     pdf.set_font("Helvetica", size=12)
-    
     label_imp = t.get('pdf_imp', t.get('pdf_it', 'Costo Impresion'))
     
-    # Usamos f-strings pero asegurando que el símbolo sea el compatible
     pdf.cell(0, 10, f"{label_imp}: {simbolo_f} {c_imp}".encode('latin-1', 'replace').decode('latin-1'), ln=True)
     pdf.cell(0, 10, f"{t.get('pdf_dis', 'Costo Diseno')}: {simbolo_f} {c_dis}".encode('latin-1', 'replace').decode('latin-1'), ln=True)
     pdf.cell(0, 10, f"{t.get('pdf_pin', 'Costo Pintura')}: {simbolo_f} {c_pin}".encode('latin-1', 'replace').decode('latin-1'), ln=True)
             
-    # --- SECCIÓN DE DESCUENTO ---
+    # --- DESCUENTO ---
     if descuento_val > 0:
         pdf.set_text_color(255, 0, 0)
         pdf.cell(0, 10, f"DESCUENTO: -{simbolo_f} {descuento_val:.2f}".encode('latin-1', 'replace').decode('latin-1'), ln=True)
@@ -61,6 +64,7 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
     texto_total = f"{t.get('final_quote', 'Total')}: {simbolo_f} {total_final:.2f}"
     pdf.cell(0, 10, texto_total.encode('latin-1', 'replace').decode('latin-1'), ln=True)
 
+    # Retornamos los bytes finales del PDF
     return pdf.output()
     
 # 1. Configuración de la página (ACTUALIZADO)
