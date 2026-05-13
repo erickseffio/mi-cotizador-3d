@@ -43,10 +43,15 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
     pdf.cell(0, 10, f"{formatear_texto(t.get('pdf_dis', 'Costo Diseno'))}: {formatear_texto(simbolo)} {c_dis}", ln=True)
     pdf.cell(0, 10, f"{formatear_texto(t.get('pdf_pin', 'Costo Pintura'))}: {formatear_texto(simbolo)} {c_pin}", ln=True)
             
+    # --- SECCIÓN DE DESCUENTO TRADUCIDA ---
     if descuento_val > 0:
-        pdf.set_text_color(255, 0, 0)
-        pdf.cell(0, 10, f"DESCUENTO: -{formatear_texto(simbolo)} {descuento_val:.2f}", ln=True)
-        pdf.set_text_color(0, 0, 0)
+        # Buscamos la traducción en tu diccionario 't'. 
+        # Si no existe 'pdf_desc', usará "DESCUENTO" por defecto.
+        etiqueta_descuento = t.get('pdf_desc', t.get('discount_label', 'DESCUENTO'))
+        
+        pdf.set_text_color(255, 0, 0) # Color rojo
+        pdf.cell(0, 10, f"{formatear_texto(etiqueta_descuento)}: -{formatear_texto(simbolo)} {descuento_val:.2f}", ln=True)
+        pdf.set_text_color(0, 0, 0) # Volver a negro
         
     pdf.ln(5)
     pdf.set_font("Helvetica", 'B', 14)
@@ -184,6 +189,8 @@ texts = {
         "port_shanks_desc": "Aplicación de sombras dinámicas y barniz de protección UV.",
         "port_anime_desc": "Calidad de exhibición para personajes de One Piece y Jujutsu Kaisen.",
         "port_h2_calidad": "✅ Calidad Maker 3D",
+        "pdf_desc": "DESCUENTO",
+        "thanks": "¡Gracias por tu solicitud!",
         "port_stat_fig": "Figuras Entregadas",
         "port_stat_pint": "Acabado de Pintura",
         "port_stat_env": "Envíos Garantizados",
@@ -248,6 +255,8 @@ texts = {
         "port_shanks_desc": "Aplicación de sombras dinámicas y barniz de protección UV.",
         "port_anime_desc": "Calidad de exhibición para personajes de One Piece y Jujutsu Kaisen.",
         "port_h2_calidad": "✅ Calidad Maker 3D",
+        "pdf_desc": "DESCUENTO",
+        "thanks": "¡Gracias por tu solicitud!",
         "port_stat_fig": "Figuras Entregadas",
         "port_stat_pint": "Acabado de Pintura",
         "port_stat_env": "Envíos Garantizados",
@@ -312,6 +321,9 @@ texts = {
         "port_shanks_desc": "Application of dynamic shadows and UV protection varnish.",
         "port_anime_desc": "Exhibition quality for One Piece and Jujutsu Kaisen characters.",
         "port_h2_calidad": "✅ Maker 3D Quality",
+        "English": {
+        "pdf_desc": "DISCOUNT",
+        "thanks": "Thank you for your request!",
         "port_stat_fig": "Figures Delivered",
         "port_stat_pint": "Paint Finish",
         "port_stat_env": "Guaranteed Shipping",
@@ -376,6 +388,8 @@ texts = {
         "port_shanks_desc": "Applicazione di ombre dinamiche e vernice protettiva UV.",
         "port_anime_desc": "Qualità da esposizione per i personaggi di One Piece e Jujutsu Kaisen.",
         "port_h2_calidad": "✅ Qualità Maker 3D",
+        "pdf_desc": "SCONTO",
+        "thanks": "Grazie por la tua richiesta!",
         "port_stat_fig": "Figure Consegnate",
         "port_stat_pint": "Finitura di Pittura",
         "port_stat_env": "Spedizioni Garantite",
