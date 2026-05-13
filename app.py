@@ -3,6 +3,24 @@ import urllib.parse
 
 # 1. Configuración de la página
 st.set_page_config(page_title="Maker3DPeru-Italia", page_icon="Logo.jpg")
+# --- NUEVO: AJUSTE DE TAMAÑO PARA DETALLES (CSS) ---
+st.markdown("""
+    <style>
+    /* Esto reduce el ancho del expander a la mitad y lo centra */
+    .stExpander {
+        max-width: 50% !important; 
+        margin: 0 auto !important;
+    }
+    
+    /* Hace que el texto dentro sea un poco más pequeño y elegante */
+    .streamlit-expanderHeader {
+        font-size: 0.9em !important;
+    }
+    .streamlit-expanderContent {
+        font-size: 0.85em !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
 @st.dialog("Vista de Obra - Maker 3D Perú", width="large")
 def mostrar_imagen_grande(url, titulo, descripcion):
