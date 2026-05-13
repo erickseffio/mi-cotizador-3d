@@ -8,8 +8,8 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
     # --- BLOQUE A: Función interna limpiadora ---
     def limpiar_texto(texto):
         if not isinstance(texto, str): return texto
-        # Filtra emojis para que el PDF no explote
         return texto.encode('ascii', 'ignore').decode('ascii')
+
     simbolo_pdf = simbolo.replace("€", "EUR")
     pdf = FPDF()
     pdf.add_page()
@@ -27,15 +27,13 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
             pdf.image(logo_path, 10, 8, 33)
         except Exception as e:
             print(f"Error con el logo: {e}")
-            # Si falla el logo, ponemos el nombre en texto para que no se detenga
             pdf.set_font("Arial", 'B', 12)
             pdf.cell(0, 10, "MAKER 3D PERU", ln=True)
             
-       # --- FOTO DE LA FIGURA ---
+    # --- FOTO DE LA FIGURA ---
     if imagen_figura is not None:
         try:
             import tempfile
-            # Verificamos que realmente haya datos binarios
             datos_imagen = imagen_figura.getvalue()
             if datos_imagen: 
                 with tempfile.NamedTemporaryFile(delete=False, suffix=".png") as tmp_file:
@@ -44,26 +42,29 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
                 pdf.image(tmp_path, x=150, y=50, w=45)
         except Exception as e:
             print(f"No se pudo cargar la imagen: {e}")
-    # Si no hay imagen, el código simplemente saltará esta parte y seguirá adelante
-        
-        # --- TABLA DE COSTOS (Líneas 44-47 corregidas) ---
-        pdf.set_font("Arial", size=12)
-        pdf.cell(0, 10, f"{limpiar_texto(t['pdf_imp'])}: {simbolo_pdf} {c_imp}", ln=True)
-        pdf.cell(0, 10, f"{limpiar_texto(t['pdf_dis'])}: {simbolo_pdf} {c_dis}", ln=True)
-        pdf.cell(0, 10, f"{limpiar_texto(t['pdf_pin'])}: {simbolo_pdf} {c_pin}", ln=True)
+
+    # --- IMPORTANTE: El código de abajo DEBE estar fuera de los bloques 'if' anteriores ---
+    # Alinea esto a la misma altura que los 'if'
+    
+    # --- TABLA DE COSTOS ---
+    pdf.set_font("Arial", size=12)
+    pdf.cell(0, 10, f"{limpiar_texto(t['pdf_imp'])}: {simbolo_pdf} {c_imp}", ln=True)
+    pdf.cell(0, 10, f"{limpiar_texto(t['pdf_dis'])}: {simbolo_pdf} {c_dis}", ln=True)
+    pdf.cell(0, 10, f"{limpiar_texto(t['pdf_pin'])}: {simbolo_pdf} {c_pin}", ln=True)
             
-        # --- SECCIÓN DE DESCUENTO ---
-        pdf.set_text_color(255, 0, 0) # Rojo para el descuento
-        pdf.set_text_color(0, 0, 0) # Volver a negro
+    # --- SECCIÓN DE DESCUENTO ---
+    if descuento_val > 0:
+        pdf.set_text_color(255, 0, 0)
+        pdf.cell(0, 10, f"DESCUENTO APLICADO: -{simbolo_pdf} {descuento_val:.2f}", ln=True)
+        pdf.set_text_color(0, 0, 0)
         
-        pdf.ln(5)
-        pdf.set_font("Arial", 'B', 14)
-        # Aquí es vital usar simbolo_pdf para que el Euro no rompa el PDF con la foto
-        texto_total = f"{limpiar_texto(t['final_quote'])}: {simbolo_pdf} {total_final:.2f}"
-        pdf.cell(0, 10, texto_total, ln=True)
+    pdf.ln(5)
+    pdf.set_font("Arial", 'B', 14)
+    texto_total = f"{limpiar_texto(t['final_quote'])}: {simbolo_pdf} {total_final:.2f}"
+    pdf.cell(0, 10, texto_total, ln=True)
 
-        return pdf.output(dest='S').encode('latin-1', errors='ignore')
-
+    # El return debe estar al final de todo, alineado con el inicio de la función
+    return pdf.output(dest='S').encode('latin-1', errors='ignore')
 # 1. Configuración de la página (ACTUALIZADO)
 st.set_page_config(
     page_title="Maker3DPeru-Italia", 
