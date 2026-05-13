@@ -4,34 +4,36 @@ import urllib.parse
 # 1. Configuración de la página
 st.set_page_config(page_title="Maker3DPeru-Italia", page_icon="Logo.jpg")
 # --- AJUSTE DE TAMAÑO PARA DETALLES (CSS AGRESIVO) ---
-# --- COPIA Y REEMPLAZA TU BLOQUE DE CSS POR ESTE ---
 st.markdown("""
     <style>
-    /* 1. Resetear el espacio de la página para que no se expanda arriba */
+    /* 1. NO TOCAR LA CABECERA: Reseteamos márgenes superiores generales */
     .block-container {
-        padding-top: 2rem !important;
+        padding-top: 1rem !important;
     }
 
-    /* 2. Aplicar el espacio SOLO a las columnas del portafolio */
-    /* Esto busca las columnas y les da aire arriba para que la imagen baje */
-    [data-testid="column"] [data-testid="stVerticalBlock"] {
-        padding-top: 40px !important; /* Ajusta este número para bajar la foto */
+    /* 2. CENTRAR IMÁGENES DEL PORTAFOLIO: 
+       Apuntamos solo a las imágenes que están dentro de contenedores de columnas */
+    [data-testid="column"] [data-testid="stImage"] {
         display: flex;
-        flex-direction: column;
-        align-items: center;
+        justify-content: center;
+        padding-top: 50px !important; /* Esto baja la foto dentro de su cuadro */
+        padding-bottom: 20px !important;
     }
 
-    /* 3. Centrar el texto debajo de la imagen */
-    [data-testid="column"] .stMarkdown {
-        text-align: center !important;
+    /* 3. AJUSTE DE IMAGEN: Evita que se estire */
+    [data-testid="column"] [data-testid="stImage"] img {
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0,0,0,0.3); /* Un toque de sombra profesional */
     }
 
-    /* 4. Evitar que las alertas de arriba se muevan */
-    [data-testid="stNotification"] {
+    /* 4. ASEGURAR QUE LOS IDIOMAS Y ALERTAS SE VEAN BIEN */
+    [data-testid="stNotification"], .stSelectbox {
         margin-top: 0px !important;
+        z-index: 100;
     }
     </style>
     """, unsafe_allow_html=True)
+
 @st.dialog("Vista de Obra - Maker 3D Perú", width="medium")
 def mostrar_imagen_grande(url, titulo, descripcion):
     st.image(url, use_container_width=True)
