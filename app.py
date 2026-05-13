@@ -16,35 +16,41 @@ st.markdown("""
             padding-top: 5rem !important;
         }
 
-        /* 2. BORRAR ICONOS DE LA DERECHA (Fork, GitHub, etc.) */
-        /* Eliminamos el contenedor completo de las acciones del header derecho */
+        /* 2. ELIMINAR ICONOS SUPERIORES (Fork y GitHub) */
+        /* Oculta el contenedor de acciones de la derecha completamente */
         [data-testid="stHeaderActionElements"] {
             display: none !important;
         }
         
-        /* Ocultamos específicamente el botón de Fork si persiste */
+        /* Oculta específicamente el botón de Fork */
         .stActionButton {
             display: none !important;
         }
 
-        /* Ocultar el menú de tres puntos */
+        /* 3. ELIMINAR ICONOS INFERIORES (Usuario y Logo Streamlit) */
+        /* Esto elimina el icono circular del usuario y el logo rojo de abajo */
+        [data-testid="stStatusWidget"] {
+            display: none !important;
+        }
+        
+        footer {
+            display: none !important;
+        }
+
+        /* 4. LIMPIEZA ADICIONAL */
         #MainMenu {
             display: none !important;
         }
 
-        /* 3. MANTENER LA FLECHA DE LA IZQUIERDA INVISIBLE PERO FUNCIONAL */
-        /* Hacemos que el header sea transparente para que no se vea la franja negra arriba */
         header {
             background-color: transparent !important;
             border-bottom: none !important;
         }
-        
-        /* Opcional: Si quieres que la flecha sea casi invisible hasta que pases el mouse */
+
+        /* 5. MANTENER LA FLECHA DE LA BARRA LATERAL */
+        /* Aseguramos que el botón para abrir tu panel de control siga ahí */
         button[data-testid="stBaseButton-headerNoPadding"] {
-            opacity: 0.1;
-        }
-        button[data-testid="stBaseButton-headerNoPadding"]:hover {
-            opacity: 1;
+            display: inline-flex !important;
         }
     </style>
 """, unsafe_allow_html=True)
