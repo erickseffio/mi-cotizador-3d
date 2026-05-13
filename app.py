@@ -47,12 +47,12 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
         
         # --- SECCIÓN DE DESCUENTO ---
         pdf.set_text_color(255, 0, 0) # Rojo para el descuento
-        pdf.cell(0, 10, f"{limpiar_texto(t['final_quote'])}: {simbolo} {total_final:.2f}", ln=True)
         pdf.set_text_color(0, 0, 0) # Volver a negro
         
         pdf.ln(5)
         pdf.set_font("Arial", 'B', 14)
-        pdf.cell(0, 10, f"{t['final_quote']}: {simbolo} {total_final:.2f}", ln=True)
+        texto_final = f"{limpiar_texto(t['final_quote'])}: {simbolo} {total_final:.2f}"
+        pdf.cell(0, 10, texto_final, ln=True)
     return pdf.output(dest='S').encode('latin-1', errors='ignore')
 
 # 1. Configuración de la página (ACTUALIZADO)
