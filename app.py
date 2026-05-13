@@ -20,11 +20,12 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
 
     # --- FOTO DE LA FIGURA ---
     if imagen_figura:
-        try:
-            # Dibujamos la imagen cargada por el usuario
-            pdf.image(imagen_figura, x=140, y=40, w=50)
-        except:
-            pass
+    try:
+        # Si es un objeto de Streamlit, FPDF suele aceptar el path o el objeto binario
+        # Pero asegúrate de que no sea None antes de entrar aquí
+        pdf.image(imagen_figura, x=140, y=40, w=50)
+    except Exception as e:
+        st.error(f"Error al procesar la imagen: {e}")
 
     # --- TABLA DE COSTOS ---
     pdf.set_font("Arial", size=12)
@@ -610,7 +611,7 @@ else:
                 total_final = (total_pen if "Perú" in idioma else total_eur),
                 t = t,
                 logo_path = logo_file,
-                imagen_figura = foto_subida, # Asegúrate de que este es el nombre de tu variable de st.file_uploader
+                imagen_figura = archivo_reference, # Cambiado de foto_subida a archivo_reference
                 descuento_val = ahorro_wsp_val,
                 simbolo = simbolo
             )
