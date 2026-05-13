@@ -631,28 +631,37 @@ if hay_calculo:
     col_pdf, col_wa = st.columns(2)
 
     with col_pdf:
-    try:
-        # ... (tus preparaciones de variables v_imp, v_dis, etc.) ...
+        try:
+            # --- AQUÍ DEFINIMOS LAS VARIABLES QUE FALTABAN EN TU CAPTURA ---
+            simb = t.get("simbolo", "€")
+            v_imp = f"{costo_imp:.2f}" if 'costo_imp' in locals() else "0.00"
+            # Limpiamos el símbolo de moneda para que no rompa el PDF
+            v_dis = str(moneda_diseno).replace(simb, "").strip() if 'moneda_diseno' in locals() else "0.00"
+            v_pin = f"{costo_p:.2f}" if 'costo_p' in locals() else "0.00"
+            v_desc = ahorro_wsp_val if 'ahorro_wsp_val' in locals() else 0.0
+            
+            # Elegimos el total según el idioma/país seleccionado
+            t_pagar = total_pen if "Perú" in idioma else total_eur
 
-        # Generamos los bytes reales del PDF
-        pdf_output = generar_pdf(
-            v_imp, v_dis, v_pin, st.session_state.tasa, 
-            t_pagar, t, "Logo.jpg", archivo_reference, v_desc, simb
-        )
-        
-        # IMPORTANTE: Asegurarnos de que enviamos bytes
-        pdf_bytes = bytes(pdf_output)
+            # Generamos los bytes reales del PDF
+            pdf_output = generar_pdf(
+                v_imp, v_dis, v_pin, st.session_state.tasa, 
+                t_pagar, t, "Logo.jpg", archivo_reference, v_desc, simb
+            )
+            
+            # Convertimos a bytes puros para Streamlit
+            pdf_bytes = bytes(pdf_output)
 
-        st.download_button(
-            label="📥 Descargar PDF con Foto",
-            data=pdf_bytes,  # Aquí pasamos los bytes procesados
-            file_name=f"Presupuesto_{nombre_p}.pdf",
-            mime="application/pdf",
-            key="download_pdf_btn", # Añadimos una key para evitar conflictos
-            use_container_width=True
-        )
-    except Exception as e:
-        st.error(f"Error técnico: {e}")
+            st.download_button(
+                label="📥 Descargar PDF con Foto",
+                data=pdf_bytes,
+                file_name=f"Presupuesto_{nombre_p}.pdf",
+                mime="application/pdf",
+                key="download_pdf_btn",
+                use_container_width=True
+            )
+        except Exception as e:
+            st.error(f"Error técnico: {e}")
     
     with col_wa:
         if 'wa_link' in locals() and wa_link:
