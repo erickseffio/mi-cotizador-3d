@@ -34,7 +34,7 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
             with tempfile.NamedTemporaryFile(delete=False, suffix=".png") as tmp_file:
                 tmp_file.write(imagen_figura.getvalue())
                 tmp_path = tmp_file.name
-            pdf.image(tmp_path, x=140, y=40, w=50)
+            pdf.image(tmp_path, x=150, y=50, w=45)
         except Exception as e:
             print(f"No se pudo cargar la imagen: {e}")
     # Si no hay imagen, el código simplemente saltará esta parte y seguirá adelante
