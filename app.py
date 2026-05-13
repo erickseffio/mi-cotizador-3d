@@ -6,30 +6,31 @@ st.set_page_config(page_title="Maker3DPeru-Italia", page_icon="Logo.jpg")
 # --- AJUSTE DE TAMAÑO PARA DETALLES (CSS AGRESIVO) ---
 st.markdown("""
     <style>
-    /* 1. NO TOCAR LA CABECERA: Reseteamos márgenes superiores generales */
-    .block-container {
-        padding-top: 1rem !important;
+    /* 1. RECUPERAR CABECERA: Empujamos todo el contenido hacia abajo */
+    /* Esto hará que la palabra 'Idiomas' y el logo vuelvan a aparecer */
+    .main .block-container {
+        padding-top: 5rem !important; 
+        max-width: 95% !important;
     }
 
-    /* 2. CENTRAR IMÁGENES DEL PORTAFOLIO: 
-       Apuntamos solo a las imágenes que están dentro de contenedores de columnas */
-    [data-testid="column"] [data-testid="stImage"] {
-        display: flex;
-        justify-content: center;
-        padding-top: 50px !important; /* Esto baja la foto dentro de su cuadro */
-        padding-bottom: 20px !important;
+    /* 2. BAJAR SOLO LAS IMÁGENES DEL PORTAFOLIO */
+    /* Usamos un margen superior solo para las fotos dentro de columnas */
+    /* Esto no afecta a los textos ni a la cabecera */
+    [data-testid="column"] img {
+        margin-top: 40px !important; 
+        border-radius: 15px;
+        transition: transform 0.3s;
     }
 
-    /* 3. AJUSTE DE IMAGEN: Evita que se estire */
-    [data-testid="column"] [data-testid="stImage"] img {
-        border-radius: 10px;
-        box-shadow: 0px 4px 10px rgba(0,0,0,0.3); /* Un toque de sombra profesional */
-    }
-
-    /* 4. ASEGURAR QUE LOS IDIOMAS Y ALERTAS SE VEAN BIEN */
-    [data-testid="stNotification"], .stSelectbox {
-        margin-top: 0px !important;
-        z-index: 100;
+    /* 3. EVITAR ZOOM EN MÓVILES */
+    /* Esto asegura que en pantallas pequeñas no se vea gigante */
+    @media (max-width: 600px) {
+        [data-testid="column"] img {
+            margin-top: 10px !important;
+        }
+        .main .block-container {
+            padding-top: 2rem !important;
+        }
     }
     </style>
     """, unsafe_allow_html=True)
