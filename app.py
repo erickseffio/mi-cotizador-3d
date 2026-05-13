@@ -633,7 +633,7 @@ else:
     </div>
     """, unsafe_allow_html=True)
 
-    # 4. BOTONES EN COLUMNAS (PROTEGIDO)
+    # 4. BOTONES EN COLUMNAS (VERSIÓN FINAL BLINDADA)
 st.write("---")
 
 # Solo mostramos los botones si ya se calculó un total
@@ -644,8 +644,11 @@ if 'total_eur' in locals() or 'total_pen' in locals():
         try:
             logo_file = "Logo.jpg" 
 
-            # Verificamos si existe moneda_diseno, si no, usamos un valor por defecto
-            val_dis = moneda_diseno if 'moneda_diseno' in locals() else f"{simbolo} 0.00"
+            # EXTRAEMOS EL SÍMBOLO DIRECTAMENTE DEL DICCIONARIO PARA EVITAR EL ERROR
+            # Si 'simbolo' no existe como variable, lo saca de t["simbolo"]
+            simbolo_pdf = t.get("simbolo", "€") 
+            
+            val_dis = moneda_diseno if 'moneda_diseno' in locals() else f"{simbolo_pdf} 0.00"
             val_imp = f"{costo_imp:.2f}"
             val_pin = f"{costo_p:.2f}"
 
@@ -659,7 +662,7 @@ if 'total_eur' in locals() or 'total_pen' in locals():
                 logo_path = logo_file,
                 imagen_figura = archivo_reference,
                 descuento_val = ahorro_wsp_val,
-                simbolo = simbolo
+                simbolo = simbolo_pdf # Usamos la variable segura que acabamos de crear
             )
             
             st.download_button(
@@ -673,15 +676,12 @@ if 'total_eur' in locals() or 'total_pen' in locals():
             st.error(f"Error al generar el PDF: {e}")
 
     with col_wa:
-        # Verificamos que wa_link exista antes de crear el botón
         if 'wa_link' in locals():
             st.link_button(t["wa_btn"], wa_link, use_container_width=True, type="primary")
         else:
             st.warning("Completa los datos para activar WhatsApp")
 
     st.success(t["thanks"])
-else:
-    st.info("👋 ¡Hola! Ingresa los datos arriba para generar tu presupuesto.")
     
 # --- SECCIÓN PORTAFOLIO REFINADA ---
 # --- SECCIÓN PORTAFOLIO RECUPERADA Y ADAPTABLE ---
