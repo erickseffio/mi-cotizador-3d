@@ -1,8 +1,12 @@
 import streamlit as st
 import urllib.parse
 
-# 1. Configuración de la página
-st.set_page_config(page_title="Maker3DPeru-Italia", page_icon="Logo.jpg")
+# 1. Configuración de la página (ACTUALIZADO)
+st.set_page_config(
+    page_title="Maker3DPeru-Italia", 
+    page_icon="Logo.jpg", 
+    initial_sidebar_state="collapsed" # <-- Esto cierra el panel al inicio
+)
 
 # --- AJUSTE DE TAMAÑO Y LIMPIEZA DE INTERFAZ (CSS AGRESIVO) ---
 st.markdown("""
