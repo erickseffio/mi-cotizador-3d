@@ -14,6 +14,7 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
     pdf.add_page()
 
     # --- BLOQUE C: El Título ---
+    pdf.ln(20)
     pdf.set_font("Arial", 'B', 16)
     titulo_limpio = limpiar_texto(t.get("pdf_title", "PRESUPUESTO"))
     pdf.cell(0, 10, titulo_limpio, ln=True, align='C')
