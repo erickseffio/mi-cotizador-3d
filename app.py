@@ -7,34 +7,43 @@ st.set_page_config(page_title="Maker3DPeru-Italia", page_icon="Logo.jpg")
 # --- AJUSTE DE TAMAÑO Y LIMPIEZA DE INTERFAZ (CSS AGRESIVO) ---
 st.markdown("""
     <style>
-    /* 1. Mantenemos tu espacio superior */
-    .main .block-container {
-        padding-top: 5rem !important;
-    }
+        /* 1. Mantenemos tu espacio superior */
+        .main .block-container {
+            padding-top: 5rem !important;
+        }
 
-    /* 2. OCULTAR SOLO LOS ICONOS DE LA DERECHA (GitHub, Share, Menú) */
-    /* Esto mantiene el botón de la barra lateral (flecha) funcional */
-    [data-testid="stHeaderActionElements"] {
-        display: none !important;
-    }
+        /* 2. OCULTAR ICONOS DE LA DERECHA (Share, GitHub, etc.) */
+        /* Buscamos el contenedor de acciones de la barra superior */
+        section[data-testid="stSidebar"] ~ .main header div:nth-child(2) {
+            display: none !important;
+        }
+        
+        /* Otra capa de seguridad para los botones de acción */
+        div[data-testid="stHeaderActionElements"] {
+            display: none !important;
+        }
 
-    /* Ocultamos el menú de tres puntos pero NO todo el header */
-    #MainMenu {
-        display: none !important;
-    }
+        /* Ocultar el menú de tres puntos */
+        #MainMenu {
+            display: none !important;
+        }
 
-    /* Ocultamos el botón de Deploy si aparece */
-    .stAppDeployButton {
-        display: none !important;
-    }
+        /* Ocultar el botón de Deploy (la nube) */
+        .stAppDeployButton {
+            display: none !important;
+        }
 
-    /* 3. OPCIONAL: Si quieres que la barra superior sea invisible 
-       pero que el botón de la sidebar siga ahí, usamos esto: */
-    header {
-        background-color: rgba(0,0,0,0) !important;
-        border-bottom: none !important;
-    }
-</style>
+        /* 3. ASEGURAR QUE LA BARRA LATERAL SEA VISIBLE */
+        /* Forzamos que el botón de la sidebar (flecha) sí se muestre */
+        button[data-testid="stBaseButton-headerNoPadding"] {
+            display: inline-flex !important;
+        }
+        
+        /* Hacemos el fondo del header transparente para que no moleste */
+        header {
+            background-color: transparent !important;
+        }
+    </style>
 """, unsafe_allow_html=True)
 
 @st.dialog("Vista de Obra - Maker 3D Perú", width="medium") # Volvemos al ancho que te gusta
