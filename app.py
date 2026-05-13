@@ -11,51 +11,84 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
     pdf = FPDF()
     pdf.add_page()
     
-    # Manejo de símbolos especiales
+    # Configuración de colores (Gris oscuro profesional)
+    color_primario = (44, 62, 80) 
+    color_acento = (52, 152, 219)
+    
     def formatear_texto(texto):
         return str(texto).replace("€", chr(128)).encode('latin-1', 'replace').decode('latin-1')
 
-    pdf.set_font("Helvetica", size=12)
-
-    # --- TÍTULO ---
-    pdf.ln(10)
-    pdf.set_font("Helvetica", 'B', 16)
-    pdf.cell(0, 10, formatear_texto(t.get("pdf_title", "PRESUPUESTO")), ln=True, align='C')
-    pdf.ln(10)
-
-    # --- LOGO ---
+    # --- ENCABEZADO ESTILIZADO ---
     if logo_path:
-        try: pdf.image(logo_path, 10, 8, 33)
+        try: pdf.image(logo_path, 10, 10, 40)
         except: pass
+    
+    pdf.set_font("Helvetica", 'B', 22)
+    pdf.set_text_color(*color_primario)
+    pdf.cell(0, 15, formatear_texto(t.get("pdf_title", "PRESUPUESTO")), ln=True, align='R')
+    
+    # Línea decorativa superior
+    pdf.set_draw_color(*color_acento)
+    pdf.set_line_width(1)
+    pdf.line(10, 35, 200, 35)
+    pdf.ln(20)
 
-    # --- IMAGEN ---
+    # --- CUERPO PRINCIPAL (2 COLUMNAS) ---
+    # Guardamos la posición actual para la foto
+    y_inicial = pdf.get_y()
+
+    # Columna Izquierda: Detalles de Costos
+    pdf.set_font("Helvetica", 'B', 12)
+    pdf.set_text_color(100, 100, 100)
+    pdf.cell(90, 8, "DETALLES DEL PROYECTO", ln=True)
+    pdf.ln(2)
+
+    def fila_tabla(label, valor):
+        pdf.set_font("Helvetica", 'B', 11)
+        pdf.set_text_color(*color_primario)
+        pdf.cell(50, 10, formatear_texto(label), border='B')
+        pdf.set_font("Helvetica", '', 11)
+        pdf.cell(40, 10, f"{formatear_texto(simbolo)} {valor}", border='B', ln=True, align='R')
+
+    fila_tabla(t.get('pdf_imp', 'Impresión 3D'), c_imp)
+    fila_tabla(t.get('pdf_dis', 'Diseño/Slicing'), c_dis)
+    fila_tabla(t.get('pdf_pin', 'Acabado y Pintura'), c_pin)
+
+    # --- IMAGEN DE REFERENCIA (Derecha) ---
     if imagen_figura is not None:
         try:
             img_bytes = imagen_figura.getvalue()
             if img_bytes:
                 img_file = io.BytesIO(img_bytes)
-                pdf.image(img_file, x=140, y=45, w=50)
+                # Dibujamos un marco para la foto
+                pdf.set_draw_color(200, 200, 200)
+                pdf.rect(140, y_inicial, 50, 50)
+                pdf.image(img_file, x=141, y=y_inicial+1, w=48)
         except: pass
 
-    # --- DATOS ---
-    pdf.set_font("Helvetica", size=12)
-    pdf.cell(0, 10, f"{formatear_texto(t.get('pdf_imp', 'Costo Impresion'))}: {formatear_texto(simbolo)} {c_imp}", ln=True)
-    pdf.cell(0, 10, f"{formatear_texto(t.get('pdf_dis', 'Costo Diseno'))}: {formatear_texto(simbolo)} {c_dis}", ln=True)
-    pdf.cell(0, 10, f"{formatear_texto(t.get('pdf_pin', 'Costo Pintura'))}: {formatear_texto(simbolo)} {c_pin}", ln=True)
-            
-    # --- SECCIÓN DE DESCUENTO TRADUCIDA ---
+    # --- SECCIÓN FINAL: TOTAL ---
+    pdf.ln(15)
+    
+    # Descuento si aplica
     if descuento_val > 0:
-        # Buscamos la traducción en tu diccionario 't'. 
-        # Si no existe 'pdf_desc', usará "DESCUENTO" por defecto.
-        etiqueta_descuento = t.get('pdf_desc', t.get('discount_label', 'DESCUENTO'))
-        
-        pdf.set_text_color(255, 0, 0) # Color rojo
-        pdf.cell(0, 10, f"{formatear_texto(etiqueta_descuento)}: -{formatear_texto(simbolo)} {descuento_val:.2f}", ln=True)
-        pdf.set_text_color(0, 0, 0) # Volver a negro
-        
-    pdf.ln(5)
-    pdf.set_font("Helvetica", 'B', 14)
-    pdf.cell(0, 10, f"{formatear_texto(t.get('final_quote', 'Total'))}: {formatear_texto(simbolo)} {total_final:.2f}", ln=True)
+        pdf.set_font("Helvetica", 'I', 11)
+        pdf.set_text_color(231, 76, 60) # Rojo pasión
+        pdf.cell(90, 10, f"{formatear_texto(t.get('pdf_desc', 'Descuento'))}: -{formatear_texto(simbolo)} {descuento_val:.2f}", align='R', ln=True)
+
+    # Cuadro de Total Destacado
+    pdf.set_fill_color(*color_primario)
+    pdf.set_text_color(255, 255, 255)
+    pdf.set_font("Helvetica", 'B', 16)
+    texto_total = f"{formatear_texto(t.get('final_quote', 'TOTAL'))}: {formatear_texto(simbolo)} {total_final:.2f}"
+    pdf.cell(90, 15, texto_total, ln=True, align='C', fill=True)
+
+    # --- PIE DE PÁGINA ---
+    pdf.set_y(-30)
+    pdf.set_font("Helvetica", 'I', 9)
+    pdf.set_text_color(150, 150, 150)
+    pdf.cell(0, 10, "Este presupuesto tiene una validez de 15 dias.", align='C', ln=True)
+    pdf.set_font("Helvetica", 'B', 10)
+    pdf.cell(0, 5, "Maker 3D - Arte en Resina y Filamento", align='C')
 
     return bytes(pdf.output())
     
