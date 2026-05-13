@@ -3,16 +3,25 @@ import urllib.parse
 
 # 1. Configuración de la página
 st.set_page_config(page_title="Maker3DPeru-Italia", page_icon="Logo.jpg")
-# --- AJUSTE DE TAMAÑO PARA DETALLES (CSS AGRESIVO) ---
+
+# --- AJUSTE DE TAMAÑO Y LIMPIEZA DE INTERFAZ (CSS AGRESIVO) ---
 st.markdown("""
     <style>
-    /* 1. Recuperar cabecera */
-    .main .block-container {
-        padding-top: 5rem !important;
-    }
+        /* 1. Recuperar cabecera y espacio superior */
+        .main .block-container {
+            padding-top: 5rem !important;
+        }
 
+        /* 2. Ocultar menús y botones de Streamlit (GitHub, Share, Star) */
+        header {visibility: hidden;}
+        #MainMenu {visibility: hidden;}
+        footer {visibility: hidden;}
+        .stAppDeployButton {display:none;}
+        
+        /* Ocultar el botón de "Manage app" si aparece */
+        [data-testid="stStatusWidget"] {display: none;}
     </style>
-    """, unsafe_allow_html=True)
+""", unsafe_allow_html=True)
 
 @st.dialog("Vista de Obra - Maker 3D Perú", width="medium") # Volvemos al ancho que te gusta
 def mostrar_imagen_grande(url, titulo, descripcion):
