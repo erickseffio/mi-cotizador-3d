@@ -3,15 +3,14 @@ import urllib.parse
 from fpdf import FPDF
 import tempfile
 import re
+import io
 
 from fpdf import FPDF # fpdf2 usa el mismo nombre de importación
 
 def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_figura, descuento_val, simbolo):
-    # 1. Instanciamos FPDF
     pdf = FPDF()
     pdf.add_page()
     
-    # Función para el símbolo del Euro en fuentes estándar
     def formatear_simbolo(texto_simbolo):
         return texto_simbolo.replace("€", chr(128))
 
@@ -29,21 +28,15 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
         try: pdf.image(logo_path, 10, 8, 33)
         except: pass
 
-    # --- IMAGEN DE LA FIGURA (CORRECCIÓN CRÍTICA AQUÍ) ---
+    # --- CORRECCIÓN DE LA IMAGEN (USANDO IO) ---
     if imagen_figura:
         try:
-            # Creamos un archivo temporal físico para evitar el error de 'bytearray'
-            with tempfile.NamedTemporaryFile(delete=False, suffix=".png") as tmp:
-                # Leemos los bytes del objeto de Streamlit
-                bytes_data = imagen_figura.getvalue()
-                tmp.write(bytes_data)
-                tmp_path = tmp.name
-            
-            # Insertamos la imagen usando la ruta del archivo temporal
-            pdf.image(tmp_path, x=150, y=45, w=45)
+            # Convertimos el bytearray/buffer en un flujo de bytes que FPDF entiende
+            img_data = io.BytesIO(imagen_figura.getvalue())
+            # Insertamos la imagen (x, y, ancho)
+            pdf.image(img_data, x=150, y=45, w=45)
         except Exception as e:
-            # Si falla la imagen, el PDF se genera igual pero sin la foto
-            print(f"Error procesando imagen: {e}")
+            print(f"No se pudo cargar la imagen: {e}")
 
     # --- TABLA DE COSTOS ---
     pdf.set_font("Helvetica", size=12)
@@ -64,7 +57,6 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
     texto_total = f"{t.get('final_quote', 'Total')}: {simbolo_f} {total_final:.2f}"
     pdf.cell(0, 10, texto_total.encode('latin-1', 'replace').decode('latin-1'), ln=True)
 
-    # Retornamos los bytes finales del PDF
     return pdf.output()
     
 # 1. Configuración de la página (ACTUALIZADO)
