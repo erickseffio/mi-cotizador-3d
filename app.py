@@ -80,7 +80,9 @@ if 'tasa' not in st.session_state: st.session_state.tasa = 4.10
 with st.sidebar:
     st.header("🔐 Panel de Control")
     clave = st.text_input("Contraseña Admin", type="password")
-    if clave == "02110510":
+    
+    # REEMPLAZO DE SEGURIDAD:
+    if clave == st.secrets["admin_password"]:
         st.success("Acceso Autorizado")
         st.session_state.resina = st.number_input("Resina ml (€)", value=st.session_state.resina, format="%.3f")
         st.session_state.blender = st.number_input("Hora Diseño (€)", value=st.session_state.blender)
