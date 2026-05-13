@@ -11,16 +11,16 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
     pdf = FPDF()
     pdf.add_page()
     
-    def formatear_simbolo(texto_simbolo):
-        return texto_simbolo.replace("€", chr(128))
+    # Manejo de símbolos especiales
+    def formatear_texto(texto):
+        return str(texto).replace("€", chr(128)).encode('latin-1', 'replace').decode('latin-1')
 
-    simbolo_f = formatear_simbolo(simbolo)
     pdf.set_font("Helvetica", size=12)
 
     # --- TÍTULO ---
     pdf.ln(10)
     pdf.set_font("Helvetica", 'B', 16)
-    pdf.cell(0, 10, t.get("pdf_title", "PRESUPUESTO").encode('latin-1', 'replace').decode('latin-1'), ln=True, align='C')
+    pdf.cell(0, 10, formatear_texto(t.get("pdf_title", "PRESUPUESTO")), ln=True, align='C')
     pdf.ln(10)
 
     # --- LOGO ---
@@ -28,36 +28,29 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
         try: pdf.image(logo_path, 10, 8, 33)
         except: pass
 
-    # --- IMAGEN CON FILTRO DE SEGURIDAD ---
+    # --- IMAGEN ---
     if imagen_figura is not None:
         try:
-            # Solo si es un objeto con datos válidos
             img_bytes = imagen_figura.getvalue()
-            if img_bytes and len(img_bytes) > 0:
+            if img_bytes:
                 img_file = io.BytesIO(img_bytes)
-                pdf.image(img_file, x=150, y=45, w=45)
-        except:
-            # Si el formato binario falla, no lanzamos error, solo omitimos la foto
-            pass
+                pdf.image(img_file, x=140, y=45, w=50)
+        except: pass
 
-    # --- TABLA DE COSTOS ---
+    # --- DATOS ---
     pdf.set_font("Helvetica", size=12)
-    label_imp = t.get('pdf_imp', t.get('pdf_it', 'Costo Impresion'))
-    
-    pdf.cell(0, 10, f"{label_imp}: {simbolo_f} {c_imp}".encode('latin-1', 'replace').decode('latin-1'), ln=True)
-    pdf.cell(0, 10, f"{t.get('pdf_dis', 'Costo Diseno')}: {simbolo_f} {c_dis}".encode('latin-1', 'replace').decode('latin-1'), ln=True)
-    pdf.cell(0, 10, f"{t.get('pdf_pin', 'Costo Pintura')}: {simbolo_f} {c_pin}".encode('latin-1', 'replace').decode('latin-1'), ln=True)
+    pdf.cell(0, 10, f"{formatear_texto(t.get('pdf_imp', 'Costo Impresion'))}: {formatear_texto(simbolo)} {c_imp}", ln=True)
+    pdf.cell(0, 10, f"{formatear_texto(t.get('pdf_dis', 'Costo Diseno'))}: {formatear_texto(simbolo)} {c_dis}", ln=True)
+    pdf.cell(0, 10, f"{formatear_texto(t.get('pdf_pin', 'Costo Pintura'))}: {formatear_texto(simbolo)} {c_pin}", ln=True)
             
-    # --- DESCUENTO ---
     if descuento_val > 0:
         pdf.set_text_color(255, 0, 0)
-        pdf.cell(0, 10, f"DESCUENTO: -{simbolo_f} {descuento_val:.2f}".encode('latin-1', 'replace').decode('latin-1'), ln=True)
+        pdf.cell(0, 10, f"DESCUENTO: -{formatear_texto(simbolo)} {descuento_val:.2f}", ln=True)
         pdf.set_text_color(0, 0, 0)
         
     pdf.ln(5)
     pdf.set_font("Helvetica", 'B', 14)
-    texto_total = f"{t.get('final_quote', 'Total')}: {simbolo_f} {total_final:.2f}"
-    pdf.cell(0, 10, texto_total.encode('latin-1', 'replace').decode('latin-1'), ln=True)
+    pdf.cell(0, 10, f"{formatear_texto(t.get('final_quote', 'Total'))}: {formatear_texto(simbolo)} {total_final:.2f}", ln=True)
 
     return pdf.output()
     
@@ -630,46 +623,40 @@ else:
     # 4. BOTONES EN COLUMNAS (SOLUCIÓN DEFINITIVA DE CARGA)
 st.write("---")
 
-# CONDICIÓN CRÍTICA: Solo si el total es mayor a 0 (evita errores al cargar la página)
-if ('total_eur' in locals() and total_eur > 0) or ('total_pen' in locals() and total_pen > 0):
-    
+# Verificamos si hay un total calculado
+hay_calculo = ('total_eur' in locals() and total_eur > 0) or ('total_pen' in locals() and total_pen > 0)
+
+if hay_calculo:
     st.success(t.get("thanks", "¡Gracias por tu solicitud!"))
     col_pdf, col_wa = st.columns(2)
 
     with col_pdf:
-        try:
-            simbolo_pdf = t.get("simbolo", "€") 
-            val_dis = moneda_diseno if 'moneda_diseno' in locals() else f"{simbolo_pdf} 0.00"
-            val_imp = f"{costo_imp:.2f}" if 'costo_imp' in locals() else "0.00"
-            val_pin = f"{costo_p:.2f}" if 'costo_p' in locals() else "0.00"
-            desc_val = ahorro_wsp_val if 'ahorro_wsp_val' in locals() else 0.0
-            
-            t_final = total_pen if "Perú" in idioma else total_eur
+        # Preparamos datos
+        simb = t.get("simbolo", "€")
+        v_imp = f"{costo_imp:.2f}" if 'costo_imp' in locals() else "0.00"
+        v_dis = str(moneda_diseno).replace(simb, "").strip() if 'moneda_diseno' in locals() else "0.00"
+        v_pin = f"{costo_p:.2f}" if 'costo_p' in locals() else "0.00"
+        v_desc = ahorro_wsp_val if 'ahorro_wsp_val' in locals() else 0.0
+        t_pagar = total_pen if "Perú" in idioma else total_eur
 
-            # Generamos los bytes del PDF
-            pdf_data = generar_pdf(
-                val_imp, val_dis, val_pin, st.session_state.tasa,
-                t_final, t, "Logo.jpg", archivo_reference, desc_val, simbolo_pdf
-            )
-            
-            st.download_button(
-                label="📥 Descargar PDF con Foto",
-                data=pdf_data,
-                file_name=f"Presupuesto_{nombre_p}.pdf",
-                mime="application/pdf",
-                use_container_width=True
-            )
-        except Exception as e:
-            st.error(f"Nota: El PDF se generará cuando completes los datos correctamente.")
+        # Generar PDF
+        pdf_data = generar_pdf(v_imp, v_dis, v_pin, st.session_state.tasa, t_pagar, t, "Logo.jpg", archivo_reference, v_desc, simb)
+        
+        st.download_button(
+            label="📥 Descargar PDF con Foto",
+            data=pdf_data,
+            file_name=f"Presupuesto_{nombre_p if nombre_p else 'Maker3D'}.pdf",
+            mime="application/pdf",
+            use_container_width=True
+        )
     
     with col_wa:
         if 'wa_link' in locals() and wa_link:
             st.link_button(t["wa_btn"], wa_link, use_container_width=True, type="primary")
         else:
-            st.warning("Completa nombre y personaje para WhatsApp")
+            st.info("Ingresa nombre y personaje arriba")
 else:
-    # Esto es lo que verá el usuario apenas entre a la web
-    st.info("👋 ¡Bienvenido! Ingresa los costos y el nombre del personaje para generar tu presupuesto.")
+    st.info("👋 Ingresa los datos para ver las opciones de presupuesto.")
     
 # --- SECCIÓN PORTAFOLIO REFINADA ---
 # --- SECCIÓN PORTAFOLIO RECUPERADA Y ADAPTABLE ---
