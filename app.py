@@ -92,6 +92,7 @@ texts = {
         "port_desc": "Explora nuestras últimas creaciones en resina y pintura artística.",
         "loading_img": "Procesando imagen de referencia...",
         "img_caption": "✅ Imagen cargada correctamente",
+        "btn_details": "Detalles",
         "img_success": "¡Imagen lista para la cotización!",
         "img_info": "Sube una foto de tu modelo para una mejor estimación.",
         "height_help": "📏 Guía: Una lata de soda mide 12cm, una figura estándar 18cm.",
@@ -150,6 +151,7 @@ texts = {
         "port_desc": "Explora nuestras últimas creaciones en resina y pintura artística.",
         "loading_img": "Procesando imagen de referencia...",
         "img_caption": "✅ Imagen cargada correctamente",
+        "btn_details": "Detalles",
         "img_success": "¡Imagen lista para la cotización!",
         "img_info": "Sube una foto de tu modelo para una mejor estimación.",
         "height_help": "📏 Guía: Una lata de soda mide 12cm, una figura estándar 18cm.",
@@ -208,6 +210,7 @@ texts = {
         "port_desc": "Explore our latest creations in resin and artistic painting.",
         "loading_img": "Processing reference image...",
         "img_caption": "✅ Image uploaded successfully",
+        "btn_details": "Details",
         "img_success": "Image ready for quotation!",
         "img_info": "Upload a photo of your model for a better estimation.",
         "height_help": "📏 Guide: A soda can is 12cm, a standard figure is 18cm.",
@@ -266,6 +269,7 @@ texts = {
         "port_desc": "Esplora le nostre ultime creazioni in resina y pittura artistica.",
         "loading_img": "Elaborazione dell'immagine...",
         "img_caption": "✅ Immagine caricata correttamente",
+        "btn_details": "Dettagli",
         "img_success": "Immagine pronta per el preventivo!",
         "img_info": "Carica una foto del tuo modello per una stima migliore.",
         "height_help": "📏 Guida: Una lattina misura 12cm, una figura standard 18cm.",
@@ -567,7 +571,7 @@ st.markdown(f"""
 
 col1, col2, col3 = st.columns(3)
 
-# Función para renderizar cada obra
+# Función para renderizar cada obra (CORREGIDA)
 def render_obra(col, img_url, title, description, key_btn):
     with col:
         st.markdown(f'''<div class="card">
@@ -577,7 +581,11 @@ def render_obra(col, img_url, title, description, key_btn):
                 <p>{description}</p>
             </div>
         </div>''', unsafe_allow_html=True)
-        if st.button("🔍 Detalles", key=key_btn, use_container_width=True):
+        
+        # Cambiamos "🔍 Detalles" por una f-string que usa el diccionario t
+        label_boton = f"🔍 {t.get('btn_details', 'Detalles')}"
+        
+        if st.button(label_boton, key=key_btn, use_container_width=True):
             mostrar_imagen_grande(img_url, title, description)
 
 # Llamadas a la función con tus datos
