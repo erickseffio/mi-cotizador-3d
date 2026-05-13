@@ -2,37 +2,46 @@ import streamlit as st
 import urllib.parse
 from fpdf import FPDF
 
-def generar_pdf(resina, diseño, pintura, tasa, total, idioma_textos):
+def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_figura, descuento_val, simbolo):
     pdf = FPDF()
     pdf.add_page()
-    pdf.set_font("Arial", 'B', 16)
     
-    # Encabezado
-    pdf.cell(0, 10, "MAKER 3D PERU - ITALIA", ln=True, align='C')
-    pdf.set_font("Arial", '', 12)
-    pdf.cell(0, 10, "Presupuesto de Escultura Personalizada", ln=True, align='C')
+    # --- LOGO ---
+    try:
+        # Coloca tu logo en la esquina superior izquierda
+        pdf.image(logo_path, 10, 8, 33) 
+    except:
+        pdf.set_font("Arial", 'B', 15)
+        pdf.cell(40, 10, "MAKER 3D PERÚ")
+
+    pdf.set_font("Arial", 'B', 20)
+    pdf.cell(0, 10, t["pdf_title"], ln=True, align='C')
     pdf.ln(10)
+
+    # --- FOTO DE LA FIGURA ---
+    if imagen_figura:
+        try:
+            # Dibujamos la imagen cargada por el usuario
+            pdf.image(imagen_figura, x=140, y=40, w=50)
+        except:
+            pass
+
+    # --- TABLA DE COSTOS ---
+    pdf.set_font("Arial", size=12)
+    pdf.cell(0, 10, f"{t['pdf_imp']}: {c_imp}", ln=True)
+    pdf.cell(0, 10, f"{t['pdf_dis']}: {c_dis}", ln=True)
+    pdf.cell(0, 10, f"{t['pdf_pin']}: {c_pin}", ln=True)
     
-    # Detalles del presupuesto
-    pdf.set_font("Arial", 'B', 12)
-    pdf.cell(0, 10, "Detalle de Costos:", ln=True)
-    pdf.set_font("Arial", '', 11)
-    pdf.cell(0, 8, f"- Resina: {resina}", ln=True)
-    pdf.cell(0, 8, f"- Diseño 3D: {diseño}", ln=True)
-    pdf.cell(0, 8, f"- Pintura Artistica: {pintura}", ln=True)
+    # --- SECCIÓN DE DESCUENTO ---
+    pdf.set_text_color(255, 0, 0) # Rojo para el descuento
+    pdf.cell(0, 10, f"✨ DESCUENTO APLICADO: -{simbolo} {descuento_val:.2f}", ln=True)
+    pdf.set_text_color(0, 0, 0) # Volver a negro
+    
     pdf.ln(5)
-    
-    # Total resaltado
     pdf.set_font("Arial", 'B', 14)
-    pdf.cell(0, 10, f"TOTAL: {total}", ln=True)
-    
-    # Nota de depósito (Muy importante para tu negocio)
-    pdf.ln(10)
-    pdf.set_font("Arial", 'I', 10)
-    pdf.multi_cell(0, 5, "Para iniciar el proyecto se requiere el 50% de deposito inicial. Tiempo estimado de entrega: 3 semanas.")
+    pdf.cell(0, 10, f"{t['final_quote']}: {simbolo} {total_final:.2f}", ln=True)
     
     return pdf.output(dest='S').encode('latin-1')
-
 
 # 1. Configuración de la página (ACTUALIZADO)
 st.set_page_config(
@@ -589,25 +598,32 @@ else:
     col_pdf, col_wa = st.columns(2)
 
     with col_pdf:
-        try:
-            # Generamos los bytes del PDF usando las variables locales seguras
-            pdf_bytes = generar_pdf(
-                f"{simbolo} {costo_imp:.2f}" if "Perú" not in idioma else f"S/. {(costo_imp * st.session_state.tasa):.2f}",
-                moneda_diseno,
-                f"{simbolo} {costo_p:.2f}" if "Perú" not in idioma else f"S/. {(costo_p * st.session_state.tasa):.2f}",
-                st.session_state.tasa,
-                monto_principal,
-                t
-            )
-            st.download_button(
-                label="📥 Descargar PDF",
-                data=pdf_bytes,
-                file_name=f"Presupuesto_{nombre_p}.pdf",
-                mime="application/pdf",
-                use_container_width=True
-            )
-        except Exception as e:
-            st.error(f"Error PDF: {e}")
+    try:
+        # Ruta de tu logo (asegúrate de que el archivo existe en tu carpeta)
+        logo_file = "logo_maker3d.png" 
+
+        pdf_bytes = generar_pdf(
+            c_imp = f"{simbolo} {costo_imp:.2f}" if "Perú" not in idioma else f"S/. {(costo_imp * st.session_state.tasa):.2f}",
+            c_dis = moneda_diseno,
+            c_pin = f"{simbolo} {costo_p:.2f}" if "Perú" not in idioma else f"S/. {(costo_p * st.session_state.tasa):.2f}",
+            tasa = st.session_state.tasa,
+            total_final = (total_pen if "Perú" in idioma else total_eur),
+            t = t,
+            logo_path = logo_file,
+            imagen_figura = foto_subida, # Asegúrate de que este es el nombre de tu variable de st.file_uploader
+            descuento_val = ahorro_wsp_val,
+            simbolo = simbolo
+        )
+        
+        st.download_button(
+            label="📥 Descargar PDF con Foto",
+            data=pdf_bytes,
+            file_name=f"Presupuesto_{nombre_p}.pdf",
+            mime="application/pdf",
+            use_container_width=True
+        )
+    except Exception as e:
+        st.error(f"Error al incluir elementos en el PDF: {e}")
 
     with col_wa:
         st.link_button(t["wa_btn"], wa_link, use_container_width=True, type="primary")
