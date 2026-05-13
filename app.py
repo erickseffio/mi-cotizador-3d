@@ -28,15 +28,19 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
         try: pdf.image(logo_path, 10, 8, 33)
         except: pass
 
-    # --- CORRECCIÓN DE LA IMAGEN (USANDO IO) ---
-    if imagen_figura:
+    # --- CORRECCIÓN DEFINITIVA DE IMAGEN ---
+    # Solo procesamos si imagen_figura no es None y tiene datos
+    if imagen_figura is not None:
         try:
-            # Convertimos el bytearray/buffer en un flujo de bytes que FPDF entiende
-            img_data = io.BytesIO(imagen_figura.getvalue())
-            # Insertamos la imagen (x, y, ancho)
-            pdf.image(img_data, x=150, y=45, w=45)
-        except Exception as e:
-            print(f"No se pudo cargar la imagen: {e}")
+            # Obtenemos los bytes
+            img_bytes = imagen_figura.getvalue()
+            # Si el archivo tiene contenido real (más de 0 bytes)
+            if len(img_bytes) > 0:
+                img_data = io.BytesIO(img_bytes)
+                pdf.image(img_data, x=150, y=45, w=45)
+        except Exception:
+            # Si falla algo con la imagen, no detenemos el PDF
+            pass
 
     # --- TABLA DE COSTOS ---
     pdf.set_font("Helvetica", size=12)
@@ -632,31 +636,17 @@ st.write("---")
 if 'total_eur' in locals() or 'total_pen' in locals():
     col_pdf, col_wa = st.columns(2)
 
-    with col_pdf:
+    # En la sección de botones:
+with col_pdf:
+    # Solo intentamos generar el PDF si ya hay un nombre de proyecto o costo definido
+    if 'nombre_p' in locals() and nombre_p:
         try:
-            logo_file = "Logo.jpg" 
-
-            # --- CAPA DE SEGURIDAD PARA VARIABLES ---
-            simbolo_pdf = t.get("simbolo", "€") 
-            val_dis = moneda_diseno if 'moneda_diseno' in locals() else f"{simbolo_pdf} 0.00"
-            val_imp = f"{costo_imp:.2f}" if 'costo_imp' in locals() else "0.00"
-            val_pin = f"{costo_p:.2f}" if 'costo_p' in locals() else "0.00"
+            # ... resto de tu código para preparar val_imp, val_dis, etc ...
             
-            # Si el descuento no existe, lo ponemos en 0.0
-            descuento_final = ahorro_wsp_val if 'ahorro_wsp_val' in locals() else 0.0
-            # ----------------------------------------
-
             pdf_bytes = generar_pdf(
-                c_imp = val_imp,
-                c_dis = val_dis,
-                c_pin = val_pin,
-                tasa = st.session_state.tasa,
-                total_final = (total_pen if "Perú" in idioma else total_eur),
-                t = t,
-                logo_path = logo_file,
-                imagen_figura = archivo_reference,
-                descuento_val = descuento_final, # Usamos la variable segura
-                simbolo = simbolo_pdf
+                # ... tus parámetros ...
+                imagen_figura = archivo_reference if archivo_reference else None,
+                # ... resto de parámetros ...
             )
             
             st.download_button(
@@ -667,6 +657,7 @@ if 'total_eur' in locals() or 'total_pen' in locals():
                 use_container_width=True
             )
         except Exception as e:
+            # Solo mostramos el error si realmente falló algo crítico
             st.error(f"Error al generar el PDF: {e}")
 
     with col_wa:
