@@ -557,7 +557,7 @@ with col_wa:
          st.markdown(f'<a href="{wa_link}" target="_blank" style="text-decoration:none;"><button style="width:100%; height:45px; border-radius:5px; background-color:#25D366; color:white; border:none; cursor:pointer;">🟢 Enviar por WhatsApp</button></a>', unsafe_allow_html=True)
 
 
-# --- 7. CIERRE Y WHATSAPP (Lógica Corregida) ---
+# --- 7. CIERRE Y WHATSAPP (Lógica Corregida con PDF) ---
 st.warning(t["note"])
 st.markdown(f"<div style='text-align: center; padding: 10px; background-color: #fdf2d9; border-radius: 5px; border: 1px solid #f9e2af; color: #856404; margin: 15px 0;'>{t['social_proof']}</div>", unsafe_allow_html=True)
 
@@ -565,19 +565,19 @@ st.markdown(f"<div style='text-align: center; padding: 10px; background-color: #
 if not nombre_c or not nombre_p:
     st.info(t["warning_input"]) 
 else:
-    # 1. Definir Moneda y Totales para el mensaje
+    # 1. Definir Moneda y Totales para el mensaje (Ya lo tienes)
     if "Perú" in idioma:
         moneda_wa = f"S/. {total_pen:.2f}"
         moneda_diseno = f"S/. {(costo_d * st.session_state.tasa):.2f}"
-        ahorro_wsp_val = ahorro_pen # Usa el ahorro en Soles calculado en la sección 6
+        ahorro_wsp_val = ahorro_pen 
         simbolo = "S/."
     else:
         moneda_wa = f"€ {total_eur:.2f}"
         moneda_diseno = f"€ {costo_d:.2f}"
-        ahorro_wsp_val = ahorro_est # Usa el ahorro en Euros calculado en la sección 6
+        ahorro_wsp_val = ahorro_est 
         simbolo = "€"
 
-    # 2. Mapa de detalles de diseño
+    # 2. Mapa de detalles de diseño (Ya lo tienes)
     mapa_detalles = {}
     for lang in texts:
         opts = texts[lang]["design_opts"]
@@ -585,7 +585,7 @@ else:
         for i in range(len(opts)):
             mapa_detalles[opts[i]] = details[i]
             
-    # 3. Generamos el mensaje para WhatsApp
+    # 3. Generamos el mensaje para WhatsApp (Ya lo tienes)
     msg = (f"{t['wa_header']}\n"
            f"--------------------------\n"
            f"👤 Cliente: {nombre_c}\n"
@@ -599,32 +599,56 @@ else:
            f"--------------------------\n"
            f"💎 {t['final_quote']}: {moneda_wa}")
     
+    import urllib.parse
     wa_link = f"https://wa.me/{t['wa_num']}?text={urllib.parse.quote(msg)}"
 
-    # Interfaz de usuario
+    # --- NUEVA SUB-SECCIÓN DE BOTONES ---
+    st.write("---")
+    col1, col2 = st.columns(2)
+
+    with col1:
+        # BOTÓN DE PDF
+        try:
+            pdf_bytes = generar_pdf(
+                f"{simbolo} {costo_imp:.2f}" if "Perú" not in idioma else f"S/. {(costo_imp * st.session_state.tasa):.2f}",
+                moneda_diseno,
+                f"{simbolo} {costo_p:.2f}" if "Perú" not in idioma else f"S/. {(costo_p * st.session_state.tasa):.2f}",
+                st.session_state.tasa,
+                monto_principal,
+                t
+            )
+            st.download_button(
+                label="📥 Descargar PDF",
+                data=pdf_bytes,
+                file_name=f"Presupuesto_{nombre_p}.pdf",
+                mime="application/pdf",
+                use_container_width=True
+            )
+        except Exception as e:
+            st.error(f"Error PDF: {e}")
+
+    with col2:
+        # BOTÓN DE WHATSAPP (Usando el link_button original para evitar errores)
+        st.link_button(t["wa_btn"], wa_link, use_container_width=True, type="primary")
+
+    # Notas finales y advertencia de TikTok
     st.markdown("""
-    <div style="background-color: #f0f2f6; border-left: 5px solid #ffa500; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
+    <div style="background-color: #f0f2f6; border-left: 5px solid #ffa500; padding: 10px; border-radius: 5px; margin-top: 20px;">
         <small style="color: #31333F;">
-            💡 <b>Nota del Experto:</b> Este presupuesto es una estimación base. 
-            El precio final se confirma tras revisar la complejidad del diseño 3D. 
-            ¡Envíame tu archivo y ajustamos los detalles!
+            💡 <b>Nota del Experto:</b> Este presupuesto es una estimación base. El precio final se confirma tras revisar la complejidad del diseño 3D.
         </small>
     </div>
     """, unsafe_allow_html=True)
     
     st.markdown("""
-    <div style="background-color: #1A1C24; border: 2px solid #FF4B2B; padding: 15px; border-radius: 10px; text-align: center; margin-bottom: 20px;">
-        <span style="font-size: 20px;">📲</span> 
-        <strong style="color: #FF4B2B;">¿Los botones no funcionan?</strong><br>
-        <p style="font-size: 0.9rem; color: white; margin-top: 5px;">
-        Si vienes de TikTok, pulsa los <b>tres puntos (⋮)</b> y elige <b>'Abrir en navegador externo'</b> para poder enviarnos tu pedido.
+    <div style="background-color: #1A1C24; border: 1px solid #FF4B2B; padding: 10px; border-radius: 10px; text-align: center; margin-top: 10px;">
+        <p style="font-size: 0.8rem; color: white; margin: 0;">
+            📲 <b>¿Vienes de TikTok?</b> Pulsa los 3 puntos (⋮) y elige <b>'Abrir en navegador'</b> para descargar el PDF.
         </p>
     </div>
     """, unsafe_allow_html=True)
 
-    st.link_button(t["wa_btn"], wa_link, use_container_width=True, type="primary")
     st.success(t["thanks"])
-
 # --- SECCIÓN PORTAFOLIO REFINADA ---
 # --- SECCIÓN PORTAFOLIO RECUPERADA Y ADAPTABLE ---
 st.markdown("""
