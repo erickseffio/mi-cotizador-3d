@@ -632,7 +632,7 @@ else:
     </div>
     """, unsafe_allow_html=True)
 
-    # 4. BOTONES EN COLUMNAS (AQUÍ ESTÁ LA MAGIA)
+    # 4. BOTONES EN COLUMNAS (CORREGIDO)
 st.write("---")
 col_pdf, col_wa = st.columns(2)
 
@@ -641,10 +641,10 @@ with col_pdf:
         # Ruta de tu logo
         logo_file = "Logo.jpg" 
 
-        # PREPARACIÓN DE DATOS: Limpiamos los valores antes de enviarlos
-        # Así evitamos enviar símbolos de moneda duplicados
+        # PREPARACIÓN DE DATOS: 
+        # Usamos las variables que ya tienes definidas en tu código principal
         val_imp = f"{costo_imp:.2f}"
-        val_dis = f"{costo_diseno:.2f}" # Usa la variable numérica directamente
+        val_dis = moneda_diseno  # <--- Usamos la que ya tienes definida arriba
         val_pin = f"{costo_p:.2f}"
 
         pdf_bytes = generar_pdf(
@@ -657,7 +657,7 @@ with col_pdf:
             logo_path = logo_file,
             imagen_figura = archivo_reference,
             descuento_val = ahorro_wsp_val,
-            simbolo = simbolo # Aquí fpdf2 ya sabe qué hacer con el € o S/.
+            simbolo = simbolo
         )
         
         st.download_button(
