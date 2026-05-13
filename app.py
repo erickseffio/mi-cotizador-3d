@@ -6,25 +6,31 @@ st.set_page_config(page_title="Maker3DPeru-Italia", page_icon="Logo.jpg")
 # --- AJUSTE DE TAMAÑO PARA DETALLES (CSS AGRESIVO) ---
 st.markdown("""
     <style>
-    /* 1. Centra el contenido de las tarjetas del portafolio */
-    [data-testid="stVerticalBlock"] > div:has(img) {
-        display: flex;
-        flex-direction: column;
-        justify-content: center; /* Centra verticalmente */
-        align-items: center;     /* Centra horizontalmente */
-        min-height: 350px;       /* Ajusta esto según la altura de tus tarjetas */
+    /* 1. Limitamos el ancho del contenedor total */
+    .stExpander {
+        width: 50% !important; /* Fuerza a que ocupe solo la mitad */
+        margin: 0 auto !important; /* Lo centra */
     }
 
-    /* 2. Añade un margen superior a las imágenes para que no toquen el borde */
-    [data-testid="stImage"] img {
-        margin-top: 15px !important;
-        margin-bottom: 15px !important;
-        border-radius: 10px; /* Ya que estamos, les damos un borde suave como tus acabados */
+    /* 2. Quitamos el zoom del texto y lo hacemos compacto */
+    .streamlit-expanderHeader {
+        font-size: 0.8em !important;
+        padding-top: 2px !important;
+        padding-bottom: 2px !important;
+        line-height: 1.2 !important;
     }
 
-    /* 3. Ajusta el espacio de los textos debajo de la imagen */
-    .stMarkdown h3 {
-        text-align: center !important;
+    /* 3. Reducimos el espacio del contenido interno */
+    .streamlit-expanderContent {
+        font-size: 0.8em !important;
+        padding: 10px !important;
+        line-height: 1.1 !important; /* Texto más apretado para evitar zoom visual */
+    }
+
+    /* 4. Evita que Streamlit estire el expander en pantallas anchas */
+    [data-testid="stExpander"] {
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-radius: 8px !important;
     }
     </style>
     """, unsafe_allow_html=True)
