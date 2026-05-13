@@ -46,7 +46,6 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
         pdf.ln(5)
         pdf.set_font("Arial", 'B', 14)
         pdf.cell(0, 10, f"{t['final_quote']}: {simbolo} {total_final:.2f}", ln=True)
-        
         return pdf.output(dest='S').encode('latin-1', errors='ignore')
 
 # 1. Configuración de la página (ACTUALIZADO)
