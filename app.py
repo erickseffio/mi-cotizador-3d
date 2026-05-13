@@ -35,7 +35,7 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-@st.dialog("Vista de Obra - Maker 3D Perú", width="large")
+@st.dialog("Vista de Obra - Maker 3D Perú", width="small")
 def mostrar_imagen_grande(url, titulo, descripcion):
     st.image(url, use_container_width=True)
     st.subheader(titulo)
