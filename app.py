@@ -321,7 +321,6 @@ texts = {
         "port_shanks_desc": "Application of dynamic shadows and UV protection varnish.",
         "port_anime_desc": "Exhibition quality for One Piece and Jujutsu Kaisen characters.",
         "port_h2_calidad": "✅ Maker 3D Quality",
-        "English": {
         "pdf_desc": "DISCOUNT",
         "thanks": "Thank you for your request!",
         "port_stat_fig": "Figures Delivered",
