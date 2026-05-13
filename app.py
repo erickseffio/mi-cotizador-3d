@@ -506,17 +506,18 @@ st.markdown("""
         border-radius: 12px;
         border: 1px solid #333;
         overflow: hidden;
-        height: 300px; 
+        height: 340px; 
         display: flex;
         flex-direction: column;
         margin-bottom: 20px;
     }
     
-    .card-img {
+   .card-img {
         width: 100%;
-        height: 140px; 
-        object-fit: cover;
-        object-position: center center;
+        height: 160px; /* Aumentamos un poco el alto del contenedor */
+        object-fit: contain; /* Esto evita que la imagen se corte o se estire */
+        padding-top: 25px; /* <--- ESTO ES LO QUE BAJA LA FOTO */
+        background-color: #1e1e1e; /* Asegura que el fondo combine con la tarjeta */
     }
     
     .card-text {
