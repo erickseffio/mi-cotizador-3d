@@ -3,21 +3,34 @@ import urllib.parse
 
 # 1. Configuración de la página
 st.set_page_config(page_title="Maker3DPeru-Italia", page_icon="Logo.jpg")
-# --- NUEVO: AJUSTE DE TAMAÑO PARA DETALLES (CSS) ---
+# --- AJUSTE DE TAMAÑO PARA DETALLES (CSS AGRESIVO) ---
 st.markdown("""
     <style>
-    /* Esto reduce el ancho del expander a la mitad y lo centra */
+    /* 1. Limitamos el ancho del contenedor total */
     .stExpander {
-        max-width: 10% !important; 
-        margin: 0 auto !important;
+        width: 50% !important; /* Fuerza a que ocupe solo la mitad */
+        margin: 0 auto !important; /* Lo centra */
     }
-    
-    /* Hace que el texto dentro sea un poco más pequeño y elegante */
+
+    /* 2. Quitamos el zoom del texto y lo hacemos compacto */
     .streamlit-expanderHeader {
-        font-size: 0.9em !important;
+        font-size: 0.8em !important;
+        padding-top: 2px !important;
+        padding-bottom: 2px !important;
+        line-height: 1.2 !important;
     }
+
+    /* 3. Reducimos el espacio del contenido interno */
     .streamlit-expanderContent {
-        font-size: 0.85em !important;
+        font-size: 0.8em !important;
+        padding: 10px !important;
+        line-height: 1.1 !important; /* Texto más apretado para evitar zoom visual */
+    }
+
+    /* 4. Evita que Streamlit estire el expander en pantallas anchas */
+    [data-testid="stExpander"] {
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-radius: 8px !important;
     }
     </style>
     """, unsafe_allow_html=True)
