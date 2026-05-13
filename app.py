@@ -11,31 +11,6 @@ st.markdown("""
         padding-top: 5rem !important;
     }
 
-    /* 2. BAJAR LAS FOTOS EN LA GALERÍA PRINCIPAL */
-    /* Este selector apunta específicamente a las tarjetas del portafolio */
-    [data-testid="column"] [data-testid="stImage"] {
-        padding-top: 55px !important; 
-        display: flex;
-        justify-content: center;
-        margin-bottom: 10px !important;
-    }
-
-    /* 3. EVITAR QUE LAS FOTOS DEL DIÁLOGO (ZOOM) SE VEAN MAL */
-    /* Esto asegura que al abrir 'Detalles' la imagen no se baje de más */
-    div[data-testid="stDialog"] [data-testid="stImage"] {
-        padding-top: 0px !important;
-    }
-
-    /* 4. ESTILO DE IMAGEN */
-    [data-testid="stImage"] img {
-        border-radius: 12px;
-        margin-top: 0px !important;
-    }
-
-    /* 5. Centrar los textos debajo de la imagen */
-    div[data-testid="column"] .stMarkdown {
-        text-align: center !important;
-    }
     </style>
     """, unsafe_allow_html=True)
 
