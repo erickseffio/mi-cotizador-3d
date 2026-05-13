@@ -7,63 +7,60 @@ import re
 from fpdf import FPDF # fpdf2 usa el mismo nombre de importación
 
 def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_figura, descuento_val, simbolo):
-    # Con fpdf2 YA NO necesitas la función limpiar_texto que borraba caracteres
-    
-    # 1. Instanciamos FPDF (soporta UTF-8 por defecto)
+    # 1. Instanciamos FPDF
     pdf = FPDF()
     pdf.add_page()
     
-    # 2. Usamos una fuente estándar que soporte Unicode (ej. Helvetica o Arial)
+    # --- FUNCIÓN INTERNA PARA EL SÍMBOLO ---
+    def formatear_simbolo(texto_simbolo):
+        # fpdf2 usa latin-1 por defecto para fuentes estándar. 
+        # El Euro en latin-1 se representa con el código \x80
+        return texto_simbolo.replace("€", chr(128))
+
+    simbolo_f = formatear_simbolo(simbolo)
+
+    # 2. Fuente estándar
     pdf.set_font("Helvetica", size=12)
 
     # --- BLOQUE: El Título ---
     pdf.ln(10)
     pdf.set_font("Helvetica", 'B', 16)
-    # Ahora puedes usar t.get directamente con tildes y símbolos
-    pdf.cell(0, 10, t.get("pdf_title", "PRESUPUESTO"), ln=True, align='C')
+    pdf.cell(0, 10, t.get("pdf_title", "PRESUPUESTO").encode('latin-1', 'replace').decode('latin-1'), ln=True, align='C')
     pdf.ln(10)
 
-    # --- BLOQUE: Logo e Imagen de Referencia ---
+    # --- BLOQUE: Logo e Imagen ---
     if logo_path:
-        try:
-            pdf.image(logo_path, 10, 8, 33)
-        except:
-            pass
+        try: pdf.image(logo_path, 10, 8, 33)
+        except: pass
 
     if imagen_figura:
         try:
-            import tempfile
             with tempfile.NamedTemporaryFile(delete=False, suffix=".png") as tmp:
                 tmp.write(imagen_figura.getvalue())
-                # Ubicamos la foto de la obra (ej. Shanks o Gojo)
                 pdf.image(tmp.name, x=150, y=45, w=45)
-        except:
-            pass
+        except: pass
 
-    # --- TABLA DE COSTOS (Soporta € y S/. sin errores) ---
+    # --- TABLA DE COSTOS (Con el símbolo corregido) ---
     pdf.set_font("Helvetica", size=12)
     
-    # Manejo de llaves para Italiano y otros idiomas
-    label_imp = t.get('pdf_imp', t.get('pdf_it', 'Costo Impresión'))
+    label_imp = t.get('pdf_imp', t.get('pdf_it', 'Costo Impresion'))
     
-    pdf.cell(0, 10, f"{label_imp}: {simbolo} {c_imp}", ln=True)
-    pdf.cell(0, 10, f"{t.get('pdf_dis', 'Costo Diseño')}: {simbolo} {c_dis}", ln=True)
-    pdf.cell(0, 10, f"{t.get('pdf_pin', 'Costo Pintura')}: {simbolo} {c_pin}", ln=True)
+    # Usamos f-strings pero asegurando que el símbolo sea el compatible
+    pdf.cell(0, 10, f"{label_imp}: {simbolo_f} {c_imp}".encode('latin-1', 'replace').decode('latin-1'), ln=True)
+    pdf.cell(0, 10, f"{t.get('pdf_dis', 'Costo Diseno')}: {simbolo_f} {c_dis}".encode('latin-1', 'replace').decode('latin-1'), ln=True)
+    pdf.cell(0, 10, f"{t.get('pdf_pin', 'Costo Pintura')}: {simbolo_f} {c_pin}".encode('latin-1', 'replace').decode('latin-1'), ln=True)
             
     # --- SECCIÓN DE DESCUENTO ---
     if descuento_val > 0:
-        pdf.set_text_color(255, 0, 0) # Rojo para el ahorro
-        pdf.cell(0, 10, f"DESCUENTO: -{simbolo} {descuento_val:.2f}", ln=True)
+        pdf.set_text_color(255, 0, 0)
+        pdf.cell(0, 10, f"DESCUENTO: -{simbolo_f} {descuento_val:.2f}".encode('latin-1', 'replace').decode('latin-1'), ln=True)
         pdf.set_text_color(0, 0, 0)
         
     pdf.ln(5)
     pdf.set_font("Helvetica", 'B', 14)
-    # El total final con el símbolo de moneda real
-    texto_total = f"{t.get('final_quote', 'Total')}: {simbolo} {total_final:.2f}"
-    pdf.cell(0, 10, texto_total, ln=True)
+    texto_total = f"{t.get('final_quote', 'Total')}: {simbolo_f} {total_final:.2f}"
+    pdf.cell(0, 10, texto_total.encode('latin-1', 'replace').decode('latin-1'), ln=True)
 
-    # --- RETORNO PROFESIONAL (Binario directo) ---
-    # fpdf2 devuelve bytes directamente con output(), mucho más simple
     return pdf.output()
     
 # 1. Configuración de la página (ACTUALIZADO)
