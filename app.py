@@ -25,22 +25,14 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-@st.dialog("Vista de Obra - Maker 3D Perú", width="medium")
+@st.dialog("Vista de Obra - Maker 3D Perú", width="large") # Volvemos al ancho que te gusta
 def mostrar_imagen_grande(url, titulo, descripcion):
-    # 1. Creamos 3 columnas para centrar la imagen
-    # La columna del medio (6) es la que tendrá la foto
-    col_izq, col_centro, col_der = st.columns([1, 6, 1])
+    # Añadimos espacio físico arriba antes de la imagen
+    st.markdown("<br>", unsafe_allow_html=True) 
     
-    with col_centro:
-        # Añadimos espacio arriba manualmente
-        st.write("") 
-        st.write("") 
-        
-        # 2. Quitamos el 'use_container_width' para que no explote
-        # Y le damos un ancho fijo (puedes probar con 300, 350 o 400)
-        st.image(url, width=350) 
+    # Mantén el use_container_width para recuperar el zoom potente
+    st.image(url, use_container_width=True)
     
-    # 3. El texto sigue abajo normal
     st.subheader(titulo)
     st.write(descripcion)
     
