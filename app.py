@@ -5,31 +5,31 @@ import tempfile
 import re
 
 def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_figura, descuento_val, simbolo):
-    # --- FUNCIÓN LIMPIADORA MEJORADA ---
+    # --- FUNCIÓN LIMPIADORA ---
     def limpiar_texto(texto):
         if not isinstance(texto, str): return texto
-        # 1. Cambiamos el Euro por EUR manualmente para evitar el error \u20ac
-        texto = texto.replace("€", "EUR")
-        # 2. Eliminamos emojis y caracteres especiales (como los de tu imagen)
+        # 1. Reemplazo preventivo de símbolos problemáticos
+        texto = texto.replace("€", "EUR").replace("S/.", "S/.")
+        # 2. Eliminación de emojis/Unicode para FPDF
         return texto.encode('ascii', 'ignore').decode('ascii')
 
-    # --- CREAMOS UN DICCIONARIO LIMPIO ---
-    # Esto quita los emojis de TODAS las frases de una vez
+    # --- LIMPIEZA INICIAL DE TODO EL DICCIONARIO ---
     t_limpio = {k: limpiar_texto(v) for k, v in t.items()}
     
-    # Limpiamos también el símbolo de moneda
+    # Limpiamos el símbolo de moneda
     simbolo_pdf = limpiar_texto(simbolo)
     if not simbolo_pdf.strip(): 
         simbolo_pdf = "EUR" if "€" in simbolo else "USD"
 
     pdf = FPDF()
     pdf.add_page()
-
+    
     # --- BLOQUE C: El Título ---
     pdf.ln(20)
     pdf.set_font("Arial", 'B', 16)
-    titulo_limpio = limpiar_texto(t.get("pdf_title", "PRESUPUESTO"))
-    pdf.cell(0, 10, titulo_limpio, ln=True, align='C')
+    # Usamos t_limpio para garantizar que no haya rastros de Unicode
+    titulo_pdf = t_limpio.get("pdf_title", "PRESUPUESTO")
+    pdf.cell(0, 10, titulo_pdf, ln=True, align='C')
     pdf.ln(10)
 
     # --- BLOQUE D: El Logo (con seguridad) ---
@@ -57,12 +57,17 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
     # --- IMPORTANTE: El código de abajo DEBE estar fuera de los bloques 'if' anteriores ---
     # Alinea esto a la misma altura que los 'if'
     
-   # --- TABLA DE COSTOS (Paso 2: Usando t_limpio) ---
+   # --- TABLA DE COSTOS (CORREGIDO) ---
     pdf.set_font("Arial", size=12)
-    # Ya no usamos limpiar_texto(...) porque t_limpio ya hizo ese trabajo
+    # Usamos directamente t_limpio y simbolo_pdf
     pdf.cell(0, 10, f"{t_limpio['pdf_imp']}: {simbolo_pdf} {c_imp}", ln=True)
-    pdf.cell(0, 10, f"{t_limpio['pdf_dis']}: {simbolo_pdf} {c_dis}", ln=True)
-    pdf.cell(0, 10, f"{t_limpio['pdf_pin']}: {simbolo_pdf} {c_pin}", ln=True)
+    pdf.cell(0, 10, f"{t_limpio['pdf_dis']}: {simpio_pdf if 'pdf_dis' in t_limpio else 'Diseno'}: {simbolo_pdf} {c_dis}", ln=True)
+    # Nota: Para Italiano el campo es 'pdf_it', asegúrate de que coincida o usa un .get()
+    etiqueta_imp = t_limpio.get('pdf_imp', t_limpio.get('pdf_it', 'Costo'))
+    # Sugerencia para evitar errores si las llaves varían entre idiomas:
+    pdf.cell(0, 10, f"{t_limpio.get('pdf_imp', 'Costo')}: {simbolo_pdf} {c_imp}", ln=True)
+    pdf.cell(0, 10, f"{t_limpio.get('pdf_dis', 'Diseno')}: {simbolo_pdf} {c_dis}", ln=True)
+    pdf.cell(0, 10, f"{t_limpio.get('pdf_pin', 'Pintura')}: {simbolo_pdf} {c_pin}", ln=True)
             
     # --- SECCIÓN DE DESCUENTO ---
     if descuento_val > 0:
@@ -71,22 +76,16 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
         pdf.cell(0, 10, f"DESCUENTO: -{simbolo_pdf} {descuento_val:.2f}", ln=True)
         pdf.set_text_color(0, 0, 0)
         
+    # --- SECCIÓN DE TOTAL ---
     pdf.ln(5)
     pdf.set_font("Arial", 'B', 14)
-    # Usamos final_quote del diccionario ya procesado
     texto_total = f"{t_limpio['final_quote']}: {simbolo_pdf} {total_final:.2f}"
     pdf.cell(0, 10, texto_total, ln=True)
 
-    # El return se mantiene igual
-    # Generamos el PDF en memoria
+    # --- RETURN FINAL (EL FILTRO DE SEGURIDAD) ---
     pdf_output = pdf.output(dest='S')
-    
-    # Si el output es una cadena de texto, la limpiamos de Euros
     if isinstance(pdf_output, str):
-        pdf_output = pdf_output.replace("€", "EUR")
         return pdf_output.encode('latin-1', errors='ignore')
-    
-    # Si ya es binario (bytes), lo enviamos tal cual con manejo de errores
     return bytes(pdf_output).decode('latin-1', 'ignore').encode('latin-1', 'ignore')
     
 # 1. Configuración de la página (ACTUALIZADO)
