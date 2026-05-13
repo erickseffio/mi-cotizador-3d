@@ -22,20 +22,26 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
     pdf.ln(10)
 
     # --- BLOQUE D: El Logo (con seguridad) ---
-    if logo_path:
+    if logo_path is not None:
         try:
             pdf.image(logo_path, 10, 8, 33)
-        except:
-            pass # Si falla el logo, no se detiene el programa
+        except Exception as e:
+            print(f"Error con el logo: {e}")
+            # Si falla el logo, ponemos el nombre en texto para que no se detenga
+            pdf.set_font("Arial", 'B', 12)
+            pdf.cell(0, 10, "MAKER 3D PERU", ln=True)
             
-       # --- FOTO DE LA FIGURA (Solo si existe) ---
+       # --- FOTO DE LA FIGURA ---
     if imagen_figura is not None:
         try:
             import tempfile
-            with tempfile.NamedTemporaryFile(delete=False, suffix=".png") as tmp_file:
-                tmp_file.write(imagen_figura.getvalue())
-                tmp_path = tmp_file.name
-            pdf.image(tmp_path, x=150, y=50, w=45)
+            # Verificamos que realmente haya datos binarios
+            datos_imagen = imagen_figura.getvalue()
+            if datos_imagen: 
+                with tempfile.NamedTemporaryFile(delete=False, suffix=".png") as tmp_file:
+                    tmp_file.write(datos_imagen)
+                    tmp_path = tmp_file.name
+                pdf.image(tmp_path, x=150, y=50, w=45)
         except Exception as e:
             print(f"No se pudo cargar la imagen: {e}")
     # Si no hay imagen, el código simplemente saltará esta parte y seguirá adelante
