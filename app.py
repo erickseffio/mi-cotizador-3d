@@ -78,7 +78,16 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
     pdf.cell(0, 10, texto_total, ln=True)
 
     # El return se mantiene igual
-    return pdf.output(dest='S').encode('latin-1', errors='ignore')
+    # Generamos el PDF en memoria
+    pdf_output = pdf.output(dest='S')
+    
+    # Si el output es una cadena de texto, la limpiamos de Euros
+    if isinstance(pdf_output, str):
+        pdf_output = pdf_output.replace("€", "EUR")
+        return pdf_output.encode('latin-1', errors='ignore')
+    
+    # Si ya es binario (bytes), lo enviamos tal cual con manejo de errores
+    return bytes(pdf_output).decode('latin-1', 'ignore').encode('latin-1', 'ignore')
     
 # 1. Configuración de la página (ACTUALIZADO)
 st.set_page_config(
