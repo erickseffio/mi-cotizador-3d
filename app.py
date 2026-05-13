@@ -40,21 +40,23 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
             print(f"No se pudo cargar la imagen: {e}")
     # Si no hay imagen, el código simplemente saltará esta parte y seguirá adelante
         
-        # --- TABLA DE COSTOS ---
+        # --- TABLA DE COSTOS (Líneas 44-47 corregidas) ---
         pdf.set_font("Arial", size=12)
-        pdf.cell(0, 10, f"{limpiar_texto(t['pdf_imp'])}: {c_imp}", ln=True)
-        pdf.cell(0, 10, f"{limpiar_texto(t['pdf_dis'])}: {c_dis}", ln=True)
-        pdf.cell(0, 10, f"{limpiar_texto(t['pdf_pin'])}: {c_pin}", ln=True)
-        
+        pdf.cell(0, 10, f"{limpiar_texto(t['pdf_imp'])}: {simbolo_pdf} {c_imp}", ln=True)
+        pdf.cell(0, 10, f"{limpiar_texto(t['pdf_dis'])}: {simbolo_pdf} {c_dis}", ln=True)
+        pdf.cell(0, 10, f"{limpiar_texto(t['pdf_pin'])}: {simbolo_pdf} {c_pin}", ln=True)
+            
         # --- SECCIÓN DE DESCUENTO ---
         pdf.set_text_color(255, 0, 0) # Rojo para el descuento
         pdf.set_text_color(0, 0, 0) # Volver a negro
         
         pdf.ln(5)
         pdf.set_font("Arial", 'B', 14)
-        texto_final = f"{limpiar_texto(t['final_quote'])}: {simbolo} {total_final:.2f}"
-        pdf.cell(0, 10, texto_final, ln=True)
-    return pdf.output(dest='S').encode('latin-1', errors='ignore')
+        # Aquí es vital usar simbolo_pdf para que el Euro no rompa el PDF con la foto
+        texto_total = f"{limpiar_texto(t['final_quote'])}: {simbolo_pdf} {total_final:.2f}"
+        pdf.cell(0, 10, texto_total, ln=True)
+
+        return pdf.output(dest='S').encode('latin-1', errors='ignore')
 
 # 1. Configuración de la página (ACTUALIZADO)
 st.set_page_config(
