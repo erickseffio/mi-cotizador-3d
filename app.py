@@ -9,8 +9,8 @@ st.markdown("""
     /* 1. Solo afecta a las imágenes que están dentro del portafolio */
     /* Ajustamos el margen superior de la imagen para que baje un poco */
     [data-testid="stImage"] img {
-        margin-top: 25px !important; 
-        margin-bottom: 10px !important;
+        margin-top: 45px !important; 
+        margin-bottom: 15px !important;
         display: block;
         margin-left: auto;
         margin-right: auto;
