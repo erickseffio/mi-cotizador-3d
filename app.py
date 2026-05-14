@@ -560,18 +560,21 @@ else:
         for i in range(len(opts)):
             mapa_detalles[opts[i]] = details[i]
             
-    msg = (f"{t['wa_header']}\n"
-           f"--------------------------\n"
-           f"👤 Cliente: {nombre_c}\n"
-           f"👾 Figura: {nombre_p}\n"
-           f"📏 Altura: {altura}cm\n"
-           f"💧 Impresión: {dif}\n"
-           f"🖌️ Pintura: {nv_p}\n"
-           f"🧊 Diseño: {moneda_diseno}\n"
-           f"📝 Detalle: {mapa_detalles[tipo_d]}\n"
-           f"✨ DESCUENTO: {simbolo} {ahorro_wsp_val:.2f}\n"
-           f"--------------------------\n"
-           f"💎 {t['final_quote']}: {moneda_wa}")
+    # Generación del Mensaje de WhatsApp Universal
+    msg = (f"🚀 *NUEVA CONSULTA - MAKER 3D* 🚀\n"
+           f"--------------------------------\n"
+           f"👤 *Cliente:* {nombre_c}\n"
+           f"👾 *Figura:* {nombre_p}\n"
+           f"📏 *Altura:* {altura}cm\n"
+           f"--------------------------------\n"
+           f"💧 *Impresión:* {dif}\n"      # Pestaña 1
+           f"🖌️ *Pintura:* {nv_p}\n"        # Pestaña 2
+           f"🧊 *Diseño:* {tipo_d}\n"      # Pestaña 3
+           f"--------------------------------\n"
+           f"✨ *DESCUENTO:* {simbolo} {ahorro_wsp_val:.2f}\n"
+           f"💰 *TOTAL ESTIMADO:* {moneda_wa}\n"
+           f"--------------------------------\n"
+           f"📲 Hola! Te contacto desde tus redes sociales. ¿Podemos coordinar los detalles de este pedido?")
     
     import urllib.parse
     wa_link = f"https://wa.me/{t['wa_num']}?text={urllib.parse.quote(msg)}"
