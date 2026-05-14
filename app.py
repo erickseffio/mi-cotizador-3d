@@ -598,6 +598,31 @@ else:
     </div>
     """, unsafe_allow_html=True)
 
+# --- NUEVA SECCIÓN DE URGENCIA (Colocar aquí) ---
+    
+    # Configuración de cupos (Cámbialos manualmente cuando cierres ventas)
+    cupos_totales = 5
+    cupos_ocupados = 3 
+    cupos_libres = cupos_totales - cupos_ocupados
+    color_urgencia = "#FF4B2B" if cupos_libres <= 2 else "#28a745"
+
+    st.markdown(f"""
+        <div style="background-color: #1A1C24; border: 2px solid {color_urgencia}; padding: 15px; border-radius: 12px; text-align: center; margin-bottom: 20px;">
+            <h3 style="margin: 0; color: white; font-size: 1.1rem;">⏳ DISPONIBILIDAD DEL TALLER</h3>
+            <p style="margin: 5px 0; color: #E0E0E0; font-size: 0.9rem;">
+                Quedan <b>{cupos_libres} de {cupos_totales}</b> cupos para entregas en el próximo mes.
+            </p>
+            <div style="background-color: #31333F; border-radius: 10px; height: 8px; width: 100%; margin: 10px 0;">
+                <div style="background-color: {color_urgencia}; height: 8px; width: {(cupos_ocupados/cupos_totales)*100}%; border-radius: 10px;"></div>
+            </div>
+            <small style="color: {color_urgencia}; font-weight: bold;">
+                ⚠️ Los pedidos se agendan por orden de depósito (50%).
+            </small>
+        </div>
+    """, unsafe_allow_html=True)
+
+    # --- AQUÍ EMPIEZA TU SECCIÓN 4. BOTONES EN COLUMNAS ---
+
     # 4. BOTONES EN COLUMNAS (SOLUCIÓN DEFINITIVA DE CARGA)
 st.write("---")
 
