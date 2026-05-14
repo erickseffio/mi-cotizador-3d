@@ -181,6 +181,9 @@ with st.sidebar:
 texts = {
     "Español (Perú S/.)": {
         "simbolo": "S/.",
+        "desc_digimon": "Figura detallada de Digimon con acabado en resina premium y pintura técnica.",
+        "desc_shanks": "Escultura de Shanks (One Piece) de 40cm, pintada totalmente a mano.",
+        "desc_gojo": "Satoru Gojo con efectos de vacío en resina traslúcida.",
         "title": "Maker3DPeru-Italia",
         "slogan": "✨ Hiper-realismo en Resina: Del archivo digital a tu vitrina.",
         "delivery": "🕒 Entrega: 3 semanas (Desde el depósito del 50%)",
@@ -222,6 +225,9 @@ texts = {
     },
     "Español (España €)": {
         "simbolo": "€",
+        "desc_digimon": "Figura detallada de Digimon con acabado en resina premium y pintura técnica.",
+        "desc_shanks": "Escultura de Shanks (One Piece) de 40cm, pintada totalmente a mano.",
+        "desc_gojo": "Satoru Gojo con efectos de vacío en resina traslúcida.",
         "title": "Maker3DPeru-Italia",
         "slogan": "✨ Hiper-realismo en Resina: Del archivo digital a tu vitrina.",
         "delivery": "🕒 Entrega: 2 semanas (Desde el depósito del 50%)",
@@ -262,6 +268,9 @@ texts = {
     },
     "English €": {
         "simbolo": "€",
+        "desc_digimon": "Detailed Digimon figure in premium resin with professional paint job.",
+        "desc_shanks": "40cm Shanks (One Piece) sculpture, entirely hand-painted.",
+        "desc_gojo": "Satoru Gojo with translucent resin effects.",
         "title": "Maker3DPeru-Italia",
         "slogan": "✨ Hyper-realism in Resin: From digital file to display case.",
         "delivery": "🕒 Delivery: 3 weeks (After 50% deposit)",
@@ -302,6 +311,9 @@ texts = {
     },
     "Italiano €": {
         "simbolo": "€",
+        "desc_digimon": "Figura dettagliata di Digimon in resina premium con pittura professionale.",
+        "desc_shanks": "Scultura di Shanks (One Piece) da 40 cm, dipinta interamente a mano.",
+        "desc_gojo": "Satoru Gojo con effetti in resina traslucida.",
         "title": "Maker3DPeru-Italia",
         "slogan": "✨ Iperrealismo in resina: dal file digitale alla teca espositiva.",
         "delivery": "🕒 Consegna: 1 settimana (Dall'acconto del 50%)",
