@@ -682,48 +682,48 @@ if hay_calculo:
     col_pdf, col_wa = st.columns(2)
 
     with col_pdf:
-    try:
-        # 1. FORZAMOS EL SÍMBOLO DINÁMICO (Crucial)
-        # Nos aseguramos de que 'simb' sea exactamente lo que el diccionario actual dice
-        simb_pdf = t.get("simbolo", "€") 
-        
-        # 2. LIMPIEZA DE VARIABLES PARA EL PDF
-        v_imp = f"{costo_imp:.2f}" if 'costo_imp' in locals() else "0.00"
-        # Quitamos cualquier símbolo que se haya colado en el diseño
-        v_dis = str(moneda_diseno).replace("€", "").replace("S/.", "").strip() if 'moneda_diseno' in locals() else "0.00"
-        v_pin = f"{costo_p:.2f}" if 'costo_p' in locals() else "0.00"
-        v_desc = ahorro_wsp_val if 'ahorro_wsp_val' in locals() else 0.0
-        
-        # 3. SELECCIÓN DEL TOTAL CORRECTO
-        # Si el idioma elegido es "Español (Perú)", usamos total_pen, si no, total_eur
-        t_pagar = total_pen if "Perú" in idioma else total_eur
-
-        # 4. LLAMADA A LA FUNCIÓN (Fíjate en el último parámetro: simb_pdf)
-        pdf_output = generar_pdf(
-            v_imp, 
-            v_dis, 
-            v_pin, 
-            st.session_state.tasa, 
-            t_pagar, 
-            t, 
-            "Logo.jpg", 
-            archivo_reference, 
-            v_desc, 
-            simb_pdf  # <--- AQUÍ LE PASAMOS EL SÍMBOLO QUE ACABAMOS DE CALCULAR
-        )
-        
-        pdf_bytes = bytes(pdf_output)
-
-        st.download_button(
-            label=f"📥 {t.get('btn_download', 'Descargar PDF')}",
-            data=pdf_bytes,
-            file_name=f"Presupuesto_{nombre_p}.pdf",
-            mime="application/pdf",
-            key="download_pdf_btn",
-            use_container_width=True
-        )
-    except Exception as e:
-        st.error(f"Error al generar el PDF: {e}")
+        try:
+            # 1. FORZAMOS EL SÍMBOLO DINÁMICO (Crucial)
+            # Nos aseguramos de que 'simb' sea exactamente lo que el diccionario actual dice
+            simb_pdf = t.get("simbolo", "€") 
+            
+            # 2. LIMPIEZA DE VARIABLES PARA EL PDF
+            v_imp = f"{costo_imp:.2f}" if 'costo_imp' in locals() else "0.00"
+            # Quitamos cualquier símbolo que se haya colado en el diseño
+            v_dis = str(moneda_diseno).replace("€", "").replace("S/.", "").strip() if 'moneda_diseno' in locals() else "0.00"
+            v_pin = f"{costo_p:.2f}" if 'costo_p' in locals() else "0.00"
+            v_desc = ahorro_wsp_val if 'ahorro_wsp_val' in locals() else 0.0
+            
+            # 3. SELECCIÓN DEL TOTAL CORRECTO
+            # Si el idioma elegido es "Español (Perú)", usamos total_pen, si no, total_eur
+            t_pagar = total_pen if "Perú" in idioma else total_eur
+    
+            # 4. LLAMADA A LA FUNCIÓN (Fíjate en el último parámetro: simb_pdf)
+            pdf_output = generar_pdf(
+                v_imp, 
+                v_dis, 
+                v_pin, 
+                st.session_state.tasa, 
+                t_pagar, 
+                t, 
+                "Logo.jpg", 
+                archivo_reference, 
+                v_desc, 
+                simb_pdf  # <--- AQUÍ LE PASAMOS EL SÍMBOLO QUE ACABAMOS DE CALCULAR
+            )
+            
+            pdf_bytes = bytes(pdf_output)
+    
+            st.download_button(
+                label=f"📥 {t.get('btn_download', 'Descargar PDF')}",
+                data=pdf_bytes,
+                file_name=f"Presupuesto_{nombre_p}.pdf",
+                mime="application/pdf",
+                key="download_pdf_btn",
+                use_container_width=True
+            )
+        except Exception as e:
+            st.error(f"Error al generar el PDF: {e}")
     
     with col_wa:
         if 'wa_link' in locals() and wa_link:
