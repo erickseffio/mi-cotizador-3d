@@ -651,7 +651,7 @@ if hay_calculo:
     
     with col_wa:
         if 'wa_link' in locals() and wa_link:
-            st.link_button(t["wa_btn"], wa_link, use_container_width=True, type="primary")
+            st.link_button(f"📲 {t['wa_btn']}", wa_link, use_container_width=True, type="primary")
         else:
             st.info("Ingresa nombre y personaje arriba")
 else:
