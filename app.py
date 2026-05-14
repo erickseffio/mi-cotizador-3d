@@ -46,7 +46,8 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
     pdf.set_fill_color(*color_fondo_tabla)
     pdf.set_font("Helvetica", 'B', 11)
     pdf.set_text_color(100, 100, 100)
-    pdf.cell(90, 10, formatear_texto(t.get('step1', 'DETALLES DEL PROYECTO')), ln=True, fill=True)
+    titulo_seccion = t.get('step1', '1. DETALLES DEL PROYECTO').replace("1️⃣", "1.")
+    pdf.cell(90, 10, formatear_texto(titulo_seccion), ln=True, fill=True)
     
     pdf.ln(2)
     
