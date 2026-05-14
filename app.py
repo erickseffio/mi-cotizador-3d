@@ -600,7 +600,7 @@ with st.container(border=True):
         st.markdown(f"""
             <div style="background-color:#142d1a; padding:20px; border-radius:10px; border: 1px solid #234d2c; margin-top:15px;">
                 <p style="color:#4ecb71; margin:0; font-size:1rem; font-weight:bold;">
-                        {t['savings_title']}
+                        \u2728 {t['savings_title']}
                 </p>
                 <h2 style="margin:0; color:#4ecb71; font-size:1.8rem;">
                     {ahorro_texto}
