@@ -77,12 +77,11 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
             pdf.image(img_buffer, x=115, y=y_inicio_cuerpo, w=80)
         except: pass
 
-    # --- BLOQUE DE TOTALES (ESTILO APP) ---
-    pdf.set_y(y_inicio_cuerpo + 60)
+   # --- BLOQUE DE TOTALES ---
+    pdf.set_y(y_inicio_cuerpo + 50) # Subimos el bloque para que quepa todo
     pdf.set_x(10)
     
-    # Espacio para el descuento (si existe)
-    if descuento_val > 0:
+    if float(descuento_val) > 0:
         pdf.set_font("Helvetica", 'B', 11)
         pdf.set_text_color(*color_rojo)
         s = obtener_simbolo(simbolo)
@@ -91,24 +90,25 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
     
     pdf.ln(2)
     
-    # Cuadro de Inversión Final
     pdf.set_fill_color(*color_texto_principal)
     pdf.set_text_color(255, 255, 255)
     pdf.set_font("Helvetica", 'B', 15)
     
     s_final = obtener_simbolo(simbolo)
     etiqueta_inv = t.get('final_quote', 'Inversión Estimada')
-    # Dibujamos un rectángulo con bordes redondeados (si tu FPDF lo permite) o una celda rellena
     pdf.cell(90, 15, formatear_texto(f"{etiqueta_inv}: {s_final} {float(total_final):.2f}"), ln=True, align='C', fill=True)
 
-    # --- PIE DE PÁGINA ---
-    pdf.set_y(-30)
-    pdf.set_font("Helvetica", 'I', 9)
+    # --- PIE DE PÁGINA (Ajustado para 1 sola hoja) ---
+    pdf.set_y(-25) # Más cerca del borde inferior
+    pdf.set_font("Helvetica", 'I', 8) # Fuente un poco más pequeña
     pdf.set_text_color(150, 150, 150)
     pdf.set_draw_color(200, 200, 200)
-    pdf.line(10, 265, 200, 265)
-    pdf.cell(0, 10, "MAKER 3D PERU - Torino, Italia | Lima, Peru", align='C', ln=True)
-    pdf.cell(0, 5, formatear_texto(t.get('note', 'El inicio de producción requiere el 50% de adelanto.')), align='C')
+    pdf.line(10, 275, 200, 275) # Línea divisoria más abajo
+    pdf.cell(0, 5, "MAKER 3D PERU - Torino, Italia | Lima, Peru", align='C', ln=True)
+    
+    # Quitamos el emoji manualmente aquí para evitar los ??
+    nota = t.get('note', 'Note: Production starts after 50% deposit.').replace("⚠️", "!")
+    pdf.cell(0, 5, formatear_texto(nota), align='C')
 
     return bytes(pdf.output())
     
