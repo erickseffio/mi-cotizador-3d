@@ -179,7 +179,6 @@ with st.sidebar:
 
 # --- 3. DICCIONARIO DE TRADUCCIONES ---
 texts = {
-    texts = {
     "Español (Perú S/.)": {
         "simbolo": "S/.",
         "title": "Maker3DPeru-Italia",
@@ -290,7 +289,7 @@ texts = {
         "p_name_ph": "es: Alessandro Rossi", "char_name_ph": "es: Darth Vader",
         "step1": "1️⃣ Dettagli Progetto", "step2": "2️⃣ Configurazione Artistica", "step3": "3️⃣ Investimento Stimato",
         "pdf_title": "PREVENTIVO DI STAMPA 3D",
-        "pdf_it": "Costo di Stampa", "final_quote": "Investimento Stimato",
+        "pdf_imp": "Costo di Stampa", "final_quote": "Investimento Stimato",
         "pdf_dis": "Costo del Design", "pdf_pin": "Costo di Pittura",
         "tab_print": "💧 Struttura e proporzioni", "tab_paint": "🖌️ finitura artistica", "tab_design": "🧊 Design",
         "height_label": "Altezza (cm)", "height_help": "📏 Guida: Una lattina misura 12cm, una figura standard 18cm.",
@@ -307,13 +306,14 @@ texts = {
         "social_title": "📱 Seguici!", "social_proof": "Spedizioni sicure e garantite 📦",
         "port_header": "✨ Portfolio Premium - Maker 3D Perú",
         "port_main_title": "Il Mio Portfolio", "port_tag": "GALLERIA LAVORI",
-        "port_desc": "Esplora le nostre ultime creazioni.",
+        "port_desc": "Esplora le nostre ultime creaciones.",
         "loading_img": "Elaborazione...", "img_caption": "✅ Immagine caricata",
         "img_success": "Immagine pronta!", "img_info": "Carica una foto.",
-        "warning_input": "⚠️ **Attenzione:** Inserisci Nome e Personaggio.",
+        "warning_input": "⚠️ **Attenzione:** Inserisci Nombre y Personaggio.",
         "footer_text": "Design di Maker 3D Perú"
     }
 }
+
 idioma = st.selectbox("🌐 Idioma", ["Español (Perú S/.)", "Español (España €)", "English €", "Italiano €"])
 t = texts[idioma]
 
