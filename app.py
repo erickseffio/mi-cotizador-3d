@@ -181,6 +181,7 @@ with st.sidebar:
 texts = {
     "Español (Perú S/.)": {
         "simbolo": "S/.",
+        "desc_albafica": "Albafica de Piscis con detalles de rosas y armadura dorada en pintura metalizada.",
         "desc_hyoga": "Hyoga de Cisne con efectos de hielo en resina traslúcida y pintura metalizada.",
         "desc_digimon": "Figura detallada de Digimon con acabado en resina premium y pintura técnica.",
         "title": "Maker3DPeru-Italia",
@@ -224,6 +225,7 @@ texts = {
     },
     "Español (España €)": {
         "simbolo": "€",
+        "desc_albafica": "Albafica de Piscis con detalles de rosas y armadura dorada en pintura metalizada.",
         "desc_digimon": "Figura detallada de Digimon con acabado en resina premium y pintura técnica.",
         "desc_hyoga": "Hyoga de Cisne con efectos de hielo en resina traslúcida y pintura metalizada.",
         "title": "Maker3DPeru-Italia",
@@ -266,6 +268,7 @@ texts = {
     },
     "English €": {
         "simbolo": "€",
+        "desc_albafica": "Pisces Albafica featuring rose details and golden armor with metallic finish.",
         "desc_digimon": "Detailed Digimon figure in premium resin with professional paint job.",
         "desc_hyoga": "Cygnus Hyoga with ice effects in translucent resin and metallic paint.",
         "title": "Maker3DPeru-Italia",
@@ -308,6 +311,7 @@ texts = {
     },
     "Italiano €": {
         "simbolo": "€",
+        "desc_albafica": "Albafica dei Pesci con dettagli di rose e armatura dorata in vernice metallizzata.",
         "desc_digimon": "Figura dettagliata di Digimon in resina premium con pittura professionale.",
         "desc_hyoga": "Hyoga del Cigno con effetti ghiaccio in resina traslucida e vernice metallizzata.",
         "title": "Maker3DPeru-Italia",
