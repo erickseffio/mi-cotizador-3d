@@ -85,10 +85,18 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
     
     if descuento_val > 0:
         pdf.set_font("Helvetica", 'I', 10)
-        pdf.set_text_color(231, 76, 60)
+        pdf.set_text_color(231, 76, 60) # Rojo para resaltar el ahorro
+        
+        # Obtenemos la etiqueta del idioma o usamos 'Descuento' por defecto
+        etiqueta_desc = t.get('pdf_desc', 'Descuento')
+        
+        # Manejo del símbolo para el descuento
         s_desc = chr(128) if "€" in simbolo else simbolo
-        pdf.cell(100, 8, formatear_texto(f"{t.get('pdf_desc', 'Descuento')}: -{s_desc} {descuento_val:.2f}"), align='R', ln=True)
-
+        
+        # Formateamos la línea del descuento
+        linea_descuento = f"{etiqueta_desc}: -{s_desc} {descuento_val:.2f}"
+        pdf.cell(100, 8, formatear_texto(linea_descuento), align='R', ln=True)
+        
     pdf.set_fill_color(*color_primario)
     pdf.set_text_color(255, 255, 255)
     pdf.set_font("Helvetica", 'B', 14)
