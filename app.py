@@ -11,37 +11,37 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
     pdf = FPDF()
     pdf.add_page()
     
-    color_primario = (44, 62, 80) # Gris azulado profesional
-    color_acento = (52, 152, 219)  # Azul brillante para líneas
+    color_primario = (44, 62, 80) 
+    color_acento = (52, 152, 219)
     
+    # 1. ESTA FUNCIÓN ES LA CLAVE: Maneja el Euro correctamente para el PDF
     def limpiar_formatear(texto, symb):
         limpio = str(texto).replace("€", "").replace("S/.", "").replace("$", "").strip()
-        return f"{symb} {limpio}"
+        # Si el símbolo es Euro, usamos el código 128 que entiende el PDF
+        s_pdf = chr(128) if "€" in symb else symb
+        return f"{s_pdf} {limpio}"
 
     def formatear_texto(texto):
+        # Aquí también nos aseguramos de que cualquier Euro en el texto se convierta
         return str(texto).replace("€", chr(128)).encode('latin-1', 'replace').decode('latin-1')
 
-    # --- CABECERA ---
+    # --- CABECERA (Tu código está perfecto aquí) ---
     if logo_path:
-        # Logo con más aire (x=12, y=12) y tamaño balanceado (w=32)
         try: pdf.image(logo_path, 12, 12, 32) 
         except: pass
     
     pdf.set_font("Helvetica", 'B', 18)
     pdf.set_text_color(*color_primario)
-    pdf.set_y(20) # Bajamos un poco el título
+    pdf.set_y(20)
     pdf.cell(0, 10, formatear_texto(t.get("pdf_title", "PRESUPUESTO")).upper(), ln=True, align='R')
     
-    # Línea decorativa más elegante
     pdf.set_draw_color(*color_acento)
     pdf.set_line_width(0.8)
-    pdf.line(10, 52, 200, 52) # Posición y=52 para evitar cruces
+    pdf.line(10, 52, 200, 52)
     pdf.ln(30)
 
     # --- CONTENIDO ---
     y_detalle = pdf.get_y()
-
-    # Columna Datos
     pdf.set_font("Helvetica", 'B', 10)
     pdf.set_text_color(120, 120, 120)
     pdf.cell(90, 8, formatear_texto("DETALLES DEL PROYECTO"), ln=True)
@@ -52,6 +52,7 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
         pdf.set_text_color(*color_primario)
         pdf.cell(65, 9, formatear_texto(label), border='B')
         pdf.set_font("Helvetica", '', 10)
+        # Aquí usamos la función de limpieza mejorada
         valor_final = limpiar_formatear(valor_texto, simbolo)
         pdf.cell(30, 9, formatear_texto(valor_final), border='B', ln=True, align='R')
 
@@ -59,35 +60,28 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
     fila_estilizada(t.get('pdf_dis', 'Costo de Diseño'), c_dis)
     fila_estilizada(t.get('pdf_pin', 'Costo de Pintura'), c_pin)
 
-    # --- MARCO DE FOTO ---
-    if imagen_figura is not None:
-        try:
-            img_bytes = imagen_figura.getvalue()
-            if img_bytes:
-                img_file = io.BytesIO(img_bytes)
-                # Sombra sutil / Marco
-                pdf.set_draw_color(210, 210, 210)
-                pdf.rect(130, y_detalle - 2, 65, 65) # Rectángulo contenedor
-                pdf.image(img_file, x=132, y=y_detalle, w=61)
-        except: pass
-
-    # --- TOTALES ---
+    # --- 2. SECCIÓN DEL TOTAL (Asegúrate de tener esto al final) ---
     pdf.set_y(y_detalle + 70) 
     
+    # Descuento dinámico
     if descuento_val > 0:
         pdf.set_font("Helvetica", 'I', 10)
         pdf.set_text_color(231, 76, 60)
-        pdf.cell(100, 8, f"{formatear_texto(t.get('pdf_desc', 'Descuento'))}: -{formatear_texto(simbolo)} {descuento_val:.2f}", align='R', ln=True)
+        s_desc = chr(128) if "€" in simbolo else simbolo
+        pdf.cell(100, 8, formatear_texto(f"{t.get('pdf_desc', 'Descuento')}: -{s_desc} {descuento_val:.2f}"), align='R', ln=True)
 
-    # Bloque de Total
+    # Bloque de Total dinámico
     pdf.set_fill_color(*color_primario)
     pdf.set_text_color(255, 255, 255)
     pdf.set_font("Helvetica", 'B', 14)
+    
+    s_total = chr(128) if "€" in simbolo else simbolo
     etiqueta_total = t.get('final_quote', 'Inversión Estimada')
-    texto_total = f"{formatear_texto(etiqueta_total)}: {formatear_texto(simbolo)} {total_final:.2f}"
-    pdf.cell(100, 14, texto_total, ln=True, align='C', fill=True)
+    texto_total = f"{etiqueta_total}: {s_total} {total_final:.2f}"
+    
+    pdf.cell(100, 14, formatear_texto(texto_total), ln=True, align='C', fill=True)
 
-    # Pie de página (branding)
+    # --- PIE DE PÁGINA ---
     pdf.set_y(-25)
     pdf.set_font("Helvetica", 'I', 8)
     pdf.set_text_color(170, 170, 170)
