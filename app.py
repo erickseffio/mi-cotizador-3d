@@ -12,106 +12,102 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
     pdf = FPDF()
     pdf.add_page()
     
-    color_primario = (44, 62, 80) 
+    # Colores de marca
+    color_fondo_tabla = (245, 245, 245)
+    color_texto_principal = (44, 62, 80)
     color_acento = (52, 152, 219)
-    
-    def limpiar_formatear(texto, symb):
-        limpio = str(texto).replace("€", "").replace("S/.", "").replace("$", "").strip()
-        s_pdf = chr(128) if "€" in symb else symb
-        return f"{s_pdf} {limpio}"
+    color_rojo = (231, 76, 60)
 
     def formatear_texto(texto):
         return str(texto).replace("€", chr(128)).encode('latin-1', 'replace').decode('latin-1')
 
+    def obtener_simbolo(symb):
+        return chr(128) if "€" in symb else symb
+
     # --- CABECERA ---
     if logo_path:
-        try: pdf.image(logo_path, 12, 12, 32) 
+        try: pdf.image(logo_path, 12, 12, 35)
         except: pass
     
-    pdf.set_font("Helvetica", 'B', 18)
-    pdf.set_text_color(*color_primario)
-    pdf.set_y(20)
+    pdf.set_font("Helvetica", 'B', 20)
+    pdf.set_text_color(*color_texto_principal)
+    pdf.set_y(25)
     pdf.cell(0, 10, formatear_texto(t.get("pdf_title", "PRESUPUESTO")).upper(), ln=True, align='R')
-    
     pdf.set_draw_color(*color_acento)
-    pdf.set_line_width(0.8)
-    pdf.line(10, 52, 200, 52)
+    pdf.set_line_width(1)
+    pdf.line(120, 38, 200, 38)
+    
+    pdf.ln(25)
 
-    # --- NUEVA SECCIÓN: PROCESAMIENTO DE LA IMAGEN DE LA FIGURA ---
-    if imagen_figura is not None:
+    # --- CUERPO PRINCIPAL (2 COLUMNAS) ---
+    y_inicio_cuerpo = pdf.get_y()
+    
+    # COLUMNA IZQUIERDA: TABLA DE DETALLES
+    pdf.set_fill_color(*color_fondo_tabla)
+    pdf.set_font("Helvetica", 'B', 11)
+    pdf.set_text_color(100, 100, 100)
+    pdf.cell(90, 10, formatear_texto(t.get('step1', 'DETALLES DEL PROYECTO')), ln=True, fill=True)
+    
+    pdf.ln(2)
+    
+    # Función para crear filas de tabla limpias
+    def crear_fila(label, valor):
+        pdf.set_font("Helvetica", '', 11)
+        pdf.set_text_color(*color_texto_principal)
+        pdf.cell(60, 10, formatear_texto(label), border='B')
+        pdf.set_font("Helvetica", 'B', 11)
+        s = obtener_simbolo(simbolo)
+        pdf.cell(30, 10, formatear_texto(f"{s} {valor:.2f}"), border='B', ln=True, align='R')
+
+    crear_fila(t.get('pdf_imp', 'Costo de Impresión'), c_imp)
+    crear_fila(t.get('pdf_dis', 'Costo de Diseño'), c_dis)
+    crear_fila(t.get('pdf_pin', 'Costo de Pintura'), c_pin)
+
+    # COLUMNA DERECHA: IMAGEN DE REFERENCIA
+    if imagen_figura:
         try:
-            # 1. Resetear el puntero del archivo para lectura
             imagen_figura.seek(0)
-            
-            # 2. Abrir con PIL y convertir a RGB (evita errores con PNG transparentes)
             img = Image.open(imagen_figura)
-            if img.mode in ("RGBA", "P"):
-                img = img.convert("RGB")
-            
-            # 3. Guardar en un buffer temporal de memoria
+            if img.mode in ("RGBA", "P"): img = img.convert("RGB")
             img_buffer = io.BytesIO()
             img.save(img_buffer, format="JPEG")
             img_buffer.seek(0)
-            
-            # 4. Insertar imagen en el lateral derecho (x=125, y=65, ancho=65)
-            pdf.image(img_buffer, x=125, y=65, w=65)
-        except Exception as e:
-            # Si hay error con la imagen, el PDF se genera sin ella para no bloquear al cliente
-            print(f"Error imagen PDF: {e}")
+            # Centramos la imagen en el espacio derecho
+            pdf.image(img_buffer, x=115, y=y_inicio_cuerpo, w=80)
+        except: pass
 
-    pdf.ln(30)
-
-    # --- CONTENIDO ---
-    y_detalle = pdf.get_y()
-    pdf.set_font("Helvetica", 'B', 10)
-    pdf.set_text_color(120, 120, 120)
-    pdf.cell(90, 8, formatear_texto("DETALLES DEL PROYECTO"), ln=True)
-    pdf.ln(2)
-
-    def fila_estilizada(label, valor_texto):
-        pdf.set_font("Helvetica", 'B', 10)
-        pdf.set_text_color(*color_primario)
-        pdf.cell(65, 9, formatear_texto(label), border='B')
-        pdf.set_font("Helvetica", '', 10)
-        valor_final = limpiar_formatear(valor_texto, simbolo)
-        pdf.cell(30, 9, formatear_texto(valor_final), border='B', ln=True, align='R')
-
-    fila_estilizada(t.get('pdf_imp', 'Costo de Impresión'), c_imp)
-    fila_estilizada(t.get('pdf_dis', 'Costo de Diseño'), c_dis)
-    fila_estilizada(t.get('pdf_pin', 'Costo de Pintura'), c_pin)
-
-    # --- SECCIÓN DEL TOTAL (Ajustada para que no choque con la imagen) ---
-    pdf.set_y(y_detalle + 80) 
+    # --- BLOQUE DE TOTALES (ESTILO APP) ---
+    pdf.set_y(y_inicio_cuerpo + 60)
+    pdf.set_x(10)
     
+    # Espacio para el descuento (si existe)
     if descuento_val > 0:
-        pdf.set_font("Helvetica", 'I', 10)
-        pdf.set_text_color(231, 76, 60) # Rojo para resaltar el ahorro
-        
-        # Obtenemos la etiqueta del idioma o usamos 'Descuento' por defecto
-        etiqueta_desc = t.get('pdf_desc', 'Descuento')
-        
-        # Manejo del símbolo para el descuento
-        s_desc = chr(128) if "€" in simbolo else simbolo
-        
-        # Formateamos la línea del descuento
-        linea_descuento = f"{etiqueta_desc}: -{s_desc} {descuento_val:.2f}"
-        pdf.cell(100, 8, formatear_texto(linea_descuento), align='R', ln=True)
-        
-    pdf.set_fill_color(*color_primario)
+        pdf.set_font("Helvetica", 'B', 11)
+        pdf.set_text_color(*color_rojo)
+        s = obtener_simbolo(simbolo)
+        etiqueta_desc = t.get('pdf_desc', 'DESCUENTO')
+        pdf.cell(90, 10, formatear_texto(f"{etiqueta_desc}: -{s} {descuento_val:.2f}"), align='R', ln=True)
+    
+    pdf.ln(2)
+    
+    # Cuadro de Inversión Final
+    pdf.set_fill_color(*color_texto_principal)
     pdf.set_text_color(255, 255, 255)
-    pdf.set_font("Helvetica", 'B', 14)
+    pdf.set_font("Helvetica", 'B', 15)
     
-    s_total = chr(128) if "€" in simbolo else simbolo
-    etiqueta_total = t.get('final_quote', 'Inversión Estimada')
-    texto_total = f"{etiqueta_total}: {s_total} {total_final:.2f}"
-    
-    pdf.cell(100, 14, formatear_texto(texto_total), ln=True, align='C', fill=True)
+    s_final = obtener_simbolo(simbolo)
+    etiqueta_inv = t.get('final_quote', 'Inversión Estimada')
+    # Dibujamos un rectángulo con bordes redondeados (si tu FPDF lo permite) o una celda rellena
+    pdf.cell(90, 15, formatear_texto(f"{etiqueta_inv}: {s_final} {total_final:.2f}"), ln=True, align='C', fill=True)
 
     # --- PIE DE PÁGINA ---
-    pdf.set_y(-25)
-    pdf.set_font("Helvetica", 'I', 8)
-    pdf.set_text_color(170, 170, 170)
-    pdf.cell(0, 10, "MAKER 3D PERU - Arte y Tecnologia en cada detalle", align='C')
+    pdf.set_y(-30)
+    pdf.set_font("Helvetica", 'I', 9)
+    pdf.set_text_color(150, 150, 150)
+    pdf.set_draw_color(200, 200, 200)
+    pdf.line(10, 265, 200, 265)
+    pdf.cell(0, 10, "MAKER 3D PERU - Torino, Italia | Lima, Peru", align='C', ln=True)
+    pdf.cell(0, 5, formatear_texto(t.get('note', 'El inicio de producción requiere el 50% de adelanto.')), align='C')
 
     return bytes(pdf.output())
     
