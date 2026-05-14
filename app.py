@@ -57,7 +57,7 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
         pdf.cell(60, 10, formatear_texto(label), border='B')
         pdf.set_font("Helvetica", 'B', 11)
         s = obtener_simbolo(simbolo)
-        pdf.cell(30, 10, formatear_texto(f"{s} {valor:.2f}"), border='B', ln=True, align='R')
+        pdf.cell(30, 10, formatear_texto(f"{s} {float(valor):.2f}"), border='B', ln=True, align='R')
 
     crear_fila(t.get('pdf_imp', 'Costo de Impresión'), c_imp)
     crear_fila(t.get('pdf_dis', 'Costo de Diseño'), c_dis)
@@ -86,7 +86,7 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
         pdf.set_text_color(*color_rojo)
         s = obtener_simbolo(simbolo)
         etiqueta_desc = t.get('pdf_desc', 'DESCUENTO')
-        pdf.cell(90, 10, formatear_texto(f"{etiqueta_desc}: -{s} {descuento_val:.2f}"), align='R', ln=True)
+        pdf.cell(90, 10, formatear_texto(f"{etiqueta_desc}: -{s} {float(descuento_val):.2f}"), align='R', ln=True)
     
     pdf.ln(2)
     
@@ -98,7 +98,7 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
     s_final = obtener_simbolo(simbolo)
     etiqueta_inv = t.get('final_quote', 'Inversión Estimada')
     # Dibujamos un rectángulo con bordes redondeados (si tu FPDF lo permite) o una celda rellena
-    pdf.cell(90, 15, formatear_texto(f"{etiqueta_inv}: {s_final} {total_final:.2f}"), ln=True, align='C', fill=True)
+    pdf.cell(90, 15, formatear_texto(f"{etiqueta_inv}: {s_final} {float(total_final):.2f}"), ln=True, align='C', fill=True)
 
     # --- PIE DE PÁGINA ---
     pdf.set_y(-30)
