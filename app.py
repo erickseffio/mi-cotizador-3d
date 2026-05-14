@@ -238,12 +238,7 @@ texts = {
         "warning_input": "⚠️ **Atención:** Ingresa tu Nombre y el Personaje arriba.",
         "footer_text": "Diseñado por Maker 3D Perú | Envíos nacionales e internacionales",
         "height_help": "📏 Guía: Una lata de soda mide 12cm, una figura estándar 18cm.",
-        "design_details": [
-            "El archivo no requiere cambios.",
-            "Escalado o reparación básica.",
-            "Personalización de pose o texto.",
-            "Escultura digital completa."
-        ],
+        "design_details": "Detalles técnicos: Escalado, reparación de malla o cortes básicos.",
     },
     "Español (España €)": {
         "simbolo": "€",
@@ -281,12 +276,7 @@ texts = {
         "warning_input": "⚠️ **Atención:** Falta Nombre o Personaje.",
         "footer_text": "Maker 3D Perú | Calidad Profesional",
         "height_help": "📏 Guía: Una lata de soda mide 12cm, una figura estándar 18cm.",
-        "design_details": [
-            "El archivo no requiere cambios técnicos.",
-            "Escalado, reparación de malla o cortes básicos.",
-            "Cambio de pose o añadir nombres/logos.",
-            "Modelado desde cero o escultura compleja."
-        ],
+        "design_details": "Detalles técnicos: Escalado, reparación de malla o cortes básicos.",
     },
     "English €": {
         "simbolo": "€",
@@ -324,12 +314,7 @@ texts = {
         "warning_input": "⚠️ **Attention:** Enter Name and Character.",
         "footer_text": "Designed by Maker 3D Perú",
         "height_help": "📏 Guide: A soda can is 12cm, a standard figure is 18cm.",
-        "design_details": [
-            "File requires no changes.",
-            "Scaling or basic mesh repair.",
-            "Pose modification or adding text.",
-            "Modeling from scratch."
-        ],
+        "design_details": "Technical details: Scaling, mesh repair, or basic cuts.",
     },
     "Italiano €": {
         "simbolo": "€",
@@ -364,15 +349,10 @@ texts = {
         "port_desc": "Esplora le nostre ultime creaciones.",
         "loading_img": "Elaborazione...", "img_caption": "✅ Immagine caricata",
         "img_success": "Immagine pronta!", "img_info": "Carica una foto.",
-        "warning_input": "⚠️ **Attenzione:** Inserisci Nombre y Personaggio.",
+        "warning_input": "⚠️ **Attenzione:** Inserisci Nome y Personaggio.",
         "footer_text": "Design di Maker 3D Perú",
         "height_help": "📏 Guida: Una lattina misura 12cm, una figura standard 18cm.",
-        "design_details": [
-            "Il file non richiede modifiche.",
-            "Scalatura o riparazione base.",
-            "Modifica della posa o nomi.",
-            "Modellazione da zero."
-        ],
+        "design_details": "Dettagli tecnici: Scalatura, riparazione mesh o tagli base.",
     }
 }
 
