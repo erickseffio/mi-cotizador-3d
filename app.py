@@ -143,7 +143,7 @@ st.markdown("""
             display: none !important;
         }
     </style>
-
+""", unsafe_allow_html=True)
 
 @st.dialog("Vista de Obra - Maker 3D Perú", width="medium") # Volvemos al ancho que te gusta
 def mostrar_imagen_grande(url, titulo, descripcion):
