@@ -4,6 +4,7 @@ from fpdf import FPDF
 import tempfile
 import re
 import io
+from PIL import Image
 
 from fpdf import FPDF # fpdf2 usa el mismo nombre de importación
 
@@ -14,18 +15,15 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
     color_primario = (44, 62, 80) 
     color_acento = (52, 152, 219)
     
-    # 1. ESTA FUNCIÓN ES LA CLAVE: Maneja el Euro correctamente para el PDF
     def limpiar_formatear(texto, symb):
         limpio = str(texto).replace("€", "").replace("S/.", "").replace("$", "").strip()
-        # Si el símbolo es Euro, usamos el código 128 que entiende el PDF
         s_pdf = chr(128) if "€" in symb else symb
         return f"{s_pdf} {limpio}"
 
     def formatear_texto(texto):
-        # Aquí también nos aseguramos de que cualquier Euro en el texto se convierta
         return str(texto).replace("€", chr(128)).encode('latin-1', 'replace').decode('latin-1')
 
-    # --- CABECERA (Tu código está perfecto aquí) ---
+    # --- CABECERA ---
     if logo_path:
         try: pdf.image(logo_path, 12, 12, 32) 
         except: pass
@@ -38,6 +36,29 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
     pdf.set_draw_color(*color_acento)
     pdf.set_line_width(0.8)
     pdf.line(10, 52, 200, 52)
+
+    # --- NUEVA SECCIÓN: PROCESAMIENTO DE LA IMAGEN DE LA FIGURA ---
+    if imagen_figura is not None:
+        try:
+            # 1. Resetear el puntero del archivo para lectura
+            imagen_figura.seek(0)
+            
+            # 2. Abrir con PIL y convertir a RGB (evita errores con PNG transparentes)
+            img = Image.open(imagen_figura)
+            if img.mode in ("RGBA", "P"):
+                img = img.convert("RGB")
+            
+            # 3. Guardar en un buffer temporal de memoria
+            img_buffer = io.BytesIO()
+            img.save(img_buffer, format="JPEG")
+            img_buffer.seek(0)
+            
+            # 4. Insertar imagen en el lateral derecho (x=125, y=65, ancho=65)
+            pdf.image(img_buffer, x=125, y=65, w=65)
+        except Exception as e:
+            # Si hay error con la imagen, el PDF se genera sin ella para no bloquear al cliente
+            print(f"Error imagen PDF: {e}")
+
     pdf.ln(30)
 
     # --- CONTENIDO ---
@@ -52,7 +73,6 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
         pdf.set_text_color(*color_primario)
         pdf.cell(65, 9, formatear_texto(label), border='B')
         pdf.set_font("Helvetica", '', 10)
-        # Aquí usamos la función de limpieza mejorada
         valor_final = limpiar_formatear(valor_texto, simbolo)
         pdf.cell(30, 9, formatear_texto(valor_final), border='B', ln=True, align='R')
 
@@ -60,17 +80,15 @@ def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_fig
     fila_estilizada(t.get('pdf_dis', 'Costo de Diseño'), c_dis)
     fila_estilizada(t.get('pdf_pin', 'Costo de Pintura'), c_pin)
 
-    # --- 2. SECCIÓN DEL TOTAL (Asegúrate de tener esto al final) ---
-    pdf.set_y(y_detalle + 70) 
+    # --- SECCIÓN DEL TOTAL (Ajustada para que no choque con la imagen) ---
+    pdf.set_y(y_detalle + 80) 
     
-    # Descuento dinámico
     if descuento_val > 0:
         pdf.set_font("Helvetica", 'I', 10)
         pdf.set_text_color(231, 76, 60)
         s_desc = chr(128) if "€" in simbolo else simbolo
         pdf.cell(100, 8, formatear_texto(f"{t.get('pdf_desc', 'Descuento')}: -{s_desc} {descuento_val:.2f}"), align='R', ln=True)
 
-    # Bloque de Total dinámico
     pdf.set_fill_color(*color_primario)
     pdf.set_text_color(255, 255, 255)
     pdf.set_font("Helvetica", 'B', 14)
