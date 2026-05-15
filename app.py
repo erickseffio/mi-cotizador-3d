@@ -9,15 +9,25 @@ from PIL import Image
 
 from fpdf import FPDF # fpdf2 usa el mismo nombre de importación
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-5JQZP9VNLY"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+import streamlit as st
+import streamlit.components.v1 as components # <-- Importante para el código invisible
 
-  gtag('config', 'G-5JQZP9VNLY');
-</script>
+# --- CONFIGURACIÓN DE RASTREO (Poner al inicio) ---
+ID_GOOGLE = "G-5JQZP9VNLY" # <-- PEGA AQUÍ TU CÓDIGO G-XXXXXXXXXX
+
+# Este es el "cerebro" que rastrea visitas, celulares, países y redes sociales
+codigo_rastreo = f"""
+    <script async src="https://www.googletagmanager.com/gtag/js?id={ID_GOOGLE}"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){{dataLayer.push(arguments);}}
+        gtag('js', new Date());
+        gtag('config', '{ID_GOOGLE}');
+    </script>
+"""
+
+# Insertamos el rastreador de forma invisible (altura 0)
+components.html(codigo_rastreo, height=0)
 
 def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_figura, descuento_val, simbolo):
     pdf = FPDF()
