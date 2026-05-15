@@ -4,9 +4,20 @@ from fpdf import FPDF
 import tempfile
 import re
 import io
+import streamlit.components.v1 as components
 from PIL import Image
 
 from fpdf import FPDF # fpdf2 usa el mismo nombre de importación
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5JQZP9VNLY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-5JQZP9VNLY');
+</script>
 
 def generar_pdf(c_imp, c_dis, c_pin, tasa, total_final, t, logo_path, imagen_figura, descuento_val, simbolo):
     pdf = FPDF()
